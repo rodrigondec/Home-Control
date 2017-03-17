@@ -190,6 +190,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Domain\Dispositivos\Activable.cs" />
+    <Compile Include="Domain\Dispositivos\Controlador.cs" />
+    <Compile Include="Domain\Dispositivos\Dispositivo.cs" />
+    <Compile Include="Domain\Interruptores\AbstractInterruptor.cs" />
+    <Compile Include="Domain\Interruptores\Interruptor.cs" />
+    <Compile Include="Domain\Knob\AbstractKnob.cs" />
+    <Compile Include="Domain\Knob\Knob.cs" />
+    <Compile Include="Domain\Sensor\AbstractSensor.cs" />
+    <Compile Include="Domain\Sensor\Sensor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
