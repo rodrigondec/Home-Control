@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace HomeControl.Domain.Dispositivos
 {
     public class Controlador : Activable
     {
-       
+        [Key]
         private int id;       
         private String nome;       
         private String ipAddress;        
@@ -25,7 +22,7 @@ namespace HomeControl.Domain.Dispositivos
                 this.id = value;
             }
         }
-        [Display(Name = "Nome")]
+       
         public String Nome
         {
             get
@@ -37,7 +34,7 @@ namespace HomeControl.Domain.Dispositivos
                 this.nome = value;
             }
         }
-        [Display(Name = "Endereço ip")]
+    
         public String IpAddress
         {
             get
@@ -49,7 +46,7 @@ namespace HomeControl.Domain.Dispositivos
                 this.ipAddress = value;
             }
         }
-        [Display(Name = "Endereço Mac")]
+
         public String MacAddress
         {
             get

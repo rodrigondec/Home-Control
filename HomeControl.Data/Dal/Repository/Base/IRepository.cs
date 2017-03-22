@@ -8,10 +8,10 @@ namespace HomeControl.Dal.Repository.Base
 {
     interface IRepository<T, ID> where T: class
     {
-        List<T> GetAll();
-        T find(ID id);
-        T update(T entity);
-        void saveChanges();
-        T add(T entity);
+        List<T> FindAll();
+        T Find(ID id);
+        T Update(T entity);
+        void SaveChanges();
+        T Add(T entity);
     }
 }

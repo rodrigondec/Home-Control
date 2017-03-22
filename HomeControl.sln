@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeControl", "HomeControl\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeControl.Tests", "HomeControl.Tests\HomeControl.Tests.csproj", "{6C704BF0-00AC-4E3A-94FB-D26124A98A3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeControl.Data", "HomeControl.Data\HomeControl.Data.csproj", "{45F18D14-F0CE-4B8B-8A29-46F2F8045605}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeControl.Domain", "HomeControl.Domain\HomeControl.Domain.csproj", "{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6C704BF0-00AC-4E3A-94FB-D26124A98A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C704BF0-00AC-4E3A-94FB-D26124A98A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C704BF0-00AC-4E3A-94FB-D26124A98A3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F18D14-F0CE-4B8B-8A29-46F2F8045605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F18D14-F0CE-4B8B-8A29-46F2F8045605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F18D14-F0CE-4B8B-8A29-46F2F8045605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F18D14-F0CE-4B8B-8A29-46F2F8045605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

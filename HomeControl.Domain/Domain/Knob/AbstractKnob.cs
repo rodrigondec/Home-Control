@@ -8,6 +8,7 @@ namespace HomeControl.Domain.Knob
 {
     public abstract class AbstractKnob : Dispositivo, Knob
     {
+        
         private float valorAtual;
         private float valorMaximo;
         private float valorMinimo;

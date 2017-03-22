@@ -9,7 +9,7 @@ namespace HomeControl.Domain.Residencia
     public class Comodo
     {
         [Key]
-        private int IdComodo { get; set; }
+        private int Id { get; set; }
         private string Nome { get; set; }
         private Residencia Residencia { get; set; }
     }
