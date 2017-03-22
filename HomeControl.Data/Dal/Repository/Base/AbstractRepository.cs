@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HomeControl.Data.Dal.Repository.Base
 {
-    public abstract class AbstractRepository<T, ID> : IRepository<T, ID>, LinqRepository<T> where T: class
+    public abstract class AbstractRepository<T, ID> : IRepository<T, ID>, LinqRepository<T>, IDisposable where T: class
     {
 
        protected DbContext db;
@@ -58,6 +58,11 @@ namespace HomeControl.Data.Dal.Repository.Base
                 db.SaveChanges();
             }
             return existing;
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
         }
     }
 }
