@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}</ProjectGuid>
+    <ProjectGuid>{C4128654-9CAE-42AE-AA6E-766A4068776D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HomeControl.Domain</RootNamespace>
-    <AssemblyName>HomeControl.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>HomeControl.Service</RootNamespace>
+    <AssemblyName>HomeControl.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,21 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Dispositivos\Activable.cs" />
-    <Compile Include="Domain\Dispositivos\Controlador.cs" />
-    <Compile Include="Domain\Dispositivos\Dispositivo.cs" />
-    <Compile Include="Domain\Interruptores\AbstractInterruptor.cs" />
-    <Compile Include="Domain\Interruptores\Interruptor.cs" />
-    <Compile Include="Domain\Knob\AbstractKnob.cs" />
-    <Compile Include="Domain\Knob\Knob.cs" />
-    <Compile Include="Domain\Residencia\Comodo.cs" />
-    <Compile Include="Domain\Residencia\Residencia.cs" />
-    <Compile Include="Domain\Sensor\AbstractSensor.cs" />
-    <Compile Include="Domain\Sensor\Sensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\Seguranca\" />
+    <Compile Include="Service\ResidenciaService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

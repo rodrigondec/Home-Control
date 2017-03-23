@@ -10,10 +10,10 @@ namespace HomeControl.Data.Dal.Factory
     public abstract class DaoFactory
     {
 
-        public abstract IComodoDao getComodoRepository(); 
-        public abstract IControladorDao getControladorRepository(); 
-        public abstract IDispositivoDao getDispositivoRepository();
-        public abstract IResidenciaDao getResidenciaRepository();
+        public abstract IComodoDao getComodoDao(); 
+        public abstract IControladorDao getControladorDao(); 
+        public abstract IDispositivoDao getDispositivoDao();
+        public abstract IResidenciaDao getResidenciaDao();
 
     }
 }

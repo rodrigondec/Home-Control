@@ -9,22 +9,22 @@ namespace HomeControl.Data.Dal.Factory
 {
     public class AdoNetRepositoryFactory : DaoFactory
     {
-        public override IComodoDao getComodoRepository()
+        public override IComodoDao getComodoDao()
         {
             return null;
         }
 
-        public override IControladorDao getControladorRepository()
+        public override IControladorDao getControladorDao()
         {
             return null;
         }
 
-        public override IDispositivoDao getDispositivoRepository()
+        public override IDispositivoDao getDispositivoDao()
         {
             return null;
         }
 
-        public override IResidenciaDao getResidenciaRepository()
+        public override IResidenciaDao getResidenciaDao()
         {
             return null;
         }

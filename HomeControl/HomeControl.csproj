@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ResidenciaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -288,9 +289,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Residencia\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HomeControl.Business\HomeControl.Business.csproj">
+      <Project>{bc006f0a-88b9-4adc-bbf5-06b1bee13d81}</Project>
+      <Name>HomeControl.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HomeControl.Domain\HomeControl.Domain.csproj">
+      <Project>{b8f4c1ab-53de-49bd-bf9a-18c47881d3ad}</Project>
+      <Name>HomeControl.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
