@@ -52,7 +52,7 @@
     <Compile Include="Dal\Factory\EntityRepositoryFactory.cs" />
     <Compile Include="Dal\Factory\RepositoryFactory.cs" />
     <Compile Include="Dal\Repository\Base\AbstractRepository.cs" />
-    <Compile Include="Dal\Repository\Base\IRepository.cs" />
+    <Compile Include="Dal\Repository\Base\IGenericDao.cs" />
     <Compile Include="Dal\Repository\Base\LinqRepository.cs" />
     <Compile Include="Dal\Repository\Custom\Implementations\ComodoRepository.cs" />
     <Compile Include="Dal\Repository\Custom\Implementations\ControladorRepository.cs" />

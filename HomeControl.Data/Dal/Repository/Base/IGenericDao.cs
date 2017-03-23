@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HomeControl.Dal.Repository.Base
 {
-    interface IRepository<T, ID> where T: class
+    interface IGenericDao<T, ID> : IDisposable where T: class
     {
         List<T> FindAll();
         T Find(ID id);
