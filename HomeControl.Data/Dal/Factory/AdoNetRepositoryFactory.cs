@@ -7,24 +7,24 @@ using HomeControl.Data.Dal.Repository.Custom.Interfaces;
 
 namespace HomeControl.Data.Dal.Factory
 {
-    public class AdoNetRepositoryFactory : RepositoryFactory
+    public class AdoNetRepositoryFactory : DaoFactory
     {
-        public override IComodoRepository getComodoRepository()
+        public override IComodoDao getComodoRepository()
         {
             return null;
         }
 
-        public override IControladorRepository getControladorRepository()
+        public override IControladorDao getControladorRepository()
         {
             return null;
         }
 
-        public override IDispositivoRepository getDispositivoRepository()
+        public override IDispositivoDao getDispositivoRepository()
         {
             return null;
         }
 
-        public override IResidenciaRepository getResidenciaRepository()
+        public override IResidenciaDao getResidenciaRepository()
         {
             return null;
         }

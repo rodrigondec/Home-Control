@@ -12,7 +12,7 @@ namespace HomeControl.Domain.Residencia
         private int id;
         private String nome;
         private HashSet<Comodo> comodos;
-
+        
         public int Id
         {
             get

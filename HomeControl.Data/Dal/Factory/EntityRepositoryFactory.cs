@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Data.Dal.Factory
 {
-    public class EntityRepositoryFactory : RepositoryFactory
+    public class EntityRepositoryFactory : DaoFactory
     {
         private HomeControlDBContext db;
         public EntityRepositoryFactory(HomeControlDBContext db)
@@ -17,22 +17,22 @@ namespace HomeControl.Data.Dal.Factory
             this.db = db;
         }
 
-        public override IComodoRepository getComodoRepository()
+        public override IComodoDao getComodoRepository()
         {
             return new ComodoRepository(db);
         }
 
-        public override IControladorRepository getControladorRepository()
+        public override IControladorDao getControladorRepository()
         {
             return new ControladorRepository(db);
         }
 
-        public override IDispositivoRepository getDispositivoRepository()
+        public override IDispositivoDao getDispositivoRepository()
         {
             return new DispositivoRepository(db);
         }
 
-        public override IResidenciaRepository getResidenciaRepository()
+        public override IResidenciaDao getResidenciaRepository()
         {
             return new ResidenciaRepository(db);
         }

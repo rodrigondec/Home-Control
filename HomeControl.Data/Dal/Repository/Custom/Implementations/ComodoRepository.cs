@@ -6,7 +6,7 @@ using HomeControl.Data.Dal.Context;
 
 namespace HomeControl.Data.Dal.Repository.Custom.Implementations
 {
-    public class ComodoRepository : AbstractRepository<Comodo, int>, IComodoRepository
+    public class ComodoRepository : AbstractRepository<Comodo, int>, IComodoDao
     {
         public ComodoRepository(HomeControlDBContext db) : base(db)
         {

@@ -6,7 +6,7 @@ using HomeControl.Data.Dal.Context;
 
 namespace HomeControl.Data.Dal.Repository.Custom.Implementations
 {
-    public class ControladorRepository : AbstractRepository<Controlador, int>, IControladorRepository
+    public class ControladorRepository : AbstractRepository<Controlador, int>, IControladorDao
     {
         public ControladorRepository(HomeControlDBContext db) : base(db)
         {

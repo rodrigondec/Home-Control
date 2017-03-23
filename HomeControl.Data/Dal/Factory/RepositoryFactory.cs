@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Data.Dal.Factory
 {
-    public abstract class RepositoryFactory
+    public abstract class DaoFactory
     {
 
-        public abstract IComodoRepository getComodoRepository(); 
-        public abstract IControladorRepository getControladorRepository(); 
-        public abstract IDispositivoRepository getDispositivoRepository();
-        public abstract IResidenciaRepository getResidenciaRepository();
+        public abstract IComodoDao getComodoRepository(); 
+        public abstract IControladorDao getControladorRepository(); 
+        public abstract IDispositivoDao getDispositivoRepository();
+        public abstract IResidenciaDao getResidenciaRepository();
 
     }
 }

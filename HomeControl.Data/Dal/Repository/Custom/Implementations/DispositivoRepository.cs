@@ -6,7 +6,7 @@ using HomeControl.Data.Dal.Context;
 
 namespace HomeControl.Data.Dal.Repository.Custom.Implementations
 {
-    public class DispositivoRepository : AbstractRepository<Dispositivo, int>, IDispositivoRepository
+    public class DispositivoRepository : AbstractRepository<Dispositivo, int>, IDispositivoDao
     {
         public DispositivoRepository(HomeControlDBContext db) : base(db)
         {

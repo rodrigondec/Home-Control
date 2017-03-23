@@ -58,10 +58,10 @@
     <Compile Include="Dal\Repository\Custom\Implementations\ControladorRepository.cs" />
     <Compile Include="Dal\Repository\Custom\Implementations\DispositivoRepository.cs" />
     <Compile Include="Dal\Repository\Custom\Implementations\ResidenciaRepository.cs" />
-    <Compile Include="Dal\Repository\Custom\Interfaces\IComodoRepository.cs" />
-    <Compile Include="Dal\Repository\Custom\Interfaces\IDispositivoRepository.cs" />
-    <Compile Include="Dal\Repository\Custom\Interfaces\IControladorRepository.cs" />
-    <Compile Include="Dal\Repository\Custom\Interfaces\IResidenciaRepository.cs" />
+    <Compile Include="Dal\Repository\Custom\Interfaces\IComodoDao.cs" />
+    <Compile Include="Dal\Repository\Custom\Interfaces\IDispositivoDao.cs" />
+    <Compile Include="Dal\Repository\Custom\Interfaces\IControladorDao.cs" />
+    <Compile Include="Dal\Repository\Custom\Interfaces\IResidenciaDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
