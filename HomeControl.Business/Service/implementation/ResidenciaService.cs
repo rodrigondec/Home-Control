@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using HomeControl.Business.Service.interfaces;
+﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Base.interfaces;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Factory;
 using HomeControl.Data.Dal.Repository.Custom.Interfaces;
 using HomeControl.Domain.Residencia;
-using HomeControl.Business.Service.Base.interfaces;
-using HomeControl.Business.Service.Base.Exceptions;
+using System;
+using System.Collections.Generic;
 
 namespace HomeControl.Business.Service.implementation
 {
@@ -41,17 +40,7 @@ namespace HomeControl.Business.Service.implementation
 
         private void Validar(Residencia entity)
         {
-            List<string> listaErro = new List<string>();
-
-            if (true)
-            {
-                listaErro.Add("Erro");
-            }
-
-            if(listaErro.Count > 0)
-            {
-                throw new BusinessException(listaErro);
-            }
+            
         }
 
         void IDisposable.Dispose()
@@ -59,7 +48,6 @@ namespace HomeControl.Business.Service.implementation
             dao.Dispose();
         }
 
-
-
+      
     }
 }
