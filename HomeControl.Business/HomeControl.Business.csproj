@@ -47,10 +47,14 @@
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
     <Compile Include="Service\Implementation\AbstractService.cs" />
     <Compile Include="Service\Implementation\ComodoService.cs" />
+    <Compile Include="Service\Implementation\InterruptorService.cs" />
     <Compile Include="Service\Implementation\ResidenciaService.cs" />
     <Compile Include="Service\Base\ICrudService.cs" />
     <Compile Include="Service\Interfaces\IComodoService.cs" />
+    <Compile Include="Service\Interfaces\IInterruptorService.cs" />
+    <Compile Include="Service\Interfaces\IKnobService.cs" />
     <Compile Include="Service\Interfaces\IResidenciaService.cs" />
+    <Compile Include="Service\Interfaces\ISensorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HomeControl.Data\HomeControl.Data.csproj">

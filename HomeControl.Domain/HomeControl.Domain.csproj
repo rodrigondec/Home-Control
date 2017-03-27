@@ -44,14 +44,14 @@
     <Compile Include="Domain\Dispositivos\Activable.cs" />
     <Compile Include="Domain\Dispositivos\Controlador.cs" />
     <Compile Include="Domain\Dispositivos\Dispositivo.cs" />
-    <Compile Include="Domain\Interruptores\AbstractInterruptor.cs" />
     <Compile Include="Domain\Interruptores\Interruptor.cs" />
+    <Compile Include="Domain\Interruptores\IInterruptor.cs" />
     <Compile Include="Domain\Knob\AbstractKnob.cs" />
     <Compile Include="Domain\Knob\Knob.cs" />
     <Compile Include="Domain\Residencia\Comodo.cs" />
     <Compile Include="Domain\Residencia\Residencia.cs" />
-    <Compile Include="Domain\Sensor\AbstractSensor.cs" />
-    <Compile Include="Domain\Sensor\Sensor.cs" />
+    <Compile Include="Domain\Sensores\Sensor.cs" />
+    <Compile Include="Domain\Sensores\ISensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
