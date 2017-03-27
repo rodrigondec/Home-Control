@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Implementation;
+using HomeControl.Domain.Residencia;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +11,13 @@ namespace HomeControl.Controllers
 {
     public class ResidenciaController : Controller
     {
+
+        private ResidenciaService service = new ResidenciaService();
+
         // GET: Residencia
         public ActionResult Index()
         {
-            return View();
+            return View(service.FindAll());
         }
 
         // GET: Residencia/Details/5
@@ -28,17 +34,18 @@ namespace HomeControl.Controllers
 
         // POST: Residencia/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Residencia residencia)
         {
             try
             {
-                // TODO: Add insert logic here
+                service.Add(residencia);
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
+            catch (BusinessException ex)
+            {                              
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(residencia);
             }
         }
 
@@ -85,5 +92,16 @@ namespace HomeControl.Controllers
                 return View();
             }
         }
+
+        #region helpers
+        private void AddValidationErrorsToModelState(ErrorList validationErrors)
+        {
+            foreach (String error in validationErrors.ErrorCodes)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        #endregion
     }
 }

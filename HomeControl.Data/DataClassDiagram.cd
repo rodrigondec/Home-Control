@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HomeControl.Data.Dal.Context.HomeControlDBContext" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAIAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Context\HomeControlDBContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Dao.Base.AbstractDao&lt;T, ID&gt;" Collapsed="true">
+    <Position X="9" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYAAAAAACAQAQAAAIAQAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Base\AbstractDao.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Dao.Custom.Implementations.ComodoDao">
+    <Position X="5.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Implementations\ComodoDao.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Dao.Custom.Implementations.ControladorDao">
+    <Position X="8" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Implementations\ControladorDao.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Dao.Custom.Implementations.DispositivoDao">
+    <Position X="10.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Implementations\DispositivoDao.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Dao.Custom.Implementations.ResidenciaDao">
+    <Position X="12.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Implementations\ResidenciaDao.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Exceptions.DalException">
+    <Position X="15.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Exceptions\DalException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Factory.AdoNetRepositoryFactory">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABACAABAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Dal\Factory\AdoNetRepositoryFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Factory.DaoFactory">
+    <Position X="6.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABACAABAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Dal\Factory\DaoFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeControl.Data.Dal.Factory.EntityDaoFactory">
+    <Position X="9" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAABACAABAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Dal\Factory\EntityDaoFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="HomeControl.Data.Dal.Dao.Base.ILinqDao&lt;T&gt;">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAIAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Base\LinqDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HomeControl.Dal.Repository.Base.IGenericDao&lt;T, ID&gt;">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Base\IGenericDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HomeControl.Data.Dal.Dao.Custom.Interfaces.IComodoDao">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Interfaces\IComodoDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HomeControl.Data.Dal.Dao.Custom.Interfaces.IControladorDao">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Interfaces\IControladorDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HomeControl.Data.Dal.Dao.Custom.Interfaces.IDispositivoDao">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Interfaces\IDispositivoDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HomeControl.Data.Dal.Dao.Custom.Interfaces.IResidenciaDao">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dal\Dao\Custom\Interfaces\IResidenciaDao.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

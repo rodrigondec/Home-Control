@@ -8,12 +8,12 @@ namespace HomeControl.Business.Service.Base.Exceptions
 {
     public class BusinessException : Exception
     {
-        List<string> ListaMensagem;
+        public ErrorList Errors { get; set; }
 
         public BusinessException(string messagem) : base(messagem) { }
 
-        public BusinessException(List<string> Lista) : base() {
-            this.ListaMensagem = Lista;
+        public BusinessException(ErrorList lista) : base() {
+            this.Errors = lista;
         }
 
     }

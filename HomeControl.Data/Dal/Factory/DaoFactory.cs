@@ -1,4 +1,4 @@
-﻿using HomeControl.Data.Dal.Repository.Custom.Interfaces;
+﻿using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +10,10 @@ namespace HomeControl.Data.Dal.Factory
     public abstract class DaoFactory
     {
 
-        public abstract IComodoDao getComodoDao(); 
-        public abstract IControladorDao getControladorDao(); 
-        public abstract IDispositivoDao getDispositivoDao();
-        public abstract IResidenciaDao getResidenciaDao();
+        public abstract IComodoDao GetComodoDao(); 
+        public abstract IControladorDao GetControladorDao(); 
+        public abstract IDispositivoDao GetDispositivoDao();
+        public abstract IResidenciaDao GetResidenciaDao();
 
     }
 }

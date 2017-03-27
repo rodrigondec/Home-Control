@@ -286,10 +286,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Residencia\Index.cshtml" />
+    <Content Include="Views\Residencia\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Residencia\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

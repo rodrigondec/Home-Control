@@ -2,36 +2,38 @@
 using HomeControl.Business.Service.Base.interfaces;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Factory;
-using HomeControl.Data.Dal.Repository.Custom.Interfaces;
+using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
 
-namespace HomeControl.Business.Service.implementation
+namespace HomeControl.Business.Service.Implementation
 {
-    public class ResidenciaService : ICrudService<Residencia, int>
+    /// <summary>
+    /// Serviço cuja finalidade é gerenciar as residências. 
+    /// </summary>
+    public class ResidenciaService : AbstractService<Residencia, int>
     {
-        IResidenciaDao dao = new EntityDaoFactory(new HomeControlDBContext()).getResidenciaDao();
+        IResidenciaDao dao = GetDaoFactory().GetResidenciaDao();
 
-        Residencia ICrudService<Residencia, int>.Add(Residencia entity)
+        public override Residencia Add(Residencia entity)
         {
             Validar(entity);
             return dao.Add(entity);
-
         }
 
-        Residencia ICrudService<Residencia, int>.Find(int id)
+        public override Residencia Find(int id)
         {
             return dao.Find(id);
             //throw new NotImplementedException();
         }
 
-        List<Residencia> ICrudService<Residencia, int>.FindAll()
+        public override List<Residencia> FindAll()
         {
             return dao.FindAll();
         }
 
-        Residencia ICrudService<Residencia, int>.Update(Residencia entity)
+        public override Residencia Update(Residencia entity)
         {
             Validar(entity);
             return dao.Update(entity);
@@ -43,7 +45,7 @@ namespace HomeControl.Business.Service.implementation
             
         }
 
-        void IDisposable.Dispose()
+        public override void Dispose()
         {
             dao.Dispose();
         }

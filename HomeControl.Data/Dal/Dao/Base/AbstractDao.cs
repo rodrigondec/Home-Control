@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace HomeControl.Data.Dal.Repository.Base
+namespace HomeControl.Data.Dal.Dao.Base
 {
-    public abstract class AbstractRepository<T, ID> : IGenericDao<T, ID>, LinqRepository<T>, IDisposable where T: class
+    public abstract class AbstractDao<T, ID> : IGenericDao<T, ID>, ILinqDao<T>, IDisposable where T: class
     {
 
        protected DbContext db;
 
-       public AbstractRepository(DbContext db)
+       public AbstractDao(DbContext db)
        {
             this.db = db;
        }

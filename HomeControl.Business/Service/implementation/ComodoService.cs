@@ -2,59 +2,78 @@
 using HomeControl.Business.Service.Base.interfaces;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Factory;
-using HomeControl.Data.Dal.Repository.Custom.Interfaces;
+using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
 
-namespace HomeControl.Business.Service.implementation
+namespace HomeControl.Business.Service.Implementation
 {
-    public class ComodoService : ICrudService<Comodo, int>
+    /// <summary>
+    /// Serviço cuja finalidade é gerenciar os comodos de uma residência. 
+    /// </summary>
+    public class ComodoService : AbstractService<Comodo, int>
     {
-        IComodoDao dao = new EntityDaoFactory(new HomeControlDBContext()).getComodoDao();
+        private IComodoDao dao;
 
-        public Comodo Add(Comodo entity)
+        public ComodoService()
+        {
+            dao = GetDaoFactory().GetComodoDao();
+        }
+
+        public override Comodo Add(Comodo entity)
         {
             Validar(entity);
+
             return dao.Add(entity);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             dao.Dispose();
         }
 
-        public Comodo Find(int id)
+        public override Comodo Find(int id)
         {
             return dao.Find(id);
         }
 
-        public List<Comodo> FindAll()
+        public override List<Comodo> FindAll()
         {
             return dao.FindAll();
         }
 
-        public Comodo Update(Comodo entity)
+        public override Comodo Update(Comodo entity)
         {
             Validar(entity);
             return dao.Update(entity);
         }
 
-        private void Validar(Comodo entity)
+        /// <summary>
+        /// Efetua a validação de um comodo. Caso o comodo fuja 
+        /// das regras de validação, o método pode lançar 'Business Exception'.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <exception cref="BusinessException"></exception>
+        /// <returns></returns>
+        private ErrorList Validar(Comodo entity)
         {
             //TODO: Implementar Validações
-            List<string> listaErro = new List<string>();
+            ErrorList erros = new ErrorList();
 
             if (true)
             {
-                listaErro.Add("Erro");
+                erros.Add("Erro");
             }
 
-            if (listaErro.Count > 0)
+            if (erros.HasErrors())
             {
-                throw new BusinessException(listaErro);
+                throw new BusinessException(erros);
             }
+
+            return erros;
+
         }
- 
+
     }
 }

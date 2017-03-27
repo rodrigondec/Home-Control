@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HomeControl.Business</RootNamespace>
     <AssemblyName>HomeControl.Business</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,14 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomeControl\Business\Service\interfaces\ICrudService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Base\Exceptions\BusinessException.cs" />
-    <Compile Include="Service\implementation\ComodoService.cs" />
-    <Compile Include="Service\implementation\ResidenciaService.cs" />
+    <Compile Include="Service\Base\Exceptions\ErrorList.cs" />
+    <Compile Include="Service\Configuration\DalConfiguration.cs" />
+    <Compile Include="Service\Implementation\AbstractService.cs" />
+    <Compile Include="Service\Implementation\ComodoService.cs" />
+    <Compile Include="Service\Implementation\ResidenciaService.cs" />
     <Compile Include="Service\Base\ICrudService.cs" />
-    <Compile Include="Service\interfaces\IComodoService.cs" />
-    <Compile Include="Service\interfaces\IResidenciaService.cs" />
+    <Compile Include="Service\Interfaces\IComodoService.cs" />
+    <Compile Include="Service\Interfaces\IResidenciaService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HomeControl.Data\HomeControl.Data.csproj">
@@ -59,7 +62,9 @@
       <Name>HomeControl.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

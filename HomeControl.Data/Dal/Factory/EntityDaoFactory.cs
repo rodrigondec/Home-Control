@@ -1,6 +1,6 @@
 ﻿using HomeControl.Data.Dal.Context;
-using HomeControl.Data.Dal.Repository.Custom.Implementations;
-using HomeControl.Data.Dal.Repository.Custom.Interfaces;
+using HomeControl.Data.Dal.Dao.Custom.Implementations;
+using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,24 +17,24 @@ namespace HomeControl.Data.Dal.Factory
             this.db = db;
         }
 
-        public override IComodoDao getComodoDao()
+        public override IComodoDao GetComodoDao()
         {
-            return new ComodoRepository(db);
+            return new ComodoDao(db);
         }
 
-        public override IControladorDao getControladorDao()
+        public override IControladorDao GetControladorDao()
         {
-            return new ControladorRepository(db);
+            return new ControladorDao(db);
         }
 
-        public override IDispositivoDao getDispositivoDao()
+        public override IDispositivoDao GetDispositivoDao()
         {
-            return new DispositivoRepository(db);
+            return new DispositivoDao(db);
         }
 
-        public override IResidenciaDao getResidenciaDao()
+        public override IResidenciaDao GetResidenciaDao()
         {
-            return new ResidenciaRepository(db);
+            return new ResidenciaDao(db);
         }
 
     }
