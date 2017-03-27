@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeControl.Domain.Sensor
+namespace HomeControl.Domain.Sensores
 {
-    interface Sensor
+    interface ISensor
     {
         float getValorAtual();
     }

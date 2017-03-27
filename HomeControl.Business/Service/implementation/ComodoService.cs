@@ -18,7 +18,7 @@ namespace HomeControl.Business.Service.Implementation
 
         public ComodoService()
         {
-            dao = GetDaoFactory().GetComodoDao();
+            dao = daoFactory.GetComodoDao();
         }
 
         public override Comodo Add(Comodo entity)

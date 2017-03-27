@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace HomeControl.Domain.Sensor
+namespace HomeControl.Domain.Sensores
 {
-    public abstract class AbstractSensor : Dispositivo, Sensor
+    public class Sensor : Dispositivo, ISensor
     {
         [NotMapped]
         public float valorAtual;

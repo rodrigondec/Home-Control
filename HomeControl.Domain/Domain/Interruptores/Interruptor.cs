@@ -1,15 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HomeControl.Domain.Dispositivos;
+using System;
 
 namespace HomeControl.Domain.Interruptores
 {
-    interface Interruptor
+    public class Interruptor : Dispositivo, IInterruptor
     {
-        bool getStatus();
-        void desligarDispositivo();
-        void ligarDispositivo();
+        public override void activate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void deactivate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void desligarDispositivo()
+        {
+        }
+
+        public bool getStatus()
+        {
+            //TO DO: Implementar retorno do status real
+            return true;
+        }
+
+        public override bool isActive()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ligarDispositivo() { }
     }
 }

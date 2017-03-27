@@ -17,9 +17,14 @@ namespace HomeControl.Business.Service.Implementation
         public abstract List<T> FindAll();
         public abstract T Update(T entity);
 
-        protected static DaoFactory GetDaoFactory()
+        public static DaoFactory daoFactory
         {
-            return DalConfiguration.GetDaoFactory();
+            get
+            {
+                return DalConfiguration.GetDaoFactory();
+            }
         }
     }
+    
 }
+
