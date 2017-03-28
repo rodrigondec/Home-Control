@@ -46,8 +46,8 @@
     <Compile Include="Domain\Dispositivos\Dispositivo.cs" />
     <Compile Include="Domain\Interruptores\Interruptor.cs" />
     <Compile Include="Domain\Interruptores\IInterruptor.cs" />
-    <Compile Include="Domain\Knob\AbstractKnob.cs" />
-    <Compile Include="Domain\Knob\Knob.cs" />
+    <Compile Include="Domain\Potenciometro\AbstractPotenciometro.cs" />
+    <Compile Include="Domain\Potenciometro\Potenciometro.cs" />
     <Compile Include="Domain\Residencia\Comodo.cs" />
     <Compile Include="Domain\Residencia\Residencia.cs" />
     <Compile Include="Domain\Sensores\Sensor.cs" />

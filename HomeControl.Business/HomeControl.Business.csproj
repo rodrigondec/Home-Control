@@ -45,14 +45,15 @@
     <Compile Include="Service\Base\Exceptions\BusinessException.cs" />
     <Compile Include="Service\Base\Exceptions\ErrorList.cs" />
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
-    <Compile Include="Service\Implementation\AbstractService.cs" />
-    <Compile Include="Service\Implementation\ComodoService.cs" />
-    <Compile Include="Service\Implementation\InterruptorService.cs" />
-    <Compile Include="Service\Implementation\ResidenciaService.cs" />
+    <Compile Include="Service\Implementations\AbstractService.cs" />
+    <Compile Include="Service\Implementations\ComodoService.cs" />
+    <Compile Include="Service\Implementations\InterruptorService.cs" />
+    <Compile Include="Service\Implementations\ResidenciaService.cs" />
     <Compile Include="Service\Base\ICrudService.cs" />
+    <Compile Include="Service\Implementations\SensorService.cs" />
     <Compile Include="Service\Interfaces\IComodoService.cs" />
     <Compile Include="Service\Interfaces\IInterruptorService.cs" />
-    <Compile Include="Service\Interfaces\IKnobService.cs" />
+    <Compile Include="Service\Interfaces\IPotenciometroService.cs" />
     <Compile Include="Service\Interfaces\IResidenciaService.cs" />
     <Compile Include="Service\Interfaces\ISensorService.cs" />
   </ItemGroup>
