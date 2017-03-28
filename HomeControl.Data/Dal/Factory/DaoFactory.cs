@@ -12,7 +12,8 @@ namespace HomeControl.Data.Dal.Factory
 
         public abstract IComodoDao GetComodoDao(); 
         public abstract IControladorDao GetControladorDao();
-        public abstract IInterruptorDao GetInterruptorDao(); 
+        public abstract IInterruptorDao GetInterruptorDao();
+        public abstract ISensorDao GetSensorDao();
         //TO DO:Apagar o DispositivoDao depois de testado
         public abstract IDispositivoDao GetDispositivoDao();
         public abstract IResidenciaDao GetResidenciaDao();
