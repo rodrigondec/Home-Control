@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HomeControl.Domain.Knob
+namespace HomeControl.Domain.Potenciometro
 {
-    public abstract class AbstractKnob : Dispositivo, Knob
+    public abstract class AbstractPotenciometro : Dispositivo, Potenciometro
     {
         
         private float valorAtual;

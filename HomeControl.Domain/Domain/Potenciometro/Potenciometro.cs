@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeControl.Domain.Knob
+namespace HomeControl.Domain.Potenciometro
 {
-    interface Knob
+    interface Potenciometro
     {
         void aumentarValor();
         void diminuirValor();
