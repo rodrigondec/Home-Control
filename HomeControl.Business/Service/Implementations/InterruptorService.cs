@@ -4,7 +4,7 @@ using HomeControl.Domain.Interruptores;
 using System;
 using System.Collections.Generic;
 
-namespace HomeControl.Business.Service.Implementation
+namespace HomeControl.Business.Service.Implementations
 {
     public class InterruptorService : AbstractService<Interruptor, int>
     {

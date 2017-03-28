@@ -7,7 +7,7 @@ using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
 
-namespace HomeControl.Business.Service.Implementation
+namespace HomeControl.Business.Service.Implementations
 {
     /// <summary>
     /// Serviço cuja finalidade é gerenciar os comodos de uma residência. 

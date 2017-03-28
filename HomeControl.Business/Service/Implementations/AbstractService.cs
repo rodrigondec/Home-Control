@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeControl.Business.Service.Implementation
+namespace HomeControl.Business.Service.Implementations
 {
     public abstract class AbstractService<T, PK> : ICrudService<T, PK> where T : class
     {
