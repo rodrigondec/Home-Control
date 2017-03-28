@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dal\Context\HomeControlDBContext.cs" />
+    <Compile Include="Dal\Dao\Custom\Implementations\InterruptorDao.cs" />
+    <Compile Include="Dal\Dao\Custom\Interfaces\IInterruptorDao.cs" />
     <Compile Include="Dal\Exceptions\DalException.cs" />
     <Compile Include="Dal\Factory\AdoNetRepositoryFactory.cs" />
     <Compile Include="Dal\Factory\EntityDaoFactory.cs" />

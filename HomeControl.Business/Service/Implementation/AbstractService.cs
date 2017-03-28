@@ -16,6 +16,7 @@ namespace HomeControl.Business.Service.Implementation
         public abstract T Find(PK id);
         public abstract List<T> FindAll();
         public abstract T Update(T entity);
+        protected abstract void Validar(T entity);
 
         public static DaoFactory daoFactory
         {

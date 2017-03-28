@@ -14,7 +14,9 @@ namespace HomeControl.Business.Service.Implementation
     /// </summary>
     public class ResidenciaService : AbstractService<Residencia, int>
     {
-        IResidenciaDao dao = GetDaoFactory().GetResidenciaDao();
+        IResidenciaDao dao = daoFactory.GetResidenciaDao();
+
+
 
         public override Residencia Add(Residencia entity)
         {
@@ -39,17 +41,15 @@ namespace HomeControl.Business.Service.Implementation
             return dao.Update(entity);
 
         }
-
-        private void Validar(Residencia entity)
-        {
-            
-        }
-
+        
         public override void Dispose()
         {
             dao.Dispose();
         }
 
-      
+        protected override void Validar(Residencia entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

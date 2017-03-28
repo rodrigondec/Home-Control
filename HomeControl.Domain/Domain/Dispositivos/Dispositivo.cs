@@ -13,7 +13,7 @@ namespace HomeControl.Domain.Dispositivos
         private Boolean ativo;
         private int porta;
         private int estado;
-        private Comodo comodo;
+        private Comodo comodo;       
 
         public int Id
         {

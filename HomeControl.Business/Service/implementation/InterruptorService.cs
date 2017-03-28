@@ -1,4 +1,5 @@
-﻿using HomeControl.Data.Dal.Dao.Custom.Interfaces;
+﻿using HomeControl.Data.Dal.Dao.Custom.Implementations;
+using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Interruptores;
 using System;
 using System.Collections.Generic;
@@ -7,35 +8,44 @@ namespace HomeControl.Business.Service.Implementation
 {
     public class InterruptorService : AbstractService<Interruptor, int>
     {
-        private IDispositivoDao dao;
+
+        private IInterruptorDao dao;
 
         public InterruptorService()
         {
-            dao = daoFactory.GetDispositivoDao();
+            dao = daoFactory.GetInterruptorDao();
         }
 
         public override Interruptor Add(Interruptor entity)
         {
+            Validar(entity);
             return dao.Add(entity);
         }
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            dao.Dispose();
         }
 
         public override Interruptor Find(int id)
         {
-            throw new NotImplementedException();
+            return dao.Find(id);
         }
 
         public override List<Interruptor> FindAll()
         {
-            throw new NotImplementedException();
+            return dao.FindAll();
         }
 
         public override Interruptor Update(Interruptor entity)
         {
+            Validar(entity);
+            return dao.Update(entity);
+        }
+
+        protected override void Validar(Interruptor entity)
+        {
+            //to do: Validações
             throw new NotImplementedException();
         }
     }

@@ -32,6 +32,11 @@ namespace HomeControl.Data.Dal.Factory
             return new DispositivoDao(db);
         }
 
+        public override IInterruptorDao GetInterruptorDao()
+        {
+            return new InterruptorDao(db);
+        }
+
         public override IResidenciaDao GetResidenciaDao()
         {
             return new ResidenciaDao(db);
