@@ -1,6 +1,6 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
-using HomeControl.Domain.Residencia;
+using HomeControl.Domain.Sensor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,53 +9,53 @@ using System.Web.Mvc;
 
 namespace HomeControl.Controllers
 {
-    public class ResidenciaController : Controller
+    public class SensorController : Controller
     {
 
-        private ResidenciaService service = new ResidenciaService();
+        private SensorService service = new SensorService();
 
-        // GET: Residencia
+        // GET: Sensor
         public ActionResult Index()
         {
             return View(service.FindAll());
         }
 
-        // GET: Residencia/Details/5
+        // GET: Sensor/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Residencia/Create
+        // GET: Sensor/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Residencia/Create
+        // POST: Sensor/Create
         [HttpPost]
-        public ActionResult Create(Residencia residencia)
+        public ActionResult Create(Sensor sensor)
         {
             try
             {
-                service.Add(residencia);
+                service.Add(sensor);
 
                 return RedirectToAction("Index");
             }
             catch (BusinessException ex)
-            {                              
+            {
                 AddValidationErrorsToModelState(ex.Errors);
-                return View(residencia);
+                return View(sensor);
             }
         }
 
-        // GET: Residencia/Edit/5
+        // GET: Sensor/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Residencia/Edit/5
+        // POST: Sensor/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -71,13 +71,13 @@ namespace HomeControl.Controllers
             }
         }
 
-        // GET: Residencia/Delete/5
+        // GET: Sensor/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Residencia/Delete/5
+        // POST: Sensor/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
