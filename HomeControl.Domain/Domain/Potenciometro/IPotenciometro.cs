@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Domain.Potenciometro
 {
-    interface Potenciometro
+    interface IPotenciometro
     {
         void aumentarValor();
         void diminuirValor();
