@@ -301,6 +301,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Residencia\Index.cshtml" />
     <Content Include="Views\Residencia\Create.cshtml" />
+    <Content Include="Views\Residencia\Details.cshtml" />
+    <Content Include="Views\Residencia\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
