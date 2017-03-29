@@ -8,11 +8,12 @@ namespace HomeControl.Domain.Residencia
 {
     public class Residencia
     {
-        [Key]
+        [Key]        
         private int id;
         private String nome;
         private HashSet<Comodo> comodos;
-        
+
+        [Display(Name = "Id da Tabela")]
         public int Id
         {
             get
