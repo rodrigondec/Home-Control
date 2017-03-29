@@ -49,16 +49,8 @@ namespace HomeControl.Business.Service.Implementations
             return dao.Update(entity);
         }
 
-        /// <summary>
-        /// Efetua a validação de um comodo. Caso o comodo fuja 
-        /// das regras de validação, o método pode lançar 'Business Exception'.
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <exception cref="BusinessException"></exception>
-        /// <returns></returns>
-        private ErrorList Validar(Comodo entity)
+        protected override void Validar(Comodo entity)
         {
-            //TODO: Implementar Validações
             ErrorList erros = new ErrorList();
 
             if (true)
@@ -71,9 +63,9 @@ namespace HomeControl.Business.Service.Implementations
                 throw new BusinessException(erros);
             }
 
-            return erros;
-
+            
         }
+
 
     }
 }

@@ -3,7 +3,7 @@ using HomeControl.Domain.Sensores;
 
 namespace HomeControl.Business.Service.Interfaces
 {
-    interface ISensorService : ICrudService<Sensor, int>
+    public interface ISensorService : ICrudService<Sensor, int>
     {
     }
 }

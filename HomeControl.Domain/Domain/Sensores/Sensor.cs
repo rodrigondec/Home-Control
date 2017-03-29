@@ -11,6 +11,27 @@ namespace HomeControl.Domain.Sensores
     {
         [NotMapped]
         public float valorAtual;
-        public abstract float getValorAtual();
+
+        public override void activate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void deactivate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float getValorAtual()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public abstract float getValorAtual();
+
+        public override bool isActive()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

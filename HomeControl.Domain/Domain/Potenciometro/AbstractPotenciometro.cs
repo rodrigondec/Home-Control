@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HomeControl.Domain.Potenciometro
 {
-    public abstract class AbstractPotenciometro : Dispositivo, Potenciometro
+    public abstract class AbstractPotenciometro : Dispositivo, IPotenciometro
     {
         
         private float valorAtual;

@@ -1,5 +1,6 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Base.interfaces;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Dao.Custom.Implementations;
 using HomeControl.Data.Dal.Dao.Custom.Interfaces;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 
 namespace HomeControl.Business.Service.Implementations
 {
-    class SensorService : AbstractService<Sensor, int>
+    public class SensorService : AbstractService<Sensor, int>, ISensorService
     {
         private ISensorDao dao;
 
@@ -26,7 +27,7 @@ namespace HomeControl.Business.Service.Implementations
 
         public override void Dispose()
         {
-            dao.Dispose()
+            dao.Dispose();
         }
 
         public override Sensor Find(int id)

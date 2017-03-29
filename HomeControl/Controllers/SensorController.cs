@@ -1,6 +1,7 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
-using HomeControl.Domain.Sensor;
+using HomeControl.Business.Service.Interfaces;
+using HomeControl.Domain.Sensores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace HomeControl.Controllers
     public class SensorController : Controller
     {
 
-        private SensorService service = new SensorService();
+        private ISensorService service = new SensorService();
 
         // GET: Sensor
         public ActionResult Index()
