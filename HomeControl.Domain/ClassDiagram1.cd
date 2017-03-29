@@ -38,6 +38,7 @@
       <HashCode>AQACAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAEAAgA=</HashCode>
       <FileName>Domain\Residencia\Comodo.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="HomeControl.Domain.Residencia.Residencia" Collapsed="true">
     <Position X="7.5" Y="1.5" Width="1.5" />
@@ -45,6 +46,7 @@
       <HashCode>AQACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAgA=</HashCode>
       <FileName>Domain\Residencia\Residencia.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="HomeControl.Domain.Sensor.AbstractSensor">
     <Position X="2.75" Y="1.75" Width="1.5" />

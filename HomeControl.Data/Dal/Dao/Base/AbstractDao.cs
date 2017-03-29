@@ -1,4 +1,5 @@
 ﻿using HomeControl.Dal.Repository.Base;
+using HomeControl.Domain;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace HomeControl.Data.Dal.Dao.Base
 {
-    public abstract class AbstractDao<T, ID> : IGenericDao<T, ID>, ILinqDao<T>, IDisposable where T: class
+    public abstract class AbstractDao<T, ID> : IGenericDao<T, ID>, ILinqDao<T>, IDisposable where T: class,IPersistable<ID>
     {
 
        protected DbContext db;
@@ -55,16 +56,17 @@ namespace HomeControl.Data.Dal.Dao.Base
 
         public T Update(T entity)
         {
-            /*if (entity == null)
+            if (entity == null)
                 return null;
 
-            T existing = db.Set<T>().Find(entity);
-            if (existing != null)*/
-            //{
-            db.Entry(entity).CurrentValues.SetValues(entity);
-            db.SaveChanges();
-            //}
-            return entity;
+            T existing = Find(entity.Id);
+
+            if (existing != null)
+            {
+                db.Entry(existing).CurrentValues.SetValues(entity);
+                db.SaveChanges();
+            }
+            return existing;
         }
 
         public void Dispose()

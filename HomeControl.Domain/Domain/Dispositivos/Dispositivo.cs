@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeControl.Domain.Dispositivos
 {
-    public abstract class Dispositivo : Activable
+    public abstract class Dispositivo : Activable, IPersistable<int>
     {
         [Key]
         private int id;

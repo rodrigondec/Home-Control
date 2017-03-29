@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HomeControl.Domain.Residencia
 {
-    public class Residencia
+    public class Residencia : IPersistable<int>
     {
         [Key]        
         private int id;
