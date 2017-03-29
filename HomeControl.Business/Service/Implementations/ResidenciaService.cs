@@ -20,6 +20,11 @@ namespace HomeControl.Business.Service.Implementations
 
         public override Residencia Add(Residencia entity)
         {
+            if (entity.Id > 0 )
+            {
+                throw new BusinessException("Residencia já existente.");
+            }
+
             Validar(entity);
             return dao.Add(entity);
         }
@@ -37,6 +42,10 @@ namespace HomeControl.Business.Service.Implementations
 
         public override Residencia Update(Residencia entity)
         {
+            if (entity.Id <= 0)
+            {
+                throw new BusinessException("Residencia não existente.");
+            }
             Validar(entity);
             return dao.Update(entity);
 
@@ -54,7 +63,7 @@ namespace HomeControl.Business.Service.Implementations
             
             if (entity.Nome == null || entity.Nome.Trim() == "")
             {
-                erros.Add("<b>Nome Inválido</b>");
+                erros.Add("Nome Inválido.");
             }
 
             if (erros.HasErrors())

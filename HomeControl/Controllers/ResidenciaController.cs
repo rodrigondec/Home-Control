@@ -23,7 +23,16 @@ namespace HomeControl.Controllers
         // GET: Residencia/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+
+            Residencia casa = service.Find(id);
+
+            if(casa == null)
+            {
+                ModelState.AddModelError("", "Residência não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            return View(casa);
         }
 
         // GET: Residencia/Create
@@ -52,22 +61,31 @@ namespace HomeControl.Controllers
         // GET: Residencia/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Residencia casa = service.Find(id);
+
+            if (casa == null)
+            {
+                ModelState.AddModelError("", "Residência não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            return View(casa);
         }
 
         // POST: Residencia/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Residencia residencia)
         {
             try
             {
-                // TODO: Add update logic here
+                service.Update(residencia);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(residencia);
             }
         }
 
