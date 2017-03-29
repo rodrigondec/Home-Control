@@ -22,42 +22,49 @@ namespace HomeControl.Data.Dal.Dao.Base
             db.SaveChanges();
             return entity;
         }
+
         public T Find(ID id)
         {
             return db.Set<T>().Find(id);
         }
+
         public IEnumerable<T> FindAll(Func<T, bool> exp)
         {
             return db.Set<T>().Where(exp);
         }
+
         public T First(Func<T, bool> exp)
         {
             return db.Set<T>().First();
         }
+
         public List<T> FindAll()
         {
             return db.Set<T>().ToList();
         } 
+
         public void SaveChanges()
         {
             db.SaveChanges();
         }
+
         public T FindOne(Func<T, bool> exp)
         {
             return db.Set<T>().SingleOrDefault(exp);
         }
+
         public T Update(T entity)
         {
-            if (entity == null)
+            /*if (entity == null)
                 return null;
 
             T existing = db.Set<T>().Find(entity);
-            if (existing != null)
-            {
-                db.Entry(existing).CurrentValues.SetValues(entity);
-                db.SaveChanges();
-            }
-            return existing;
+            if (existing != null)*/
+            //{
+            db.Entry(entity).CurrentValues.SetValues(entity);
+            db.SaveChanges();
+            //}
+            return entity;
         }
 
         public void Dispose()
