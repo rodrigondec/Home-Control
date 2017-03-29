@@ -49,7 +49,21 @@ namespace HomeControl.Business.Service.Implementations
 
         protected override void Validar(Residencia entity)
         {
-            throw new NotImplementedException();
+            //TODO: Implementar validações
+            ErrorList erros = new ErrorList();
+            
+            if (entity.Nome == null || entity.Nome.Trim() == "")
+            {
+                erros.Add("<b>Nome Inválido</b>");
+            }
+
+            if (erros.HasErrors())
+            {
+                throw new BusinessException(erros);
+            }
+
+
+            //throw new NotImplementedException();
         }
     }
 }
