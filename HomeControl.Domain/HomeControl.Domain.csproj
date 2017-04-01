@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Dispositivos\Activable.cs" />
-    <Compile Include="Domain\Dispositivos\Controlador.cs" />
+    <Compile Include="Domain\Dispositivos\Embarcado.cs" />
     <Compile Include="Domain\Dispositivos\Dispositivo.cs" />
     <Compile Include="Domain\Interruptores\Interruptor.cs" />
     <Compile Include="Domain\Interruptores\IInterruptor.cs" />

@@ -22,9 +22,9 @@ namespace HomeControl.Data.Dal.Factory
             return new ComodoDao(db);
         }
 
-        public override IControladorDao GetControladorDao()
+        public override IEmbarcadoDao GetControladorDao()
         {
-            return new ControladorDao(db);
+            return new EmbarcadoDao(db);
         }
 
         public override IDispositivoDao GetDispositivoDao()

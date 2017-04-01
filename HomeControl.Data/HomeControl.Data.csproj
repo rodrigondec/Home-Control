@@ -66,12 +66,12 @@
     <Compile Include="Dal\Dao\Base\IGenericDao.cs" />
     <Compile Include="Dal\Dao\Base\LinqDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\ComodoDao.cs" />
-    <Compile Include="Dal\Dao\Custom\Implementations\ControladorDao.cs" />
+    <Compile Include="Dal\Dao\Custom\Implementations\EmbarcadoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\DispositivoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\ResidenciaDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IComodoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IDispositivoDao.cs" />
-    <Compile Include="Dal\Dao\Custom\Interfaces\IControladorDao.cs" />
+    <Compile Include="Dal\Dao\Custom\Interfaces\IEmbarcadoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IResidenciaDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

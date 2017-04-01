@@ -3,7 +3,7 @@ using HomeControl.Domain.Dispositivos;
 
 namespace HomeControl.Data.Dal.Dao.Custom.Interfaces
 {
-    public interface IControladorDao : IGenericDao<Controlador, int>
+    public interface IEmbarcadoDao : IGenericDao<Embarcado, int>
     {
     }
 }

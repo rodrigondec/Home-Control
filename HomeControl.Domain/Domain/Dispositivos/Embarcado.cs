@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomeControl.Domain.Dispositivos
 {
-    public class Controlador : Activable, IPersistable<int>
+    public class Embarcado : Activable, IPersistable<int>
     {
         [Key]
         private int id;       

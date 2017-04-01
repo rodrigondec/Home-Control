@@ -6,9 +6,9 @@ using HomeControl.Data.Dal.Context;
 
 namespace HomeControl.Data.Dal.Dao.Custom.Implementations
 {
-    public class ControladorDao : AbstractDao<Controlador, int>, IControladorDao
+    public class EmbarcadoDao : AbstractDao<Embarcado, int>, IEmbarcadoDao
     {
-        public ControladorDao(HomeControlDBContext db) : base(db)
+        public EmbarcadoDao(HomeControlDBContext db) : base(db)
         {
         }
     }

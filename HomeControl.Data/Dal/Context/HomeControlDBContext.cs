@@ -8,7 +8,7 @@ namespace HomeControl.Data.Dal.Context
     public class HomeControlDBContext : IdentityDbContext<IdentityUser>
     {
        // public DbSet<Dispositivo> Dispositivos { get; set; }
-        public DbSet<Controlador> Controladores { get; set; }
+        public DbSet<Embarcado> Embarcados { get; set; }
         public DbSet<Comodo> Comodos { get; set; }
         public DbSet<Residencia> Residencias { get; set; }
 

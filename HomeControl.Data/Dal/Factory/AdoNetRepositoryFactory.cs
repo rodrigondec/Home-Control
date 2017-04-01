@@ -14,7 +14,7 @@ namespace HomeControl.Data.Dal.Factory
             return null;
         }
 
-        public override IControladorDao GetControladorDao()
+        public override IEmbarcadoDao GetControladorDao()
         {
             return null;
         }
