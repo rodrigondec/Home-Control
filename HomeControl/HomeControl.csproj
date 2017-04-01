@@ -209,7 +209,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ComodoController.cs" />
+    <Compile Include="Controllers\EmbarcadoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InterruptorController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ResidenciaController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
@@ -306,6 +309,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Comodo\" />
+    <Folder Include="Views\Embarcado\" />
+    <Folder Include="Views\Interruptor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
