@@ -306,10 +306,13 @@
     <Content Include="Views\Residencia\Create.cshtml" />
     <Content Include="Views\Residencia\Details.cshtml" />
     <Content Include="Views\Residencia\Edit.cshtml" />
+    <Content Include="Views\Comodo\Details.cshtml" />
+    <Content Include="Views\Comodo\Create.cshtml" />
+    <Content Include="Views\Comodo\Edit.cshtml" />
+    <Content Include="Views\Comodo\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Comodo\" />
     <Folder Include="Views\Embarcado\" />
     <Folder Include="Views\Interruptor\" />
   </ItemGroup>
