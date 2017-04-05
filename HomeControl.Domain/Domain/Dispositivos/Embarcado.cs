@@ -12,6 +12,19 @@ namespace HomeControl.Domain.Dispositivos
         public String ipAddress { get; set; }
         public String macAddress { get; set; }
 
+        public int Id
+        {
+            get
+            {
+                return this.id;
+            }
+
+            set
+            {
+                this.id = value;
+            }
+        }
+
 
 
 

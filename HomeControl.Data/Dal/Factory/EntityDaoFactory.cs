@@ -12,6 +12,7 @@ namespace HomeControl.Data.Dal.Factory
     public class EntityDaoFactory : DaoFactory
     {
         private HomeControlDBContext db;
+
         public EntityDaoFactory(HomeControlDBContext db)
         {
             this.db = db;
@@ -47,5 +48,9 @@ namespace HomeControl.Data.Dal.Factory
             return new ResidenciaDao(db);
         }
 
+        public override IEmbarcadoDao GetEmbarcadoDao()
+        {
+            return new EmbarcadoDao(db);
+        }
     }
 }

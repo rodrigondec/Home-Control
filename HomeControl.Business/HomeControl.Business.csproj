@@ -47,11 +47,13 @@
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
     <Compile Include="Service\Implementations\AbstractService.cs" />
     <Compile Include="Service\Implementations\ComodoService.cs" />
+    <Compile Include="Service\Implementations\EmbarcadoService.cs" />
     <Compile Include="Service\Implementations\InterruptorService.cs" />
     <Compile Include="Service\Implementations\ResidenciaService.cs" />
     <Compile Include="Service\Base\ICrudService.cs" />
     <Compile Include="Service\Implementations\SensorService.cs" />
     <Compile Include="Service\Interfaces\IComodoService.cs" />
+    <Compile Include="Service\Interfaces\IEmbarcadoService.cs" />
     <Compile Include="Service\Interfaces\IInterruptorService.cs" />
     <Compile Include="Service\Interfaces\IPotenciometroService.cs" />
     <Compile Include="Service\Interfaces\IResidenciaService.cs" />

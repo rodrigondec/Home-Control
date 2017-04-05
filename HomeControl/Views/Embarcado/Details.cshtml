@@ -1,0 +1,42 @@
+﻿@model HomeControl.Domain.Dispositivos.Embarcado
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Embarcado</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ipAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ipAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.macAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.macAddress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

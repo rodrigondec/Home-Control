@@ -24,6 +24,11 @@ namespace HomeControl.Data.Dal.Factory
             return null;
         }
 
+        public override IEmbarcadoDao GetEmbarcadoDao()
+        {
+            return null;
+        }
+
         public override IInterruptorDao GetInterruptorDao()
         {
             return null;
