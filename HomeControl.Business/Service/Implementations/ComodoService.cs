@@ -6,13 +6,14 @@ using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
+using HomeControl.Business.Service.Interfaces;
 
 namespace HomeControl.Business.Service.Implementations
 {
     /// <summary>
     /// Serviço cuja finalidade é gerenciar os comodos de uma residência. 
     /// </summary>
-    public class ComodoService : AbstractService<Comodo, int>
+    public class ComodoService : AbstractService<Comodo, int>, IComodoService
     {
         private IComodoDao dao;
 

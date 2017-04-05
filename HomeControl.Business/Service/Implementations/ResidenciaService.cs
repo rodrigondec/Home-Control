@@ -6,13 +6,14 @@ using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
+using HomeControl.Business.Service.Interfaces;
 
 namespace HomeControl.Business.Service.Implementations
 {
     /// <summary>
     /// Serviço cuja finalidade é gerenciar as residências. 
     /// </summary>
-    public class ResidenciaService : AbstractService<Residencia, int>
+    public class ResidenciaService : AbstractService<Residencia, int>, IResidenciaService
     {
         IResidenciaDao dao = daoFactory.GetResidenciaDao();
 

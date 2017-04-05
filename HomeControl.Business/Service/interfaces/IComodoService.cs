@@ -3,7 +3,7 @@ using HomeControl.Domain.Residencia;
 
 namespace HomeControl.Business.Service.Interfaces
 {
-    interface IComodoService : ICrudService<Comodo, int>
+    public interface IComodoService : ICrudService<Comodo, int>
     {
     }
 }
