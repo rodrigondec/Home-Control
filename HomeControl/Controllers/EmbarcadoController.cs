@@ -1,5 +1,7 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Dispositivos;
+using HomeControl.Business.Service.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace HomeControl.Controllers
 {
     public class EmbarcadoController : Controller
     {
-        private EmbarcadoService service = new EmbarcadoService();
+        private IEmbarcadoService service = new EmbarcadoService();
 
         // GET: Embarcado
         public ActionResult Index()
@@ -41,7 +43,7 @@ namespace HomeControl.Controllers
 
         // POST: Embarcado/Create
         [HttpPost]
-        public ActionResult Create(embarcado embarcado)
+        public ActionResult Create(Embarcado embarcado)
         {
             try
             {

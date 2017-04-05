@@ -24,7 +24,15 @@ namespace HomeControl.Controllers
         // GET: Sensor/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Sensor sensor = service.Find(id);
+
+            if(sensor == null)
+            {
+                ModelState.AddModelError("", "Sensor não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            return View(sensor);
         }
 
         // GET: Sensor/Create
@@ -53,22 +61,31 @@ namespace HomeControl.Controllers
         // GET: Sensor/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Sensor sensor = service.Find(id);
+
+            if (sensor == null)
+            {
+                ModelState.AddModelError("", "Sensor não encontrada");
+                return RedirectToAction("Index");
+            }
+
+            return View(sensor);
         }
 
         // POST: Sensor/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Sensor sensor)
         {
             try
             {
-                // TODO: Add update logic here
+                service.Update(sensor);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(sensor);
             }
         }
 

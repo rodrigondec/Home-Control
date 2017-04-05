@@ -17,6 +17,7 @@ namespace HomeControl.Data.Dal.Factory
         //TO DO:Apagar o DispositivoDao depois de testado
         public abstract IDispositivoDao GetDispositivoDao();
         public abstract IResidenciaDao GetResidenciaDao();
+        public abstract IEmbarcadoDao GetEmbarcadoDao();
 
     }
 }

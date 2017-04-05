@@ -48,8 +48,22 @@ namespace HomeControl.Business.Service.Implementations
 
         protected override void Validar(Sensor entity)
         {
-            //to do: Validações
-            throw new NotImplementedException();
+            ErrorList erros = new ErrorList();
+
+            if (entity == null)
+            {
+                erros.Add("Sensor precisa ser preenchido");
+            }
+
+            if(entity.Comodo == null)
+            {
+                erros.Add("Sensor precisar estar associado a um Cômodo");
+            }
+            
+            if (erros.HasErrors())
+            {
+                throw new BusinessException(erros);
+            }
         }
     }
 }

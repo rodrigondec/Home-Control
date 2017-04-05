@@ -6,58 +6,62 @@ namespace HomeControl.Domain.Dispositivos
     public class Embarcado : Activable, IPersistable<int>
     {
         [Key]
-        private int id;       
-        private String nome;       
-        private String ipAddress;        
-        private String macAddress;
+        public int id { get; set; }
+        //private int id;       
+        public String nome { get; set; }
+        public String ipAddress { get; set; }
+        public String macAddress { get; set; }
 
-        public int Id
-        {
-            get
-            {
-                return this.id;
-            }
-            set
-            {
-                this.id = value;
-            }
-        }
-       
-        public String Nome
-        {
-            get
-            {
-                return this.nome;
-            }
-            set
-            {
-                this.nome = value;
-            }
-        }
-    
-        public String IpAddress
-        {
-            get
-            {
-                return this.ipAddress;
-            }
-            set
-            {
-                this.ipAddress = value;
-            }
-        }
 
-        public String MacAddress
-        {
-            get
-            {
-                return this.macAddress;
-            }
-            set
-            {
-                this.macAddress = value;
-            }
-        }
+
+
+        //public int Id
+        //{
+        //    get
+        //    {
+        //        return this.id;
+        //    }
+        //    set
+        //    {
+        //        this.id = value;
+        //    }
+        //}
+
+        //public String Nome
+        //{
+        //    get
+        //    {
+        //        return this.nome;
+        //    }
+        //    set
+        //    {
+        //        this.nome = value;
+        //    }
+        //}
+
+        //public String IpAddress
+        //{
+        //    get
+        //    {
+        //        return this.ipAddress;
+        //    }
+        //    set
+        //    {
+        //        this.ipAddress = value;
+        //    }
+        //}
+
+        //public String MacAddress
+        //{
+        //    get
+        //    {
+        //        return this.macAddress;
+        //    }
+        //    set
+        //    {
+        //        this.macAddress = value;
+        //    }
+        //}
 
         void validarDispositivos()
         {
