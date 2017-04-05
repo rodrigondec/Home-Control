@@ -1,5 +1,6 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace HomeControl.Controllers
 {
     public class ComodoController : Controller
     {
-        private ComodoService service = new ComodoService();
+        private IComodoService service = new ComodoService();
 
         // GET: Comodo
         public ActionResult Index()

@@ -1,5 +1,6 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Interruptores;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace HomeControl.Controllers
 {
     public class InterruptorController : Controller
     {
-        private InterruptorService service = new InterruptorService();
+        private IInterruptorService service = new InterruptorService();
 
         // GET: Interruptor
         public ActionResult Index()

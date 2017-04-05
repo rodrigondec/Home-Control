@@ -1,5 +1,6 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace HomeControl.Controllers
     public class ResidenciaController : Controller
     {
 
-        private ResidenciaService service = new ResidenciaService();
+        private IResidenciaService service = new ResidenciaService();
 
         // GET: Residencia
         public ActionResult Index()
