@@ -55,17 +55,17 @@ namespace HomeControl.Business.Service.Implementations
                 erros.Add("O Embarcado precisa ser preenchido");
             }
 
-            if (entity.macAddress == "")
+            if (entity.MacAddress == "")
             {
                 erros.Add("Mac Address precisar ser preenchido");
             }
 
-            if (entity.ipAddress == "")
+            if (entity.IpAddress == "")
             {
                 erros.Add("IP precisar ser preenchido");
             }
 
-            if(entity.nome == "")
+            if(entity.Nome == "")
             {
                 erros.Add("Nome precisa ser preenchido");
             }

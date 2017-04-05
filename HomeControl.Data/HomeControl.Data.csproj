@@ -73,6 +73,15 @@
     <Compile Include="Dal\Dao\Custom\Interfaces\IDispositivoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IEmbarcadoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IResidenciaDao.cs" />
+    <Compile Include="Migrations\201704051653111_Initial.cs" />
+    <Compile Include="Migrations\201704051653111_Initial.Designer.cs">
+      <DependentUpon>201704051653111_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704051713588_Alteracoes.cs" />
+    <Compile Include="Migrations\201704051713588_Alteracoes.Designer.cs">
+      <DependentUpon>201704051713588_Alteracoes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +97,14 @@
       <Project>{b8f4c1ab-53de-49bd-bf9a-18c47881d3ad}</Project>
       <Name>HomeControl.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704051653111_Initial.resx">
+      <DependentUpon>201704051653111_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704051713588_Alteracoes.resx">
+      <DependentUpon>201704051713588_Alteracoes.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

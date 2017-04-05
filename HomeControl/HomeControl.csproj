@@ -327,6 +327,10 @@
       <Project>{bc006f0a-88b9-4adc-bbf5-06b1bee13d81}</Project>
       <Name>HomeControl.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HomeControl.Data\HomeControl.Data.csproj">
+      <Project>{45f18d14-f0ce-4b8b-8a29-46f2f8045605}</Project>
+      <Name>HomeControl.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HomeControl.Domain\HomeControl.Domain.csproj">
       <Project>{b8f4c1ab-53de-49bd-bf9a-18c47881d3ad}</Project>
       <Name>HomeControl.Domain</Name>
