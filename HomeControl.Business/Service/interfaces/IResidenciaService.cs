@@ -3,7 +3,7 @@ using HomeControl.Domain.Residencia;
 
 namespace HomeControl.Business.Service.Interfaces
 {
-    interface IResidenciaService : ICrudService<Residencia, int>
+    public interface IResidenciaService : ICrudService<Residencia, int>
     {
       
     }

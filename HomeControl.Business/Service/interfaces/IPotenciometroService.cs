@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Business.Service.Interfaces
 {
-    interface IPotenciometroService
+    public interface IPotenciometroService
     {
     }
 }
