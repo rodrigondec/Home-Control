@@ -53,9 +53,14 @@ namespace HomeControl.Business.Service.Implementations
         {
             ErrorList erros = new ErrorList();
 
-            if (true)
+            if (entity == null)
             {
-                erros.Add("Erro");
+                erros.Add("Comodo precisa ser Preenchido");
+            }
+
+            if(entity.Residencia == null)
+            {
+                erros.Add("Residencia precisa ser selecionada");
             }
 
             if (erros.HasErrors())
