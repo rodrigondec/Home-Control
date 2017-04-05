@@ -1,4 +1,5 @@
-﻿using HomeControl.Data.Dal.Dao.Custom.Implementations;
+﻿using HomeControl.Business.Service.Interfaces;
+using HomeControl.Data.Dal.Dao.Custom.Implementations;
 using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Interruptores;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 
 namespace HomeControl.Business.Service.Implementations
 {
-    public class InterruptorService : AbstractService<Interruptor, int>
+    public class InterruptorService : AbstractService<Interruptor, int>, IInterruptorService
     {
 
         private IInterruptorDao dao;
