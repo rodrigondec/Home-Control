@@ -5,11 +5,11 @@ Um sistema de controle e automação residencial. Utilizando sensores, atuadores
 <dl>
   <dt>Super-Type Layer</dt>
   <dd>- Uma super classe pai de todas as outras em um pacote</dd>
-  <dt>Factory</dt>
+  <dt>Abstract Factory</dt>
   <dd>- Uma estrutura que permite implementar fácilmente uma nova maneira de acesso ao banco de dados</dd>
   <dt>DAO</dt>
   <dd>- "Data Access Object", implementação e abstração dos métodos de acesso das entitys no banco de dados</dd>
-  <dt>bla</dt>
+  <dt>Template Pattern</dt>
   <dd>- </dd>
   <dt>bla²</dt>
   <dd>- </dd>
