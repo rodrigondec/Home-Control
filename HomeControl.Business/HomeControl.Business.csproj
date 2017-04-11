@@ -94,6 +94,8 @@
     <Compile Include="Service\Messaging\SmsService.cs" />
     <Compile Include="Service\Security\Managers\UserManager.cs" />
     <Compile Include="Service\Security\Managers\UserSignInManager.cs" />
+    <Compile Include="Service\Security\SecurityFacade.cs" />
+    <Compile Include="Service\Security\SignInService.cs" />
     <Compile Include="Service\Security\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,5 +11,8 @@ namespace HomeControl.Dal.Repository.Base
         T Update(T entity);
         void SaveChanges();
         T Add(T entity);
+        T Remove(T entity);
+
+
     }
 }

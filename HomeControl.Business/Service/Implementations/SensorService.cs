@@ -16,7 +16,7 @@ namespace HomeControl.Business.Service.Implementations
 
         public SensorService()
         {
-            dao = daoFactory.GetSensorDao();
+            dao = DaoFactory.GetSensorDao();
         }
 
         public override Sensor Add(Sensor entity)

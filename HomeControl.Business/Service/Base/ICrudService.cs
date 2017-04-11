@@ -17,6 +17,7 @@ namespace HomeControl.Business.Service.Base.interfaces
         T Find(ID id);
         T Update(T entity);
         T Add(T entity);
+        T Remove(T entity);        
         //void Validar(T entity);
     }
 }

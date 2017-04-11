@@ -69,6 +69,11 @@ namespace HomeControl.Data.Dal.Dao.Base
             return existing;
         }
 
+        public T Remove(T entity)
+        {
+            return null;
+        }
+
         public void Dispose()
         {
             db.Dispose();

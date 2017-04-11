@@ -9,11 +9,30 @@ namespace HomeControl.Business.Service.Security
 {
     public class UserService
     {
-       
-        public UserService(UserManager userManager, UserSignInManager signInManager)
+        private UserManager _userManager;
+        public UserManager UserManager
         {
-
+            get
+            {
+                return _userManager;
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
+
+        public UserService(UserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+        //Register
+        //ConfirmEmail
+        //ForgotPassword
+        //ResetPassword
+        //SendCode;
+        //ExternalLoginConfirmation
 
     }
 }
