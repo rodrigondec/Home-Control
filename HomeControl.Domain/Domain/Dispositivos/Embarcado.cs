@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomeControl.Domain.Dispositivos
 {
-    public class Embarcado : Activable, IPersistable<int>
+    public class Embarcado : IActivable, IPersistable<int>
     {
        
              
@@ -60,17 +60,17 @@ namespace HomeControl.Domain.Dispositivos
             throw new NotImplementedException();
         }
 
-        public void activate()
+        public void Activate()
         {
             throw new NotImplementedException();
         }
 
-        public void deactivate()
+        public void Deactivate()
         {
             throw new NotImplementedException();
         }
 
-        public bool isActive()
+        public bool IsActive()
         {
             throw new NotImplementedException();
         }

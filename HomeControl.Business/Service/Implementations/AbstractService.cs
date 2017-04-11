@@ -12,8 +12,16 @@ using System.Threading.Tasks;
 namespace HomeControl.Business.Service.Implementations
 {
     public abstract class AbstractService<T, PK> : ICrudService<T, PK> where T : class, IPersistable<PK>
-    {
-        IGenericDao<T, PK> genericDao;
+    {       
+
+        protected IGenericDao<T, PK> GenericDao { get; set; }
+
+        public AbstractService(IGenericDao<T, PK> genericDao)
+        {
+            this.GenericDao = genericDao;
+        }
+
+        public AbstractService(){}
 
         public abstract T Add(T entity);
         public abstract void Dispose();
@@ -23,7 +31,7 @@ namespace HomeControl.Business.Service.Implementations
         protected abstract void Validar(T entity);
         public T Remove(T entity)
         {
-          return genericDao.Remove(entity);
+          return GenericDao.Remove(entity);
         }
         public static DaoFactory DaoFactory
         {
@@ -32,6 +40,7 @@ namespace HomeControl.Business.Service.Implementations
                 return DalConfiguration.GetDaoFactory();
             }
         }
+       
     }
     
 }

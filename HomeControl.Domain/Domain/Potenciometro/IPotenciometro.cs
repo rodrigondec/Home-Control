@@ -8,11 +8,11 @@ namespace HomeControl.Domain.Potenciometro
 {
     interface IPotenciometro
     {
-        void aumentarValor();
-        void diminuirValor();
-        int getValorAtual();
-        void diminuirParaValorMinimo();
-        void aumentarParaValorMaximo();
+        void AumentarValor();
+        void DiminuirValor();
+        int GetValorAtual();
+        void DiminuirParaValorMinimo();
+        void AumentarParaValorMaximo();
 
 
     }

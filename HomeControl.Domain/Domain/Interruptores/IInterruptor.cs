@@ -8,8 +8,8 @@ namespace HomeControl.Domain.Interruptores
 {
     interface IInterruptor
     {
-        bool getStatus();
-        void desligarDispositivo();
-        void ligarDispositivo();
+        bool GetStatus();
+        void DesligarDispositivo();
+        void LigarDispositivo();
     }
 }

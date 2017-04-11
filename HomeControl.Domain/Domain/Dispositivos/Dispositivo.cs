@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeControl.Domain.Dispositivos
 {
-    public abstract class Dispositivo : Activable, IPersistable<int>
+    public abstract class Dispositivo : IActivable, IPersistable<int>
     {
         [Key]
         private int id;
@@ -73,10 +73,10 @@ namespace HomeControl.Domain.Dispositivos
             }
         }
 
-        public abstract void activate();
+        public abstract void Activate();
 
-        public abstract void deactivate();     
+        public abstract void Deactivate();     
 
-        public abstract bool isActive();        
+        public abstract bool IsActive();        
     }
 }

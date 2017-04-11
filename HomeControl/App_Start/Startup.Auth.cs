@@ -8,6 +8,8 @@ using Owin;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Business.Service.Security.Managers;
 using HomeControl.Domain.Domain.Security;
+using HomeControl.Business.Service.Security;
+using HomeControl.Business.Service.Security.Configuration;
 
 namespace HomeControl
 {
@@ -16,11 +18,8 @@ namespace HomeControl
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(HomeControlDBContext.Create);
-            app.CreatePerOwinContext<UserManager>(UserManager.Create);
-            app.CreatePerOwinContext<UserSignInManager>(UserSignInManager.Create);
-
+            //Configura a camada de segurança do sistema.
+            SecurityConfiguration.Configure(app);
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie

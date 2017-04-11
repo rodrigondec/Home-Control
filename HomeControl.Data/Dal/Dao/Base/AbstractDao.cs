@@ -71,7 +71,15 @@ namespace HomeControl.Data.Dal.Dao.Base
 
         public T Remove(T entity)
         {
-            return null;
+            T existing = Find(entity.Id);
+
+            if (existing != null)
+            {
+                db.Set<T>().Remove(existing);
+                db.SaveChanges();
+            }
+
+            return existing;
         }
 
         public void Dispose()

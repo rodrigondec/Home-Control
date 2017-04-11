@@ -8,6 +8,6 @@ namespace HomeControl.Domain.Sensores
 {
     interface ISensor
     {
-        float getValorAtual();
+        float GetValorAtual();
     }
 }

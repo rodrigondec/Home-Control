@@ -7,6 +7,7 @@ using HomeControl.Domain.Residencia;
 using System;
 using System.Collections.Generic;
 using HomeControl.Business.Service.Interfaces;
+using HomeControl.Dal.Repository.Base;
 
 namespace HomeControl.Business.Service.Implementations
 {
@@ -15,28 +16,54 @@ namespace HomeControl.Business.Service.Implementations
     /// </summary>
     public class ResidenciaService : AbstractService<Residencia, int>, IResidenciaService
     {
-        IResidenciaDao dao = DaoFactory.GetResidenciaDao();
+       
+        public IResidenciaDao Dao
+        {
+            get
+            {
+                if (Dao == null)
+                {
+                    Dao = DaoFactory.GetResidenciaDao();
+                    GenericDao = Dao;
+                }
+
+                return this.Dao;
+            }
+
+            set {
+                this.Dao = value;                          
+            }
+        }
+
+        public ResidenciaService(IResidenciaDao dao) : base(dao)
+        {
+            this.Dao = dao;
+        }
+
+        public ResidenciaService()
+        {
+
+        }
 
         public override Residencia Add(Residencia entity)
         {
-            if (entity.Id > 0 )
+            if (entity.Id > 0)
             {
                 throw new BusinessException("Residencia já existente.");
             }
 
             Validar(entity);
-            return dao.Add(entity);
+            return Dao.Add(entity);
         }
 
         public override Residencia Find(int id)
         {
-            return dao.Find(id);
-            //throw new NotImplementedException();
+            return Dao.Find(id);           
         }
 
         public override List<Residencia> FindAll()
         {
-            return dao.FindAll();
+            return Dao.FindAll();
         }
 
         public override Residencia Update(Residencia entity)
@@ -46,20 +73,20 @@ namespace HomeControl.Business.Service.Implementations
                 throw new BusinessException("Residencia não existente.");
             }
             Validar(entity);
-            return dao.Update(entity);
+            return Dao.Update(entity);
 
         }
-        
+
         public override void Dispose()
         {
-            dao.Dispose();
+            Dao.Dispose();
         }
 
         protected override void Validar(Residencia entity)
         {
             //TODO: Implementar validações
             ErrorList erros = new ErrorList();
-            
+
             if (entity.Nome == null || entity.Nome.Trim() == "")
             {
                 erros.Add("Nome Inválido.");
@@ -69,7 +96,7 @@ namespace HomeControl.Business.Service.Implementations
             {
                 throw new BusinessException(erros);
             }
-            
+
         }
     }
 }

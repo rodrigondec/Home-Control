@@ -14,10 +14,10 @@ namespace HomeControl.Domain.Potenciometro
         private float valorMinimo;
         private float estadoAtual;
 
-        public abstract void aumentarParaValorMaximo();
-        public abstract void aumentarValor();
-        public abstract void diminuirParaValorMinimo();
-        public abstract void diminuirValor();
-        public abstract int getValorAtual();
+        public abstract void AumentarParaValorMaximo();
+        public abstract void AumentarValor();
+        public abstract void DiminuirParaValorMinimo();
+        public abstract void DiminuirValor();
+        public abstract int GetValorAtual();
     }
 }

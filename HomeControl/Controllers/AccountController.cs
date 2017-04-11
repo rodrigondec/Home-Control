@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using HomeControl.Models;
 using HomeControl.Business.Service.Security.Managers;
 using HomeControl.Domain.Domain.Security;
+using HomeControl.Business.Service.Security;
 
 namespace HomeControl.Controllers
 {
@@ -19,6 +20,8 @@ namespace HomeControl.Controllers
     {
         private UserSignInManager _signInManager;
         private UserManager _userManager;
+
+        public SecurityFacade _securityFacade;
 
         public AccountController()
         {
@@ -77,7 +80,7 @@ namespace HomeControl.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await _securityFacade.Login(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -99,7 +102,7 @@ namespace HomeControl.Controllers
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
+            if (!await _securityFacade.HasBeenVerifiedAsync())
             {
                 return View("Error");
             }
@@ -122,7 +125,7 @@ namespace HomeControl.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await _securityFacade.VerifyCode(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:

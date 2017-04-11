@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Domain.Dispositivos
 {
-   public interface Activable
+   public interface IActivable
     {
-        void activate();
-        void deactivate();
-        Boolean isActive();
+        void Activate();
+        void Deactivate();
+        Boolean IsActive();
     }
 }

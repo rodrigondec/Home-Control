@@ -92,11 +92,13 @@
     <Compile Include="Service\Interfaces\IResidenciaService.cs" />
     <Compile Include="Service\Interfaces\ISensorService.cs" />
     <Compile Include="Service\Messaging\SmsService.cs" />
+    <Compile Include="Service\Security\Services\ISignInService.cs" />
     <Compile Include="Service\Security\Managers\UserManager.cs" />
     <Compile Include="Service\Security\Managers\UserSignInManager.cs" />
+    <Compile Include="Service\Security\Configuration\SecurityConfiguration.cs" />
     <Compile Include="Service\Security\SecurityFacade.cs" />
-    <Compile Include="Service\Security\SignInService.cs" />
-    <Compile Include="Service\Security\UserService.cs" />
+    <Compile Include="Service\Security\Services\SignInService.cs" />
+    <Compile Include="Service\Security\Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HomeControl.Data\HomeControl.Data.csproj">

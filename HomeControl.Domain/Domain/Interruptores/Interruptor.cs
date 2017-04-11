@@ -5,31 +5,31 @@ namespace HomeControl.Domain.Interruptores
 {
     public class Interruptor : Dispositivo, IInterruptor
     {
-        public override void activate()
+        public override void Activate()
         {
             throw new NotImplementedException();
         }
 
-        public override void deactivate()
+        public override void Deactivate()
         {
             throw new NotImplementedException();
         }
 
-        public void desligarDispositivo()
+        public void DesligarDispositivo()
         {
         }
 
-        public bool getStatus()
+        public bool GetStatus()
         {
             //TO DO: Implementar retorno do status real
             return true;
         }
 
-        public override bool isActive()
+        public override bool IsActive()
         {
             throw new NotImplementedException();
         }
 
-        public void ligarDispositivo() { }
+        public void LigarDispositivo() { }
     }
 }
