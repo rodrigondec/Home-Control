@@ -52,5 +52,10 @@ namespace HomeControl.Data.Dal.Factory
         {
             return new EmbarcadoDao(db);
         }
+
+        public override IHistoricoUsoDispositivoDao GetHistoricoUsoDispositivoDao()
+        {
+            return new HistoricoUsoDao(db);
+        }
     }
 }

@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dal\Context\HomeControlDBContext.cs" />
+    <Compile Include="Dal\Dao\Custom\Implementations\HistoricoUsoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\InterruptorDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\SensorDao.cs" />
+    <Compile Include="Dal\Dao\Custom\Interfaces\IHistoricoUsoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\IInterruptorDao.cs" />
     <Compile Include="Dal\Dao\Custom\Interfaces\ISensorDao.cs" />
     <Compile Include="Dal\Exceptions\DalException.cs" />
@@ -81,6 +83,10 @@
     <Compile Include="Migrations\201704051713588_Alteracoes.Designer.cs">
       <DependentUpon>201704051713588_Alteracoes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704112244595_HistoricoUsoDispositivo.cs" />
+    <Compile Include="Migrations\201704112244595_HistoricoUsoDispositivo.Designer.cs">
+      <DependentUpon>201704112244595_HistoricoUsoDispositivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704051713588_Alteracoes.resx">
       <DependentUpon>201704051713588_Alteracoes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704112244595_HistoricoUsoDispositivo.resx">
+      <DependentUpon>201704112244595_HistoricoUsoDispositivo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

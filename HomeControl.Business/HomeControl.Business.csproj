@@ -77,6 +77,8 @@
     <Compile Include="Service\Base\Exceptions\BusinessException.cs" />
     <Compile Include="Service\Base\Exceptions\ErrorList.cs" />
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
+    <Compile Include="Service\Implementations\HistoricoUsoDispositivoService.cs" />
+    <Compile Include="Service\Interfaces\IHistoricoUsoDispositivoService.cs" />
     <Compile Include="Service\Messaging\EmailService.cs" />
     <Compile Include="Service\Implementations\AbstractService.cs" />
     <Compile Include="Service\Implementations\ComodoService.cs" />

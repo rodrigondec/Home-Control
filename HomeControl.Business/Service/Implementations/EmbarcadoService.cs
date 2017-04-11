@@ -15,8 +15,9 @@ namespace HomeControl.Business.Service.Implementations
         private IEmbarcadoDao dao;
 
         public EmbarcadoService()
-        {
+        {            
             dao = DaoFactory.GetEmbarcadoDao();
+            base.GenericDao = dao;
         }
 
         public override Embarcado Add(Embarcado entity)

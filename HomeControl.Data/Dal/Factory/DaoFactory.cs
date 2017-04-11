@@ -18,6 +18,7 @@ namespace HomeControl.Data.Dal.Factory
         public abstract IDispositivoDao GetDispositivoDao();
         public abstract IResidenciaDao GetResidenciaDao();
         public abstract IEmbarcadoDao GetEmbarcadoDao();
+        public abstract IHistoricoUsoDispositivoDao GetHistoricoUsoDispositivoDao();
 
     }
 }

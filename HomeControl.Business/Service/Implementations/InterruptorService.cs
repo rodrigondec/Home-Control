@@ -15,6 +15,7 @@ namespace HomeControl.Business.Service.Implementations
         public InterruptorService()
         {
             dao = DaoFactory.GetInterruptorDao();
+            base.GenericDao = dao;
         }
 
         public override Interruptor Add(Interruptor entity)

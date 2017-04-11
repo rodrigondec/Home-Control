@@ -59,6 +59,7 @@
     <Compile Include="Domain\Interruptores\Interruptor.cs" />
     <Compile Include="Domain\Interruptores\IInterruptor.cs" />
     <Compile Include="Domain\IPersistable.cs" />
+    <Compile Include="Domain\Log\HistoricoUsoDispositivo.cs" />
     <Compile Include="Domain\Potenciometro\AbstractPotenciometro.cs" />
     <Compile Include="Domain\Potenciometro\IPotenciometro.cs" />
     <Compile Include="Domain\Residencia\Comodo.cs" />

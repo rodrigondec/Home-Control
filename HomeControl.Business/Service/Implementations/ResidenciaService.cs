@@ -20,13 +20,7 @@ namespace HomeControl.Business.Service.Implementations
         public IResidenciaDao Dao
         {
             get
-            {
-                if (Dao == null)
-                {
-                    Dao = DaoFactory.GetResidenciaDao();
-                    GenericDao = Dao;
-                }
-
+            {            
                 return this.Dao;
             }
 
@@ -42,7 +36,8 @@ namespace HomeControl.Business.Service.Implementations
 
         public ResidenciaService()
         {
-
+            Dao = DaoFactory.GetResidenciaDao();
+            base.GenericDao = Dao;
         }
 
         public override Residencia Add(Residencia entity)
@@ -79,6 +74,7 @@ namespace HomeControl.Business.Service.Implementations
 
         public override void Dispose()
         {
+            base.Dispose();
             Dao.Dispose();
         }
 

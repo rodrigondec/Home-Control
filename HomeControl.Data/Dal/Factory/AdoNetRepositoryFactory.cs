@@ -29,6 +29,11 @@ namespace HomeControl.Data.Dal.Factory
             return null;
         }
 
+        public override IHistoricoUsoDispositivoDao GetHistoricoUsoDispositivoDao()
+        {
+            throw null;
+        }
+
         public override IInterruptorDao GetInterruptorDao()
         {
             return null;

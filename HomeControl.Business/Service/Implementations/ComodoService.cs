@@ -15,39 +15,40 @@ namespace HomeControl.Business.Service.Implementations
     /// </summary>
     public class ComodoService : AbstractService<Comodo, int>, IComodoService
     {
-        private IComodoDao dao;
+        private IComodoDao _dao;
 
         public ComodoService()
         {
-            dao = DaoFactory.GetComodoDao();
+            _dao = DaoFactory.GetComodoDao();
         }
 
         public override Comodo Add(Comodo entity)
         {
             Validar(entity);
 
-            return dao.Add(entity);
+            return _dao.Add(entity);
         }
 
         public override void Dispose()
         {
-            dao.Dispose();
+            base.Dispose();
+            _dao.Dispose();
         }
 
         public override Comodo Find(int id)
         {
-            return dao.Find(id);
+            return _dao.Find(id);
         }
 
         public override List<Comodo> FindAll()
         {
-            return dao.FindAll();
+            return _dao.FindAll();
         }
 
         public override Comodo Update(Comodo entity)
         {
             Validar(entity);
-            return dao.Update(entity);
+            return _dao.Update(entity);
         }
 
         protected override void Validar(Comodo entity)
