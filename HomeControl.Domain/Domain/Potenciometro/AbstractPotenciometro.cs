@@ -18,6 +18,6 @@ namespace HomeControl.Domain.Potenciometro
         public abstract void AumentarValor();
         public abstract void DiminuirParaValorMinimo();
         public abstract void DiminuirValor();
-        public abstract int GetValorAtual();
+        public abstract float GetValorAtual();
     }
 }
