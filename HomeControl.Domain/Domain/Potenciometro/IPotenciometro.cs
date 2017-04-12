@@ -10,7 +10,7 @@ namespace HomeControl.Domain.Potenciometro
     {
         void AumentarValor();
         void DiminuirValor();
-        int GetValorAtual();
+        float GetValorAtual();
         void DiminuirParaValorMinimo();
         void AumentarParaValorMaximo();
 
