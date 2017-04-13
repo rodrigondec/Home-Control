@@ -17,17 +17,7 @@ namespace HomeControl.Business.Service.Implementations
     public class ResidenciaService : AbstractService<Residencia, int>, IResidenciaService
     {
        
-        public IResidenciaDao Dao
-        {
-            get
-            {            
-                return this.Dao;
-            }
-
-            set {
-                this.Dao = value;                          
-            }
-        }
+        public IResidenciaDao Dao { get; set; }
 
         public ResidenciaService(IResidenciaDao dao) : base(dao)
         {

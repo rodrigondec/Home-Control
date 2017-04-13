@@ -13,6 +13,17 @@ namespace HomeControl.Controllers
     public class ComodoController : Controller
     {
         private IComodoService service = new ComodoService();
+        private IResidenciaService _residenciaService = new ResidenciaService();
+
+        private void PopulateSelectListResidencia()
+        {
+
+            List<Residencia> residencias = _residenciaService.FindAll();
+
+            SelectList listaOpcoesResidencia = new SelectList(residencias, "Id", "Nome");
+
+            ViewBag.SelectListResidencia = listaOpcoesResidencia;
+        }
 
         // GET: Comodo
         public ActionResult Index()
@@ -38,6 +49,7 @@ namespace HomeControl.Controllers
         // GET: Comodo/Create
         public ActionResult Create()
         {
+            PopulateSelectListResidencia();
             return View();
         }
 
@@ -53,6 +65,7 @@ namespace HomeControl.Controllers
             }
             catch (BusinessException ex)
             {
+                PopulateSelectListResidencia();
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(comodo);
             }
@@ -69,6 +82,7 @@ namespace HomeControl.Controllers
                 return RedirectToAction("Index");
             }
 
+            PopulateSelectListResidencia();
             return View(comodo);
         }
 
@@ -84,6 +98,7 @@ namespace HomeControl.Controllers
             }
             catch (BusinessException ex)
             {
+                PopulateSelectListResidencia();
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(comodo);
             }
