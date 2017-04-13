@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils.Xml;
 
 namespace HomeControl.Business.Service.Configuration
 {
@@ -25,13 +26,13 @@ namespace HomeControl.Business.Service.Configuration
 
         private static DaoFactory CreateFactory()
         {
-            String factory = "1";
+            String factory = XmlReader.GetAppSettingUsingConfigurationManager("DalFactory");
 
             switch (factory)
             {
-                case "1":
+                case "Entity":
                     return new EntityDaoFactory(new Data.Dal.Context.HomeControlDBContext());
-                case "2":
+                case "AdoNet":
                     return new AdoNetRepositoryFactory();
                 default:
                     throw new DalException("Erro na configuração do acesso à dados ");

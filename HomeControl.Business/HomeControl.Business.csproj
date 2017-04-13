@@ -111,6 +111,10 @@
       <Project>{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}</Project>
       <Name>HomeControl.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{7f7ca114-6388-4bc6-811a-74561a895b9c}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

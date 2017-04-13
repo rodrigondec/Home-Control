@@ -16,18 +16,8 @@ namespace HomeControl.Business.Service.Implementations
     /// </summary>
     public class ResidenciaService : AbstractService<Residencia, int>, IResidenciaService
     {
-       
-        public IResidenciaDao Dao
-        {
-            get
-            {            
-                return this.Dao;
-            }
 
-            set {
-                this.Dao = value;                          
-            }
-        }
+        public IResidenciaDao Dao { get; set; }
 
         public ResidenciaService(IResidenciaDao dao) : base(dao)
         {
@@ -53,7 +43,7 @@ namespace HomeControl.Business.Service.Implementations
 
         public override Residencia Find(int id)
         {
-            return Dao.Find(id);           
+            return Dao.Find(id);
         }
 
         public override List<Residencia> FindAll()
