@@ -16,7 +16,11 @@ namespace HomeControl.Business.Service.Implementations
     /// </summary>
     public class ResidenciaService : AbstractService<Residencia, int>, IResidenciaService
     {
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> bbe102dde5503be10da481a25afad39f462456e9
         public IResidenciaDao Dao { get; set; }
 
         public ResidenciaService(IResidenciaDao dao) : base(dao)
