@@ -18,6 +18,6 @@ namespace HomeControl.Business.Service.Base.interfaces
         T Update(T entity);
         T Add(T entity);
         T Remove(T entity);        
-        //void Validar(T entity);
+        void Validar(T entity);
     }
 }

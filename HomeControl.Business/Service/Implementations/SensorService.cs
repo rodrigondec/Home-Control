@@ -47,7 +47,7 @@ namespace HomeControl.Business.Service.Implementations
             return dao.Update(entity);
         }
 
-        protected override void Validar(Sensor entity)
+        public override void Validar(Sensor entity)
         {
             ErrorList erros = new ErrorList();
 

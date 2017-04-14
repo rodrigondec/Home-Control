@@ -41,7 +41,7 @@ namespace HomeControl.Business.Service.Implementations
             Validar(entity);
             return GenericDao.Update(entity);
         }
-        protected abstract void Validar(T entity);
+        public abstract void Validar(T entity);
         public T Remove(T entity)
         {
             return GenericDao.Remove(entity);
@@ -49,7 +49,8 @@ namespace HomeControl.Business.Service.Implementations
         public virtual void Dispose()
         {
             GenericDao.Dispose();
-        }
+        }      
+
         public static DaoFactory DaoFactory
         {
             get

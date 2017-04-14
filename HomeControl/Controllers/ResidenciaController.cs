@@ -93,22 +93,30 @@ namespace HomeControl.Controllers
         // GET: Residencia/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Residencia residencia = service.Find(id);
+
+            if (residencia == null)
+            {
+                ModelState.AddModelError("", "Residência não encontrada");
+                return RedirectToAction("Index");
+            }
+            return View(residencia);
         }
 
         // POST: Residencia/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Residencia residencia)
         {
             try
             {
-                // TODO: Add delete logic here
+                service.Remove(residencia);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(residencia);
             }
         }
 

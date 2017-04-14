@@ -24,7 +24,7 @@ namespace HomeControl.Business.Service.Implementations
             this.Dao.Dispose();
         }
 
-        protected override void Validar(HistoricoUsoDispositivo entity)
+        public override void Validar(HistoricoUsoDispositivo entity)
         {
 
         }

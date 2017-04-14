@@ -208,6 +208,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ComodoController.cs" />
     <Compile Include="Controllers\EmbarcadoController.cs" />
@@ -309,14 +310,20 @@
     <Content Include="Views\Comodo\Create.cshtml" />
     <Content Include="Views\Comodo\Edit.cshtml" />
     <Content Include="Views\Comodo\Index.cshtml" />
+    <Content Include="Views\Residencia\Delete.cshtml" />
     <Content Include="Views\Embarcado\Index.cshtml" />
     <Content Include="Views\Embarcado\Details.cshtml" />
     <Content Include="Views\Embarcado\Create.cshtml" />
     <Content Include="Views\Embarcado\Edit.cshtml" />
+    <Content Include="Views\Embarcado\Delete.cshtml" />
+    <Content Include="Views\Interruptor\Create.cshtml" />
+    <Content Include="Views\Interruptor\Index.cshtml" />
+    <Content Include="Views\Interruptor\Details.cshtml" />
+    <Content Include="Views\Interruptor\Edit.cshtml" />
+    <Content Include="Views\Interruptor\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Interruptor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

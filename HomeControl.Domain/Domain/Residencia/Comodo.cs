@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +12,6 @@ namespace HomeControl.Domain.Residencia
         [Key]
         private int id;
         private string nome;
-        private Residencia residencia;
 
         public int Id
         {
@@ -39,17 +39,12 @@ namespace HomeControl.Domain.Residencia
             }
         }
 
-        public Residencia Residencia
+       
+        public int ResidenciaId { get; set; }
+        [ForeignKey("ResidenciaId")]
+        public virtual Residencia Residencia
         {
-            get
-            {
-                return residencia;
-            }
-
-            set
-            {
-                residencia = value;
-            }
+            get; protected set;
         }
     }
 }

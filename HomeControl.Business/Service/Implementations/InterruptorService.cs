@@ -1,4 +1,5 @@
-﻿using HomeControl.Business.Service.Interfaces;
+﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Interfaces;
 using HomeControl.Data.Dal.Dao.Custom.Implementations;
 using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Interruptores;
@@ -45,10 +46,23 @@ namespace HomeControl.Business.Service.Implementations
             return dao.Update(entity);
         }
 
-        protected override void Validar(Interruptor entity)
+        public override void Validar(Interruptor entity)
         {
-            //to do: Validações
-            throw new NotImplementedException();
+            ErrorList errors = new ErrorList();
+
+            if(entity == null)
+            {
+                errors.Add("Interruptor não pode ser nulo");
+                throw new BusinessException(errors);
+            }
+
+            if(entity.Comodo == null)
+            {
+                errors.Add("Necessário associar o dispositivo à um comodo.");
+            }
+
+            throw new BusinessException(errors);
+           
         }
     }
 }

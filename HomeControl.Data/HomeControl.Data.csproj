@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dal\Context\HomeControlDBContext.cs" />
+    <Compile Include="Dal\Context\IHomeControlDBContext.cs" />
+    <Compile Include="Dal\Dao\Base\DefaultDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\HistoricoUsoDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\InterruptorDao.cs" />
     <Compile Include="Dal\Dao\Custom\Implementations\SensorDao.cs" />
@@ -87,6 +89,22 @@
     <Compile Include="Migrations\201704112244595_HistoricoUsoDispositivo.Designer.cs">
       <DependentUpon>201704112244595_HistoricoUsoDispositivo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704140304146_AddDispotitivosDbset.cs" />
+    <Compile Include="Migrations\201704140304146_AddDispotitivosDbset.Designer.cs">
+      <DependentUpon>201704140304146_AddDispotitivosDbset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704140333180_AddInterruptor.cs" />
+    <Compile Include="Migrations\201704140333180_AddInterruptor.Designer.cs">
+      <DependentUpon>201704140333180_AddInterruptor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704141548382_ComodoResidenciaFkeyInclusion.cs" />
+    <Compile Include="Migrations\201704141548382_ComodoResidenciaFkeyInclusion.Designer.cs">
+      <DependentUpon>201704141548382_ComodoResidenciaFkeyInclusion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704141627185_ComodoFkeyNotNullable.cs" />
+    <Compile Include="Migrations\201704141627185_ComodoFkeyNotNullable.Designer.cs">
+      <DependentUpon>201704141627185_ComodoFkeyNotNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +131,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704112244595_HistoricoUsoDispositivo.resx">
       <DependentUpon>201704112244595_HistoricoUsoDispositivo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704140304146_AddDispotitivosDbset.resx">
+      <DependentUpon>201704140304146_AddDispotitivosDbset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704140333180_AddInterruptor.resx">
+      <DependentUpon>201704140333180_AddInterruptor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704141548382_ComodoResidenciaFkeyInclusion.resx">
+      <DependentUpon>201704141548382_ComodoResidenciaFkeyInclusion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704141627185_ComodoFkeyNotNullable.resx">
+      <DependentUpon>201704141627185_ComodoFkeyNotNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

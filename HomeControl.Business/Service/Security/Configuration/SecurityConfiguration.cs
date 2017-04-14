@@ -7,13 +7,14 @@ namespace HomeControl.Business.Service.Security.Configuration
 {
     public class SecurityConfiguration
     {
-        public static void Configure(IAppBuilder app)
+        public static void Configure(IAppBuilder applicationBuilder)
         {
-            app.CreatePerOwinContext(HomeControlDBContext.Create);
-            app.CreatePerOwinContext<UserManager>(UserManager.Create);
-            app.CreatePerOwinContext<UserSignInManager>(UserSignInManager.Create);
-            app.CreatePerOwinContext<SignInService>(SignInService.Create);
-            app.CreatePerOwinContext<SecurityFacade>(SecurityFacade.Create);            
+            applicationBuilder.CreatePerOwinContext(HomeControlDBContext.Create);
+            applicationBuilder.CreatePerOwinContext<UserManager>(UserManager.Create);
+            applicationBuilder.CreatePerOwinContext<UserSignInManager>(UserSignInManager.Create);
+            applicationBuilder.CreatePerOwinContext<UserService>(UserService.Create);
+            applicationBuilder.CreatePerOwinContext<SignInService>(SignInService.Create);
+            applicationBuilder.CreatePerOwinContext<SecurityFacade>(SecurityFacade.Create);            
         }
 
     }

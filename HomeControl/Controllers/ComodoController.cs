@@ -20,7 +20,7 @@ namespace HomeControl.Controllers
 
             List<Residencia> residencias = _residenciaService.FindAll();
 
-            SelectList listaOpcoesResidencia = new SelectList(residencias, "Id", "Nome");
+            SelectList listaOpcoesResidencia = new SelectList(residencias, "id", "Nome");
 
             ViewBag.SelectListResidencia = listaOpcoesResidencia;
         }

@@ -67,7 +67,7 @@ namespace HomeControl.Business.Service.Implementations
             Dao.Dispose();
         }
 
-        protected override void Validar(Residencia entity)
+        public override void Validar(Residencia entity)
         {
             //TODO: Implementar validações
             ErrorList erros = new ErrorList();

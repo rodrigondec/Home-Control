@@ -7,19 +7,21 @@ using System.Linq;
 
 namespace HomeControl.Data.Dal.Dao.Base
 {
-    public abstract class AbstractDao<T, ID> : IGenericDao<T, ID>, ILinqDao<T>, IDisposable where T: class,IPersistable<ID>
+    public abstract class AbstractDao<T, ID> : IGenericDao<T, ID>, ILinqDao<T>, IDisposable where T : class, IPersistable<ID>
     {
 
-       protected DbContext db;
+        protected DbContext db;
 
-       public AbstractDao(DbContext db)
-       {
-            this.db = db;
-       }
-
-       public T Add(T entity)
+        public AbstractDao(DbContext db)
         {
-            entity = db.Set<T>().Add(entity);
+            this.db = db;
+        }
+
+        public T Add(T entity)
+        {
+
+            db.Entry(entity).State = EntityState.Added;
+            //entity = db.Set<T>().Add(entity);
             db.SaveChanges();
             return entity;
         }
@@ -42,7 +44,7 @@ namespace HomeControl.Data.Dal.Dao.Base
         public List<T> FindAll()
         {
             return db.Set<T>().ToList();
-        } 
+        }
 
         public void SaveChanges()
         {

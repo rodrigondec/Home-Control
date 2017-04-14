@@ -13,7 +13,6 @@ namespace HomeControl.Domain.Dispositivos
         private Boolean ativo;
         private int porta;
         private int estado;
-        private Comodo comodo;       
 
         public int Id
         {
@@ -60,23 +59,12 @@ namespace HomeControl.Domain.Dispositivos
             }
         }
 
-        public Comodo Comodo
-        {
-            get
-            {
-                return comodo;
-            }
-
-            set
-            {
-                comodo = value;
-            }
-        }
+        public virtual Comodo Comodo { get; set; }
 
         public abstract void Activate();
 
-        public abstract void Deactivate();     
+        public abstract void Deactivate();
 
-        public abstract bool IsActive();        
+        public abstract bool IsActive();
     }
 }

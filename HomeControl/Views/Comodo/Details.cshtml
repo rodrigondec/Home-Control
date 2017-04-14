@@ -19,6 +19,23 @@
         </dd>
 
     </dl>
+    <hr />
+    @if (Model != null && Model.Residencia != null)
+    {
+
+        <h4>Informações da Casa</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Residencia.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Residencia.Nome)
+            </dd>
+        </dl>
+
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

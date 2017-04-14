@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -8,12 +9,11 @@ namespace HomeControl.Domain.Residencia
 {
     public class Residencia : IPersistable<int>
     {
-        [Key]        
+        [Key]       
         private int id;
         private String nome;
         private HashSet<Comodo> comodos;
-
-        [Display(Name = "Id da Tabela")]
+        
         public int Id
         {
             get
