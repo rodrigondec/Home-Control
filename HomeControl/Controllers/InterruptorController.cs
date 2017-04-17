@@ -2,6 +2,7 @@
 using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Interruptores;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,27 @@ using System.Web.Mvc;
 
 namespace HomeControl.Controllers
 {
-    public class InterruptorController : Controller
+    public class InterruptorController : AbstractController
     {
-        private IInterruptorService service = new InterruptorService();
+        private IInterruptorService _interruptorService;
+
+        [Inject]
+        public InterruptorController(IInterruptorService interruptorService)
+        {
+            _interruptorService = interruptorService;
+        }
 
         // GET: Interruptor
         public ActionResult Index()
         {
-            return View(service.FindAll());
+            return View(_interruptorService.FindAll());
         }
 
         // GET: Interruptor/Details/5
         public ActionResult Details(int id)
         {
 
-            Interruptor interruptor = service.Find(id);
+            Interruptor interruptor = _interruptorService.Find(id);
 
             if (interruptor == null)
             {
@@ -47,7 +54,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Add(Interruptor);
+                _interruptorService.Add(Interruptor);
 
                 return RedirectToAction("Index");
             }
@@ -61,7 +68,7 @@ namespace HomeControl.Controllers
         // GET: Interruptor/Edit/5
         public ActionResult Edit(int id)
         {
-            Interruptor interruptor = service.Find(id);
+            Interruptor interruptor = _interruptorService.Find(id);
 
             if (interruptor == null)
             {
@@ -78,7 +85,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Update(Interruptor);
+                _interruptorService.Update(Interruptor);
 
                 return RedirectToAction("Index");
             }
@@ -111,15 +118,5 @@ namespace HomeControl.Controllers
             }
         }
 
-        #region helpers
-        private void AddValidationErrorsToModelState(ErrorList validationErrors)
-        {
-            foreach (String error in validationErrors.ErrorCodes)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-
-        #endregion
     }
 }

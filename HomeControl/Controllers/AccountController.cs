@@ -18,21 +18,12 @@ namespace HomeControl.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserSignInManager _signInManager;
-        private UserManager _userManager;
 
-        public SecurityFacade _securityFacade;
-        public UserService _userService;
-        public SignInService _signInService;
+        public ISecurityFacade _securityFacade;
 
-        public AccountController()
-        {
-        }
-
-        public AccountController(SecurityFacade securityFacade, UserService userService)
+        public AccountController(SecurityFacade securityFacade)
         {
             _securityFacade = securityFacade;
-            _userService = userService;
         }
 
         //
@@ -135,10 +126,10 @@ namespace HomeControl.Controllers
             if (ModelState.IsValid)
             {
                 var user = new Usuario { UserName = model.Email, Email = model.Email };
-                var result = await _userService.CreateAsync(user, model.Password);
+                var result = await _securityFacade.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _signInService.Login(user, false, false);
+                    await _securityFacade.Login(user, false, false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -164,7 +155,7 @@ namespace HomeControl.Controllers
             {
                 return View("Error");
             }
-            var result = await _userService.ConfirmEmailAsync(userId, code);
+            var result = await _securityFacade.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -185,8 +176,8 @@ namespace HomeControl.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userService.FindByNameAsync(model.Email);
-                if (user == null || !(await _userService.IsEmailConfirmedAsync(user.Id)))
+                var user = await _securityFacade.FindByNameAsync(model.Email);
+                if (user == null || !(await _securityFacade.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -231,13 +222,13 @@ namespace HomeControl.Controllers
             {
                 return View(model);
             }
-            var user = await _userService.FindByNameAsync(model.Email);
+            var user = await _securityFacade.FindByNameAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await _userService.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await _securityFacade.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -270,12 +261,12 @@ namespace HomeControl.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
-            var userId = await _signInService.GetVerifiedUserIdAsync();
+            var userId = await _securityFacade.GetVerifiedUserIdAsync();
             if (userId == null)
             {
                 return View("Error");
             }
-            var userFactors = await _userService.GetValidTwoFactorProvidersAsync(userId);
+            var userFactors = await _securityFacade.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
@@ -293,7 +284,7 @@ namespace HomeControl.Controllers
             }
 
             // Generate the token and send it
-            if (!await _signInService.SendTwoFactorCodeAsync(model.SelectedProvider))
+            if (!await _securityFacade.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
                 return View("Error");
             }
@@ -312,7 +303,7 @@ namespace HomeControl.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await _signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            var result = await _securityFacade.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -351,13 +342,13 @@ namespace HomeControl.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new Usuario { UserName = model.Email, Email = model.Email };
-                var result = await _userService.CreateAsync(user);
+                var result = await _securityFacade.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await _userService.AddLoginAsync(user.Id, info.Login);
+                    result = await _securityFacade.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        await _signInService.Login(user, false, false);
+                        await _securityFacade.Login(user, false, false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -390,17 +381,12 @@ namespace HomeControl.Controllers
         {
             if (disposing)
             {
-                if (_userManager != null)
+                if (_securityFacade != null)
                 {
-                    _userManager.Dispose();
-                    _userManager = null;
+                    _securityFacade.Dispose();
+                    _securityFacade = null;
                 }
 
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
             }
 
             base.Dispose(disposing);

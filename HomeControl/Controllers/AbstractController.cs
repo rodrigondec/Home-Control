@@ -1,28 +1,29 @@
-﻿using HomeControl.Business.Service.Security;
+﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Security;
 using HomeControl.Domain.Domain.Security;
+using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HomeControl.Controllers
 {
     public abstract class AbstractController : Controller
     {
-        public SecurityFacade _securityFacade;
-        public UserService _userService;
-
-        public AbstractController(SecurityFacade securityFacade, UserService userService)
-        {
-            _securityFacade = securityFacade;
-            _userService = userService;
-        }
+        [Inject]
+        public SecurityFacade _securityFacade { get; set; }
+        public UserService _userService { get; set; }
 
         public Usuario GetCurrentUser()
         {
-            return null;
-            //return User.Identity.Name;
+            return _userService.FindByNameAsync(User.Identity.Name).Result;          
+        }
+
+        protected void AddValidationErrorsToModelState(ErrorList validationErrors)
+        {
+            foreach (String error in validationErrors.ErrorCodes)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
     }
 }

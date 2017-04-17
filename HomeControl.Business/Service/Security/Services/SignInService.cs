@@ -58,7 +58,7 @@ namespace HomeControl.Business.Service.Security
             return _signInManager.SendTwoFactorCodeAsync(selectedProvider);
         }
 
-        public Task ExternalSignInAsync(ExternalLoginInfo loginInfo, bool isPersistent)
+        public Task<SignInStatus> ExternalSignInAsync(ExternalLoginInfo loginInfo, bool isPersistent)
         {
             return _signInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
         }

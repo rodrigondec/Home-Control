@@ -2,6 +2,7 @@
 using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Residencia;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,30 +13,27 @@ namespace HomeControl.Controllers
 {
     public class ComodoController : Controller
     {
-        private IComodoService service = new ComodoService();
+        private IComodoService _comodoService = new ComodoService();
         private IResidenciaService _residenciaService = new ResidenciaService();
 
-        private void PopulateSelectListResidencia()
+        [Inject]
+        public ComodoController(IResidenciaService residenciaService, IComodoService comodoService)
         {
-
-            List<Residencia> residencias = _residenciaService.FindAll();
-
-            SelectList listaOpcoesResidencia = new SelectList(residencias, "id", "Nome");
-
-            ViewBag.SelectListResidencia = listaOpcoesResidencia;
-        }
+            _residenciaService = residenciaService;
+            _comodoService = comodoService;
+        }      
 
         // GET: Comodo
         public ActionResult Index()
         {
-            return View(service.FindAll());
+            return View(_comodoService.FindAll());
         }
 
         // GET: Comodo/Details/5
         public ActionResult Details(int id)
         {
 
-            Comodo comodo = service.Find(id);
+            Comodo comodo = _comodoService.Find(id);
 
             if (comodo == null)
             {
@@ -59,7 +57,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Add(comodo);
+                _comodoService.Add(comodo);
 
                 return RedirectToAction("Index");
             }
@@ -74,7 +72,7 @@ namespace HomeControl.Controllers
         // GET: Comodo/Edit/5
         public ActionResult Edit(int id)
         {
-            Comodo comodo = service.Find(id);
+            Comodo comodo = _comodoService.Find(id);
 
             if (comodo == null)
             {
@@ -92,7 +90,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Update(comodo);
+                _comodoService.Update(comodo);
 
                 return RedirectToAction("Index");
             }
@@ -124,6 +122,13 @@ namespace HomeControl.Controllers
             {
                 return View();
             }
+        }
+
+        private void PopulateSelectListResidencia()
+        {
+            List<Residencia> residencias = _residenciaService.FindAll();
+            SelectList listaOpcoesResidencia = new SelectList(residencias, "id", "Nome");
+            ViewBag.SelectListResidencia = listaOpcoesResidencia;
         }
 
         #region helpers

@@ -9,8 +9,8 @@
 
         public static string GetAppSetting(string customField)
         {
-            System.Configuration.Configuration config =
-                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null);
+            System.Configuration.Configuration config = System.Web.Configuration.WebConfigurationManager
+                .OpenWebConfiguration(null);
             if (config.AppSettings.Settings.Count > 0)
             {
                 var customSetting = config.AppSettings.Settings[customField].ToString();

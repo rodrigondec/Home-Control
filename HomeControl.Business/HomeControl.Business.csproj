@@ -59,6 +59,9 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -76,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Base\Exceptions\BusinessException.cs" />
     <Compile Include="Service\Base\Exceptions\ErrorList.cs" />
+    <Compile Include="Service\Configuration\BusinessDiConfiguration.cs" />
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
     <Compile Include="Service\Implementations\HistoricoUsoDispositivoService.cs" />
     <Compile Include="Service\Interfaces\IHistoricoUsoDispositivoService.cs" />
@@ -94,11 +98,13 @@
     <Compile Include="Service\Interfaces\IResidenciaService.cs" />
     <Compile Include="Service\Interfaces\ISensorService.cs" />
     <Compile Include="Service\Messaging\SmsService.cs" />
+    <Compile Include="Service\Security\ISecurityFacade.cs" />
     <Compile Include="Service\Security\Services\ISignInService.cs" />
     <Compile Include="Service\Security\Managers\UserManager.cs" />
     <Compile Include="Service\Security\Managers\UserSignInManager.cs" />
     <Compile Include="Service\Security\Configuration\SecurityConfiguration.cs" />
     <Compile Include="Service\Security\SecurityFacade.cs" />
+    <Compile Include="Service\Security\Services\IUserService.cs" />
     <Compile Include="Service\Security\Services\SignInService.cs" />
     <Compile Include="Service\Security\Services\UserService.cs" />
   </ItemGroup>
@@ -110,6 +116,10 @@
     <ProjectReference Include="..\HomeControl.Domain\HomeControl.Domain.csproj">
       <Project>{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}</Project>
       <Name>HomeControl.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Operation\HomeControl.Operation.csproj">
+      <Project>{DE831A4F-DADA-42C6-B408-1975B6752461}</Project>
+      <Name>HomeControl.Operation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{7f7ca114-6388-4bc6-811a-74561a895b9c}</Project>

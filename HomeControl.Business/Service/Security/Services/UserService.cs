@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Business.Service.Security
 {
-    public class UserService : IDisposable
+    public class UserService : IDisposable, IUserService
     {
         private UserManager _userManager;
         public UserManager UserManager
