@@ -9,6 +9,6 @@ Um sistema de controle e automação residencial. Utilizando sensores, atuadores
   <dd>- Uma estrutura que permite implementar fácilmente uma nova maneira de acesso ao banco de dados</dd>
   <dt>DAO</dt>
   <dd>- "Data Access Object", implementação e abstração dos métodos de acesso das entitys no banco de dados</dd>
-  <dt>Template Pattern</dt>
+  <dt>Template Method</dt>
   <dd>- </dd>
 </dl>
