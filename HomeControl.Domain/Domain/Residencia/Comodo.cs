@@ -1,9 +1,11 @@
-﻿using System;
+﻿using HomeControl.Domain.Dispositivos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+
 
 namespace HomeControl.Domain.Residencia
 {
@@ -12,6 +14,7 @@ namespace HomeControl.Domain.Residencia
         [Key]
         private int id;
         private string nome;
+        private HashSet<Dispositivo> dispositivos;
 
         public int Id
         {
@@ -36,6 +39,18 @@ namespace HomeControl.Domain.Residencia
             set
             {
                 nome = value;
+            }
+        }
+
+        public HashSet<Dispositivo> Dispositivos
+        {
+            get
+            {
+                return this.dispositivos;
+            }
+            set
+            {
+                this.dispositivos = value;
             }
         }
 

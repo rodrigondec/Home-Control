@@ -2,6 +2,7 @@
 using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
 using HomeControl.Domain.Interruptores;
+using HomeControl.Domain.Residencia;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,16 @@ using System.Web.Mvc;
 
 namespace HomeControl.Controllers
 {
-    public class InterruptorController : AbstractController
+    public class InterruptorController : Controller
     {
         private IInterruptorService _interruptorService;
+        private IComodoService _comodoService;
 
         [Inject]
-        public InterruptorController(IInterruptorService interruptorService)
+        public InterruptorController(IInterruptorService interruptorService, IComodoService comodoService)
         {
             _interruptorService = interruptorService;
+            _comodoService = comodoService;
         }
 
         // GET: Interruptor
@@ -45,6 +48,7 @@ namespace HomeControl.Controllers
         // GET: Interruptor/Create
         public ActionResult Create()
         {
+            PopulateSelectListComodo();
             return View();
         }
 
@@ -60,6 +64,7 @@ namespace HomeControl.Controllers
             }
             catch (BusinessException ex)
             {
+                PopulateSelectListComodo();
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(Interruptor);
             }
@@ -69,7 +74,7 @@ namespace HomeControl.Controllers
         public ActionResult Edit(int id)
         {
             Interruptor interruptor = _interruptorService.Find(id);
-
+            PopulateSelectListComodo();
             if (interruptor == null)
             {
                 ModelState.AddModelError("", "Interruptor não encontrada");
@@ -91,6 +96,7 @@ namespace HomeControl.Controllers
             }
             catch (BusinessException ex)
             {
+                PopulateSelectListComodo();
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(Interruptor);
             }
@@ -117,6 +123,24 @@ namespace HomeControl.Controllers
                 return View();
             }
         }
+        
+        private void PopulateSelectListComodo()
+        {
+            List<Comodo> comodos = _comodoService.FindAll();
+            SelectList listaOpcoesComodo = new SelectList(comodos, "id", "Nome");
+            ViewBag.SelectListComodo = listaOpcoesComodo;
+        }
+
+        #region helpers
+        private void AddValidationErrorsToModelState(ErrorList validationErrors)
+        {
+            foreach (String error in validationErrors.ErrorCodes)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        #endregion
 
     }
 }

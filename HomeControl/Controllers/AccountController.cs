@@ -21,7 +21,8 @@ namespace HomeControl.Controllers
 
         public ISecurityFacade _securityFacade;
 
-        public AccountController(SecurityFacade securityFacade)
+        //verificar com daniel
+        public AccountController(ISecurityFacade securityFacade)
         {
             _securityFacade = securityFacade;
         }

@@ -59,7 +59,9 @@ namespace HomeControl.Domain.Dispositivos
             }
         }
 
-        public virtual Comodo Comodo { get; set; }
+        public int ComodoId { get; set; }
+        [ForeignKey("ComodoId")]
+        public virtual Comodo Comodo { get; protected set; }
 
         public abstract void Activate();
 

@@ -15,7 +15,7 @@ namespace HomeControl.Business.Service.Implementations
         private IEmbarcadoDao dao;
 
         public EmbarcadoService()
-        {            
+        {
             dao = DaoFactory.GetEmbarcadoDao();
             base.GenericDao = dao;
         }
@@ -56,21 +56,21 @@ namespace HomeControl.Business.Service.Implementations
                 erros.Add("O Embarcado precisa ser preenchido");
             }
 
-            if (entity.MacAddress == "")
-            {
-                erros.Add("Mac Address precisar ser preenchido");
-            }
-
-            if (entity.IpAddress == "")
-            {
-                erros.Add("IP precisar ser preenchido");
-            }
-
-            if(entity.Nome == "")
+            if (string.IsNullOrEmpty(entity.Nome))
             {
                 erros.Add("Nome precisa ser preenchido");
             }
 
+            if (string.IsNullOrEmpty(entity.MacAddress))
+            {
+                erros.Add("Mac Address precisar ser preenchido");
+            }
+
+            if (string.IsNullOrEmpty(entity.IpAddress))
+            {
+                erros.Add("IP precisar ser preenchido");
+            }
+            
             if (erros.HasErrors())
             {
                 throw new BusinessException(erros);
