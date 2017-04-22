@@ -13,6 +13,9 @@
     <tr>
 
         <th>
+            @Html.DisplayNameFor(model => model.Embarcado.Nome)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Porta)
         </th>
         <th>
@@ -25,6 +28,10 @@
     {
         <tr>
           
+            <th>
+                @Html.DisplayFor(modelItem => item.Embarcado.Nome)
+            </th>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Porta)
             </td>

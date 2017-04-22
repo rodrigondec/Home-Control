@@ -63,6 +63,10 @@ namespace HomeControl.Domain.Dispositivos
         [ForeignKey("ComodoId")]
         public virtual Comodo Comodo { get; protected set; }
 
+        public int Embarcadoid { get; set; }
+        [ForeignKey("Embarcadoid")]
+        public virtual Embarcado Embarcado { get; protected set; }
+
         public abstract void Activate();
 
         public abstract void Deactivate();
