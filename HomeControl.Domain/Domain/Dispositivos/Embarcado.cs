@@ -1,59 +1,79 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeControl.Domain.Dispositivos
 {
     public class Embarcado : IActivable, IPersistable<int>
     {
+        [Key]
+        private int id;
+        private String nome;
+        private String ipAddress;
+        private String macAddress;
+        private HashSet<Dispositivo> dispositivos;
+
        
-             
-         private String nome;       
-         private String ipAddress;        
-         private String macAddress;
-
-       [Key]
-       public int Id
+        public int Id
         {
-            get;
+            get
+            {
+                return id;
+            }
 
-            set;
+            set
+            {
+                id = value;
+            }
         }
 
         public String Nome
-         {
-             get
-             {
-                 return this.nome;
-             }
-             set
-             {
-                 this.nome = value;
-             }
-         }
-     
-         public String IpAddress
-         {
-             get
-             {
-                 return this.ipAddress;
-             }
-             set
-             {
-                 this.ipAddress = value;
-             }
-         }
-  
-         public String MacAddress
-         {
-             get
-             {
-                 return this.macAddress;
-             }
-             set
-             {
-                 this.macAddress = value;
-             }
-         }   
+        {
+            get
+            {
+                return this.nome;
+            }
+            set
+            {
+                this.nome = value;
+            }
+        }
+
+        public String IpAddress
+        {
+            get
+            {
+                return this.ipAddress;
+            }
+            set
+            {
+                this.ipAddress = value;
+            }
+        }
+
+        public String MacAddress
+        {
+            get
+            {
+                return this.macAddress;
+            }
+            set
+            {
+                this.macAddress = value;
+            }
+        }
+
+        public HashSet<Dispositivo> Dispositivos
+        {
+            get
+            {
+                return this.dispositivos;
+            }
+            set
+            {
+                this.dispositivos = value;
+            }
+        }
 
         void validarDispositivos()
         {

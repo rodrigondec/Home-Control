@@ -15,17 +15,20 @@ namespace HomeControl.Business.Service.Implementations
 
         private IInterruptorDao _interruptorDao;
         private IComodoService _comodoService;
+        private IEmbarcadoService _embarcadoService;
 
-        public InterruptorService(IInterruptorDao interruptorDao, IComodoService comodoService) : base(interruptorDao)
+        public InterruptorService(IInterruptorDao interruptorDao, IComodoService comodoService, IEmbarcadoService embarcadoService) : base(interruptorDao)
         {
             _interruptorDao = interruptorDao;
             _comodoService = comodoService;
+            _embarcadoService = embarcadoService;
         }
 
         public InterruptorService()
         {
             _interruptorDao = DaoFactory.GetInterruptorDao();
             _comodoService = new ComodoService();
+            _embarcadoService = new EmbarcadoService();
         }
 
 
@@ -85,13 +88,23 @@ namespace HomeControl.Business.Service.Implementations
                 errors.Add("Interruptor não pode ser nulo");
                 throw new BusinessException(errors);
             }
-
-           
-
+            
             if (_comodoService.Find(entity.ComodoId) == null)
             {
                 errors.Add("Necessário associar o dispositivo à um comodo.");
             }
+
+
+            if (_embarcadoService.Find(entity.Embarcadoid) == null)
+            {
+                errors.Add("Necessário associar a um Embarcado");
+            }
+
+            if(entity.Porta == 0)
+            {
+                errors.Add("Informe uma porta válida");
+            }
+
             if (errors.HasErrors())
             {
                 throw new BusinessException(errors);

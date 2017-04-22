@@ -1,6 +1,7 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
+using HomeControl.Domain.Dispositivos;
 using HomeControl.Domain.Interruptores;
 using HomeControl.Domain.Residencia;
 using Ninject;
@@ -16,12 +17,14 @@ namespace HomeControl.Controllers
     {
         private IInterruptorService _interruptorService;
         private IComodoService _comodoService;
+        private IEmbarcadoService _embarcadoService;
 
         [Inject]
-        public InterruptorController(IInterruptorService interruptorService, IComodoService comodoService)
+        public InterruptorController(IInterruptorService interruptorService, IComodoService comodoService, IEmbarcadoService embarcadoService)
         {
             _interruptorService = interruptorService;
             _comodoService = comodoService;
+            _embarcadoService = embarcadoService;
         }
 
         // GET: Interruptor
@@ -129,6 +132,10 @@ namespace HomeControl.Controllers
             List<Comodo> comodos = _comodoService.FindAll();
             SelectList listaOpcoesComodo = new SelectList(comodos, "id", "Nome");
             ViewBag.SelectListComodo = listaOpcoesComodo;
+
+            List<Embarcado> embarcados = _embarcadoService.FindAll();
+            SelectList listaOpcoesEmbarcado = new SelectList(embarcados, "id", "Nome");
+            ViewBag.SelectListEmbarcado = listaOpcoesEmbarcado;
         }
 
         #region helpers
