@@ -12,19 +12,19 @@ namespace HomeControl.Controllers
 {
     public class EmbarcadoController : Controller
     {
-        private IEmbarcadoService service = new EmbarcadoService();
+        private IEmbarcadoService _embarcadoService = new EmbarcadoService();
 
         // GET: Embarcado
         public ActionResult Index()
         {
-            return View(service.FindAll());
+            return View(_embarcadoService.FindAll());
         }
 
         // GET: Embarcado/Details/5
         public ActionResult Details(int id)
         {
 
-            Embarcado embarcado = service.Find(id);
+            Embarcado embarcado = _embarcadoService.Find(id);
 
             if (embarcado == null)
             {
@@ -47,7 +47,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Add(embarcado);
+                _embarcadoService.Add(embarcado);
 
                 return RedirectToAction("Index");
             }
@@ -61,7 +61,7 @@ namespace HomeControl.Controllers
         // GET: Embarcado/Edit/5
         public ActionResult Edit(int id)
         {
-            Embarcado embarcado = service.Find(id);
+            Embarcado embarcado = _embarcadoService.Find(id);
 
             if (embarcado == null)
             {
@@ -78,7 +78,7 @@ namespace HomeControl.Controllers
         {
             try
             {
-                service.Update(embarcado);
+                _embarcadoService.Update(embarcado);
 
                 return RedirectToAction("Index");
             }

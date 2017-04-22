@@ -14,14 +14,28 @@ namespace HomeControl.Business.Service.Implementations
     {
 
         private IInterruptorDao _interruptorDao;
-        public InterruptorService(IInterruptorDao interruptorDao) : base(interruptorDao)
+        private IComodoService _comodoService;
+
+        public InterruptorService(IInterruptorDao interruptorDao, IComodoService comodoService) : base(interruptorDao)
         {
-            _interruptorDao = interruptorDao;            
+            _interruptorDao = interruptorDao;
+            _comodoService = comodoService;
         }
-        public InterruptorService() :  this(DaoFactory.GetInterruptorDao()){}
+
+        public InterruptorService()
+        {
+            _interruptorDao = DaoFactory.GetInterruptorDao();
+            _comodoService = new ComodoService();
+        }
+
 
         public override Interruptor Add(Interruptor entity)
         {
+            if (entity.Id > 0)
+            {
+                throw new BusinessException("Não é possível criar um Interruptor já existente.");
+            }
+
             Validar(entity);
             return _interruptorDao.Add(entity);
         }
@@ -62,24 +76,28 @@ namespace HomeControl.Business.Service.Implementations
             ExecutorComando.Instance.Execute(comando);
         }
 
-
         public override void Validar(Interruptor entity)
         {
             ErrorList errors = new ErrorList();
 
-            if(entity == null)
+            if (entity == null)
             {
                 errors.Add("Interruptor não pode ser nulo");
                 throw new BusinessException(errors);
             }
 
-            if(entity.Comodo == null)
+           
+
+            if (_comodoService.Find(entity.ComodoId) == null)
             {
                 errors.Add("Necessário associar o dispositivo à um comodo.");
             }
+            if (errors.HasErrors())
+            {
+                throw new BusinessException(errors);
+            }
 
-            throw new BusinessException(errors);
-           
+
         }
     }
 }

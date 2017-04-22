@@ -18,6 +18,14 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Comodo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ComodoId, (SelectList)ViewBag.SelectListComodo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comodo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
