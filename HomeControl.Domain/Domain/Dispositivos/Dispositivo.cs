@@ -65,7 +65,7 @@ namespace HomeControl.Domain.Dispositivos
 
         public int Embarcadoid { get; set; }
         [ForeignKey("Embarcadoid")]
-        public virtual Embarcado Embarcado { get; protected set; }
+        public virtual Embarcado Embarcado { get; set; }
 
         public abstract void Activate();
 

@@ -83,6 +83,7 @@
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
     <Compile Include="Service\Implementations\HistoricoUsoDispositivoService.cs" />
     <Compile Include="Service\Interfaces\IHistoricoUsoDispositivoService.cs" />
+    <Compile Include="Service\Interruptores\InterruptorImpl.cs" />
     <Compile Include="Service\Messaging\EmailService.cs" />
     <Compile Include="Service\Implementations\AbstractService.cs" />
     <Compile Include="Service\Implementations\ComodoService.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Service\Security\Services\IUserService.cs" />
     <Compile Include="Service\Security\Services\SignInService.cs" />
     <Compile Include="Service\Security\Services\UserService.cs" />
+    <Compile Include="Service\Sensors\SensorImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HomeControl.Data\HomeControl.Data.csproj">
@@ -116,6 +118,10 @@
     <ProjectReference Include="..\HomeControl.Domain\HomeControl.Domain.csproj">
       <Project>{B8F4C1AB-53DE-49BD-BF9A-18C47881D3AD}</Project>
       <Name>HomeControl.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HomeControl.RestClients\HomeControl.RestClients.csproj">
+      <Project>{29b0747d-a519-4dd0-80c7-da10950d1e40}</Project>
+      <Name>HomeControl.RestClients</Name>
     </ProjectReference>
     <ProjectReference Include="..\Operation\HomeControl.Operation.csproj">
       <Project>{DE831A4F-DADA-42C6-B408-1975B6752461}</Project>

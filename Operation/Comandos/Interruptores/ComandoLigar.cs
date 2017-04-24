@@ -1,5 +1,6 @@
 ﻿using HomeControl.Domain.Interruptores;
 using Operation.Comandos.Base;
+using Rest.Clients;
 using System;
 using System.Collections.Generic;
 using System.Linq;

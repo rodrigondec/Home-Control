@@ -5,6 +5,7 @@ using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Interruptores;
 using Operation;
 using Operation.Comandos.Interruptores;
+using Rest.Clients;
 using System;
 using System.Collections.Generic;
 

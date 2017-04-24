@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeControl.Domain.Sensores
+namespace HomeControl.RestClients.Rest.Clients
 {
-    public interface ISensor
+    public class StatusDTO
     {
-        float GetValorAtual();
+        public bool Status { get; set; }
     }
 }

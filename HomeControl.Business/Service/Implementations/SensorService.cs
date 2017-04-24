@@ -1,10 +1,12 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Base.interfaces;
 using HomeControl.Business.Service.Interfaces;
+using HomeControl.Business.Service.Sensors;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Dao.Custom.Implementations;
 using HomeControl.Data.Dal.Dao.Custom.Interfaces;
 using HomeControl.Domain.Sensores;
+using Rest.Clients;
 using System;
 using System.Collections.Generic;
 
@@ -65,6 +67,13 @@ namespace HomeControl.Business.Service.Implementations
             {
                 throw new BusinessException(erros);
             }
+
+        }
+
+        public float GetValorAtual(Sensor sensor)
+        {
+            SensorImpl client = new SensorImpl(sensor);
+            return client.GetValorAtual();
         }
     }
 }

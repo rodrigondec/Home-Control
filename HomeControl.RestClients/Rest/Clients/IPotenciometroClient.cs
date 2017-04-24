@@ -2,9 +2,9 @@
 
 using HomeControl.Domain.Potenciometro;
 
-namespace Operation.Comandos.Potenciometros.Clients
+namespace Rest.Clients
 {
-    public interface PotenciometroClient
+    public interface IPotenciometroClient
     {        
         void AumentarValor(AbstractPotenciometro potenciometro,float valor);
         void DiminuirValor(AbstractPotenciometro potenciometro, float valor);

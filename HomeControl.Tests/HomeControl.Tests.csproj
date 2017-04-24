@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,9 +77,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -113,6 +111,7 @@
     <Compile Include="Initialize\DbContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
+    <Compile Include="Rest\SensorClientTest.cs" />
     <Compile Include="Service\ResidenciaServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +133,10 @@
       <Project>{b8f4c1ab-53de-49bd-bf9a-18c47881d3ad}</Project>
       <Name>HomeControl.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HomeControl.RestClients\HomeControl.RestClients.csproj">
+      <Project>{29b0747d-a519-4dd0-80c7-da10950d1e40}</Project>
+      <Name>HomeControl.RestClients</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HomeControl\HomeControl.csproj">
       <Project>{B763A5E3-EE1F-4096-BC8C-41945C27438E}</Project>
       <Name>HomeControl</Name>
@@ -142,6 +145,9 @@
       <Project>{7f7ca114-6388-4bc6-811a-74561a895b9c}</Project>
       <Name>Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

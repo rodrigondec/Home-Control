@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeControl.Domain.Interruptores
 {
-    interface IInterruptor
+    public interface IInterruptor
     {
         bool GetStatus();
         void DesligarDispositivo();

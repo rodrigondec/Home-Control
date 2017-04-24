@@ -14,6 +14,5 @@ namespace HomeControl.Domain.Potenciometro
         void DiminuirParaValorMinimo();
         void AumentarParaValorMaximo();
 
-
     }
 }

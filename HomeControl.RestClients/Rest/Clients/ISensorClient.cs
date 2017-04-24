@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Operation.Comandos.Sensores.Clients
+namespace Rest.Clients
 {
-    interface SensorClient
+    public interface ISensorClient
     {
-        void RecuperarValorAtual(Sensor sensor);
-    }
+        double RecuperarValorAtual(Sensor sensor);
+    } 
 }
