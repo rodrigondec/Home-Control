@@ -81,6 +81,7 @@
     <Compile Include="Service\Base\Exceptions\ErrorList.cs" />
     <Compile Include="Service\Configuration\BusinessDiConfiguration.cs" />
     <Compile Include="Service\Configuration\DalConfiguration.cs" />
+    <Compile Include="Service\Implementations\DefaultDispositivoService.cs" />
     <Compile Include="Service\Implementations\HistoricoUsoDispositivoService.cs" />
     <Compile Include="Service\Interfaces\IHistoricoUsoDispositivoService.cs" />
     <Compile Include="Service\Interruptores\InterruptorImpl.cs" />

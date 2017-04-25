@@ -92,22 +92,30 @@ namespace HomeControl.Controllers
         // GET: Embarcado/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Embarcado embarcado = _embarcadoService.Find(id);
+            if (embarcado == null)
+            {
+                ModelState.AddModelError("", "Embarcado não Encontrado");
+                return RedirectToAction("Index");
+            }
+            return View(embarcado);
         }
 
         // POST: Embarcado/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Embarcado embarcado)
         {
             try
             {
-                // TODO: Add delete logic here
+                embarcado = _embarcadoService.Find(embarcado.Id);
+                _embarcadoService.Remove(embarcado);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(embarcado);
             }
         }
 

@@ -333,6 +333,7 @@
     <Content Include="Views\Interruptor\Details.cshtml" />
     <Content Include="Views\Interruptor\Edit.cshtml" />
     <Content Include="Views\Interruptor\Delete.cshtml" />
+    <Content Include="Views\Comodo\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

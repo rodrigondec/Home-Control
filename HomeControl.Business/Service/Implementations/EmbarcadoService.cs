@@ -12,39 +12,40 @@ namespace HomeControl.Business.Service.Implementations
 {
     public class EmbarcadoService : AbstractService<Embarcado, int>, IEmbarcadoService
     {
-        private IEmbarcadoDao dao;
+        private IEmbarcadoDao _dao;
 
-        public EmbarcadoService()
+        public EmbarcadoService(IEmbarcadoDao embarcadoDao) : base(embarcadoDao)
         {
-            dao = DaoFactory.GetEmbarcadoDao();
-            base.GenericDao = dao;
+            _dao = embarcadoDao;
         }
+
+        public EmbarcadoService() : this(DaoFactory.GetEmbarcadoDao()) { }
 
         public override Embarcado Add(Embarcado entity)
         {
             Validar(entity);
-            return dao.Add(entity);
+            return _dao.Add(entity);
         }
 
         public override void Dispose()
         {
-            dao.Dispose();
+            _dao.Dispose();
         }
 
         public override Embarcado Find(int id)
         {
-            return dao.Find(id);
+            return _dao.Find(id);
         }
 
         public override List<Embarcado> FindAll()
         {
-            return dao.FindAll();
+            return _dao.FindAll();
         }
 
         public override Embarcado Update(Embarcado entity)
         {
             Validar(entity);
-            return dao.Update(entity);
+            return _dao.Update(entity);
         }
 
         public override void Validar(Embarcado entity)
@@ -66,7 +67,7 @@ namespace HomeControl.Business.Service.Implementations
                 erros.Add("Mac Address precisar ser preenchido");
             }
 
-            if (string.IsNullOrEmpty(entity.IpAddress))
+            if (string.IsNullOrEmpty(entity.Socket))
             {
                 erros.Add("IP precisar ser preenchido");
             }

@@ -44,7 +44,7 @@ namespace Rest.Clients
         #region Resources    
         private string GetResourceAlterarValor(AbstractPotenciometro potenciometro, float valor)
         {
-            String dominio = potenciometro.Embarcado.IpAddress;
+            String dominio = potenciometro.Embarcado.Socket;
             String acao = "AlterarValorPotenciometro";
             int porta = potenciometro.Porta;
 
@@ -53,7 +53,7 @@ namespace Rest.Clients
 
         private string GetResourceRecuperarValor(AbstractPotenciometro potenciometro)
         {
-            String dominio = potenciometro.Embarcado.IpAddress;
+            String dominio = potenciometro.Embarcado.Socket;
             String acao = "ResourceRecuperarValor";
             int porta = potenciometro.Porta;
 

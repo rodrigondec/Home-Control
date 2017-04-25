@@ -108,22 +108,30 @@ namespace HomeControl.Controllers
         // GET: Interruptor/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Interruptor interruptor = _interruptorService.Find(id);
+            if(interruptor == null)
+            {
+                ModelState.AddModelError("", "Interruptor não Encontrado");
+                return RedirectToAction("Index");
+            }
+            return View(interruptor);
         }
 
         // POST: Interruptor/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Interruptor interruptor)
         {
             try
             {
-                // TODO: Add delete logic here
+                interruptor = _interruptorService.Find(interruptor.Id);
+                _interruptorService.Remove(interruptor);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(interruptor);
             }
         }
         

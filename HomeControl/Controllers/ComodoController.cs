@@ -105,22 +105,30 @@ namespace HomeControl.Controllers
         // GET: Comodo/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Comodo comodo = _comodoService.Find(id);
+            if(comodo == null)
+            {
+                ModelState.AddModelError("", "Comodo não Encontrado");
+                return RedirectToAction("Index");
+            }
+            return View(comodo);
         }
 
         // POST: Comodo/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Comodo comodo)
         {
             try
             {
-                // TODO: Add delete logic here
+                comodo = _comodoService.Find(comodo.Id);
+                _comodoService.Remove(comodo);
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (BusinessException ex)
             {
-                return View();
+                AddValidationErrorsToModelState(ex.Errors);
+                return View(comodo);
             }
         }
 

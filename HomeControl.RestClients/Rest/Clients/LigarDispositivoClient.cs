@@ -47,7 +47,7 @@ namespace Rest.Clients
         private string GetResourceLigarDispositivo(Dispositivo dispositivo)
         {
 
-            String dominio = dispositivo.Embarcado.IpAddress;
+            String dominio = dispositivo.Embarcado.Socket;
             int portaDispositivo = dispositivo.Porta;
             String acao = "Ligar";
 
@@ -58,7 +58,7 @@ namespace Rest.Clients
         private string GetResourceDesligarDispositivo(Dispositivo dispositivo)
         {
 
-            String dominio = dispositivo.Embarcado.IpAddress;
+            String dominio = dispositivo.Embarcado.Socket;
             int portaDispositivo = dispositivo.Porta;
             String acao = "Desligar";
 
@@ -68,7 +68,7 @@ namespace Rest.Clients
 
         private string GetResourceStatusInterruptor(Interruptor dispositivo)
         {
-            String dominio = dispositivo.Embarcado.IpAddress;
+            String dominio = dispositivo.Embarcado.Socket;
             int portaDispositivo = dispositivo.Porta;
             String acao = "Status";
 

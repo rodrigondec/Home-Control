@@ -9,7 +9,7 @@ namespace HomeControl.Domain.Dispositivos
         [Key]
         private int id;
         private String nome;
-        private String ipAddress;
+        private String socket;
         private String macAddress;
         private HashSet<Dispositivo> dispositivos;
 
@@ -39,15 +39,15 @@ namespace HomeControl.Domain.Dispositivos
             }
         }
 
-        public String IpAddress
+        public String Socket
         {
             get
             {
-                return this.ipAddress;
+                return this.socket;
             }
             set
             {
-                this.ipAddress = value;
+                this.socket = value;
             }
         }
 

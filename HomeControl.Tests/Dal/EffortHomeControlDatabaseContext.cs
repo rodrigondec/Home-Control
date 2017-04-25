@@ -10,7 +10,7 @@ namespace HomeControl.Tests.Dal
     public class EffortHomeControlDatabaseContext : ConnectionProviderTest
     {
 
-        public IHomeControlDBContext CreateContext()
+        public HomeControlDBContext CreateContext()
         {
             base.CreateConnection();
             var context = new HomeControlDBContext(_connection);

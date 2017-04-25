@@ -2,6 +2,7 @@
 using HomeControl.Business.Service.Interfaces;
 using HomeControl.Data.Dal.Dao.Custom.Implementations;
 using HomeControl.Data.Dal.Dao.Custom.Interfaces;
+using HomeControl.Domain.Dispositivos;
 using HomeControl.Domain.Interruptores;
 using Operation;
 using Operation.Comandos.Interruptores;
@@ -17,21 +18,17 @@ namespace HomeControl.Business.Service.Implementations
         private IInterruptorDao _interruptorDao;
         private IComodoService _comodoService;
         private IEmbarcadoService _embarcadoService;
+        private DefaultDispositivoService _defaultdispositivo;
 
-        public InterruptorService(IInterruptorDao interruptorDao, IComodoService comodoService, IEmbarcadoService embarcadoService) : base(interruptorDao)
+        public InterruptorService(IInterruptorDao interruptorDao, IComodoService comodoService, IEmbarcadoService embarcadoService, DefaultDispositivoService defaultDispositivo) : base(interruptorDao)
         {
             _interruptorDao = interruptorDao;
             _comodoService = comodoService;
             _embarcadoService = embarcadoService;
+            _defaultdispositivo = defaultDispositivo;
         }
 
-        public InterruptorService()
-        {
-            _interruptorDao = DaoFactory.GetInterruptorDao();
-            _comodoService = new ComodoService();
-            _embarcadoService = new EmbarcadoService();
-        }
-
+        public InterruptorService() : this(DaoFactory.GetInterruptorDao(), new ComodoService(), new EmbarcadoService(), new DefaultDispositivoService()) { }
 
         public override Interruptor Add(Interruptor entity)
         {
@@ -72,6 +69,7 @@ namespace HomeControl.Business.Service.Implementations
 
             ExecutorComando.Instance.Execute(comando);
         }
+
         public void DesligarDispositivo(Interruptor dispositivo)
         {
             ComandoLigar comando = new ComandoLigar(new LigarInterruptorClient());
@@ -89,23 +87,31 @@ namespace HomeControl.Business.Service.Implementations
                 errors.Add("Interruptor não pode ser nulo");
                 throw new BusinessException(errors);
             }
-            
+
             if (_comodoService.Find(entity.ComodoId) == null)
             {
                 errors.Add("Necessário associar o dispositivo à um comodo.");
             }
-
-
+            
             if (_embarcadoService.Find(entity.Embarcadoid) == null)
             {
                 errors.Add("Necessário associar a um Embarcado");
             }
 
-            if(entity.Porta == 0)
+            if (entity.Porta == 0)
             {
                 errors.Add("Informe uma porta válida");
             }
+            else
+            {
+                List<Dispositivo> resul = _defaultdispositivo.FindByPorta(entity.Porta);
 
+                //if (resul != null || resul.Count != 0)
+                //{
+                //    errors.Add("Porta já utilizada.");
+                //}
+            }
+            
             if (errors.HasErrors())
             {
                 throw new BusinessException(errors);

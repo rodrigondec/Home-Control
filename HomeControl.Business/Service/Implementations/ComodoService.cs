@@ -17,18 +17,14 @@ namespace HomeControl.Business.Service.Implementations
     {
         private IComodoDao _dao;
         private IResidenciaService _residenciaService;
-
-
+        
         public ComodoService(IComodoDao comodoDao, IResidenciaService residenciaService) : base(comodoDao)
         {
             _dao = comodoDao;
             _residenciaService = residenciaService;
         }
-        public ComodoService()
-        {
-            _dao = DaoFactory.GetComodoDao();
-            _residenciaService = new ResidenciaService();
-        }
+
+        public ComodoService() : this(DaoFactory.GetComodoDao(), new ResidenciaService()) { }
 
         public override Comodo Add(Comodo entity)
         {

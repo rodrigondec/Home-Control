@@ -33,7 +33,7 @@ namespace Rest.Clients
 
         private string GetResourceRecuperarValorAtual(Sensor sensor)
         {
-            String dominio = sensor.Embarcado.IpAddress;
+            String dominio = sensor.Embarcado.Socket;
             String acao = "VALORATUALSENSOR";
             int porta = sensor.Porta;
 

@@ -20,7 +20,7 @@ namespace HomeControl.Tests.Rest
             sensor.Porta = 1;
             sensor.Embarcado = new Embarcado()
             {
-                IpAddress = "127.0.0.1:8080"
+                Socket = "127.0.0.1:8080"
             };
 
             SensorClient sensorClient = SensorClient.Instance;
