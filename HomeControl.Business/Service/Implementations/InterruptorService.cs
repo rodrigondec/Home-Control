@@ -106,10 +106,10 @@ namespace HomeControl.Business.Service.Implementations
             {
                 List<Dispositivo> resul = _defaultdispositivo.FindByPorta(entity.Porta);
 
-                //if (resul != null || resul.Count != 0)
-                //{
-                //    errors.Add("Porta já utilizada.");
-                //}
+                if (resul != null && resul.Count > 0)
+                {
+                    errors.Add("A porta já está sendo utilizada por outro dispositivo");
+                }
             }
             
             if (errors.HasErrors())
