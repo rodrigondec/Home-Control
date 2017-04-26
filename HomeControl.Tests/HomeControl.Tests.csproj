@@ -116,6 +116,8 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Rest\SensorClientTest.cs" />
     <Compile Include="Service\ComodoServiceTests.cs" />
+    <Compile Include="Service\EmbarcadoServiceTests.cs" />
+    <Compile Include="Service\InterruptorServiceTests.cs" />
     <Compile Include="Service\ResidenciaServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

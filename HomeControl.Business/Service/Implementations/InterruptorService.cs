@@ -64,18 +64,24 @@ namespace HomeControl.Business.Service.Implementations
 
         public void LigarDispositivo(Interruptor dispositivo)
         {
+            //TO DO: Registrar mudança de estado
             ComandoLigar comando = new ComandoLigar(new LigarInterruptorClient());
             comando.Dispositivo = dispositivo;
 
             ExecutorComando.Instance.Execute(comando);
+            dispositivo.Estado = 1;
+            Update(dispositivo);
         }
 
         public void DesligarDispositivo(Interruptor dispositivo)
         {
+            //TO DO: Registrar mudança de estado
             ComandoLigar comando = new ComandoLigar(new LigarInterruptorClient());
             comando.Dispositivo = dispositivo;
 
             ExecutorComando.Instance.Execute(comando);
+            dispositivo.Estado = 0;
+            this.Update(dispositivo);
         }
 
         public override void Validar(Interruptor entity)

@@ -17,7 +17,7 @@ namespace HomeControl.Business.Service.Implementations
     {
         private IComodoDao _dao;
         private IResidenciaService _residenciaService;
-        
+
         public ComodoService(IComodoDao comodoDao, IResidenciaService residenciaService) : base(comodoDao)
         {
             _dao = comodoDao;
@@ -34,8 +34,8 @@ namespace HomeControl.Business.Service.Implementations
                 throw new BusinessException("Não é possível criar um comodo já existente.");
             }
 
-            Validar(entity);           
-            
+            Validar(entity);
+
             return _dao.Add(entity);
         }
 
@@ -57,7 +57,8 @@ namespace HomeControl.Business.Service.Implementations
 
         public override Comodo Update(Comodo entity)
         {
-            if (entity.Id <= 0){
+            if (entity.Id <= 0)
+            {
                 throw new BusinessException("Não é possível alterar um comodo não existente.");
             }
 
@@ -72,10 +73,16 @@ namespace HomeControl.Business.Service.Implementations
             if (entity == null)
             {
                 erros.Add("Comodo precisa ser Preenchido");
-                throw new BusinessException(erros);
+
             }
 
-            if(_residenciaService.Find(entity.ResidenciaId) == null)
+            if (string.IsNullOrEmpty(entity.Nome))
+            {
+                erros.Add("Nome não preenchido");
+
+            }
+
+            if (_residenciaService.Find(entity.ResidenciaId) == null)
             {
                 erros.Add("Residencia precisa ser selecionada");
             }
@@ -84,7 +91,7 @@ namespace HomeControl.Business.Service.Implementations
             {
                 throw new BusinessException(erros);
             }
-            
+
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using HomeControl.Business.Service.Implementations;
+﻿using HomeControl.Business.Service.Base.Exceptions;
+using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
 using HomeControl.Data.Dal.Context;
 using HomeControl.Data.Dal.Dao.Custom.Implementations;
@@ -19,6 +20,7 @@ namespace HomeControl.Tests.Service
     {
         private IResidenciaService _residenciaService;
         private IResidenciaDao _residenciaDao;
+        private Residencia obj;
 
         [TestInitialize]
         public void InitializeTest()
@@ -30,15 +32,67 @@ namespace HomeControl.Tests.Service
         [TestMethod]
         public void TestAdd()
         {
-            Residencia r = new  Residencia();
-            r.Nome = "teste";
+            obj = new Residencia();
+            obj.Nome = "teste";
             int total = _residenciaService.FindAll().Count;
-            _residenciaService.Add(r);
-            Assert.AreEqual(_residenciaService.FindAll().Count, total+1);
+            _residenciaService.Add(obj);
+            Assert.AreEqual(total + 1, _residenciaService.FindAll().Count);
         }
 
-        //[TestMethod]
-        //public void Test
+        [TestMethod]
+        public void TestFind()
+        {
+            obj = new Residencia();
+            obj.Nome = "Teste";
+            _residenciaService.Add(obj);
+            obj = _residenciaService.Find(1);
+            Assert.AreEqual(1, obj.Id);
+        }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            obj = new Residencia();
+            obj.Nome = "Teste";
+            _residenciaService.Add(obj);
+            obj = _residenciaService.Find(1);
+            obj.Nome = "Nome Alterado";
+            _residenciaService.Update(obj);
+            Assert.AreEqual(obj, _residenciaService.Find(1));
+        }
+
+
+        [TestMethod]
+        public void TestValidarNull()
+        {
+            obj = new Residencia();
+            try
+            {
+                _residenciaService.Validar(obj);
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is BusinessException);
+            }
+        }
+
+
+        [TestMethod]
+        public void TestValidarNomeBranco()
+        {
+            obj = new Residencia();
+            obj.Nome = "";
+            try
+            {
+                _residenciaService.Validar(obj);
+                Assert.Fail("no exception thrown");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is BusinessException);
+            }
+        }
 
 
     }
