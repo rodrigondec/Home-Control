@@ -1,0 +1,25 @@
+﻿@model HomeControl.Domain.Sensores.Sensor
+
+@{
+    ViewBag.Title = "VerValor";
+}
+
+<h2>Ver Valor</h2>
+
+<div>
+    <h4>Sensor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Valor:
+        </dt>
+
+        <dt>
+            @ViewBag.ValorSensor
+        </dt>        
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

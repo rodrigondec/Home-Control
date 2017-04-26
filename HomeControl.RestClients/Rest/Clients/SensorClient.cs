@@ -37,7 +37,7 @@ namespace Rest.Clients
             String acao = "VALORATUALSENSOR";
             int porta = sensor.Porta;
 
-            return "http://"+dominio+"/"+acao+"/"+porta;
+            return "http://"+dominio+"/"+acao;
         }
 
     }

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Rest.Clients.ActivableClient">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAABAAAAAAAAAAACAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Rest\Clients\ActivableClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rest.Clients.BaseClient" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAIAAQ=</HashCode>
+      <FileName>Rest\Clients\BaseClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rest.Clients.LigarInterruptorClient">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAEAAAAAAAAEAAAAEAAACAAAAAAABAAIAAA=</HashCode>
+      <FileName>Rest\Clients\LigarDispositivoClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rest.Clients.PotenciometroClient">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAABQAAAAAQCAAAAAEAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\PotenciometroClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rest.Clients.RestClientException">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\RestClientException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rest.Clients.SensorClient">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEAAAAABAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\SensorClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Rest.Clients.ValorDTO">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\ValorDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HomeControl.RestClients.Rest.Clients.StatusDTO">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\StatusDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Rest.Clients.ILigarInterruptorClient">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAEAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Rest\Clients\ILigarInterruptorClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Rest.Clients.IPotenciometroClient">
+    <Position X="11.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAABQAAAAAACAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\IPotenciometroClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Rest.Clients.ISensorClient">
+    <Position X="9.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rest\Clients\ISensorClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

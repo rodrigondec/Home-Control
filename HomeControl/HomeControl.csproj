@@ -260,6 +260,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -334,6 +335,9 @@
     <Content Include="Views\Interruptor\Edit.cshtml" />
     <Content Include="Views\Interruptor\Delete.cshtml" />
     <Content Include="Views\Comodo\Delete.cshtml" />
+    <Content Include="Views\Sensor\Index.cshtml" />
+    <Content Include="Views\Sensor\Create.cshtml" />
+    <Content Include="Views\Sensor\VerValor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

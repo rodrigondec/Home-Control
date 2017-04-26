@@ -1,6 +1,8 @@
 ﻿using HomeControl.Business.Service.Base.Exceptions;
 using HomeControl.Business.Service.Implementations;
 using HomeControl.Business.Service.Interfaces;
+using HomeControl.Domain.Dispositivos;
+using HomeControl.Domain.Residencia;
 using HomeControl.Domain.Sensores;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace HomeControl.Controllers
     {
 
         private ISensorService _sensorService = new SensorService();
+        private IComodoService _comodoService = new ComodoService();
+        private IEmbarcadoService _embarcadoService = new EmbarcadoService();
 
         // GET: Sensor
         public ActionResult Index()
@@ -38,6 +42,7 @@ namespace HomeControl.Controllers
         // GET: Sensor/Create
         public ActionResult Create()
         {
+            PopulateSelectListComodo();
             return View();
         }
 
@@ -53,6 +58,7 @@ namespace HomeControl.Controllers
             }
             catch (BusinessException ex)
             {
+                PopulateSelectListComodo();
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(sensor);
             }
@@ -117,6 +123,33 @@ namespace HomeControl.Controllers
                 AddValidationErrorsToModelState(ex.Errors);
                 return View(sensor);
             }
+        }
+
+        public ActionResult VerValor(int id)
+        {
+            Sensor sensor = _sensorService.Find(id);
+            if (sensor == null)
+            {
+                ModelState.AddModelError("", "Sensor não Encontrado");
+                return RedirectToAction("Index");
+            }
+
+            var valorSensor = _sensorService.GetValorAtual(sensor);
+
+            ViewBag.ValorSensor = valorSensor;
+
+            return View(sensor);
+        }
+
+        private void PopulateSelectListComodo()
+        {
+            List<Comodo> comodos = _comodoService.FindAll();
+            SelectList listaOpcoesComodo = new SelectList(comodos, "id", "Nome");
+            ViewBag.SelectListComodo = listaOpcoesComodo;
+
+            List<Embarcado> embarcados = _embarcadoService.FindAll();
+            SelectList listaOpcoesEmbarcado = new SelectList(embarcados, "id", "Nome");
+            ViewBag.SelectListEmbarcado = listaOpcoesEmbarcado;
         }
 
         #region helpers

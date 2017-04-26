@@ -58,7 +58,7 @@ namespace HomeControl.Business.Service.Implementations
                 erros.Add("Sensor precisa ser preenchido");
             }
 
-            if(entity.Comodo == null)
+            if(entity.ComodoId == 0)
             {
                 erros.Add("Sensor precisar estar associado a um Cômodo");
             }
