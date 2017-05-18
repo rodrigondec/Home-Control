@@ -144,26 +144,27 @@ class Dispositivo(db.Model):
 		self.porta = porta
 		self.tipo = tipo
 
-	id_sensor =  db.Column(db.Integer, primary_key=True)
-	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-	dispositivo = db.relationship("Dispositivo")
 class Sensor(Dispositivo):
 	__tablename__ = 'sensor'
 
-	id_interruptor =  db.Column(db.Integer, primary_key=True)
-	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-	dispositivo = db.relationship("Dispositivo")
+	id_sensor =  db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
 
-	id_potenciometro =  db.Column(db.Integer, primary_key=True)
-	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-	dispositivo = db.relationship("Dispositivo")
+	def __init__(self, porta):
+		Dispositivo.__init__(self, porta, self.__tablename__)
+
 class Interruptor(Dispositivo):
 	__tablename__ = 'interruptor'
 
+	id_interruptor =  db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+
 	def __init__(self, porta):
 		Dispositivo.__init__(porta, self.__tablename__)
+
 class Potenciometro(Dispositivo):
 	__tablename__ = 'potenciometro'
+
+	id_potenciometro =  db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+
 	def __init__(self, porta):
 		Dispositivo.__init__(self, porta, self.__tablename__)
 
