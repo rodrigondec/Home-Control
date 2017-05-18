@@ -31,3 +31,27 @@ class Propriedade(AbstractName):
 		if not(isinstance(component, Component)):
 			raise TypeError('Precisa ser um objeto do tipo Component')
 		self.components.append(component)
+
+class Usuario(AbstractName):
+	"""docstring for Usuario"""
+	def __init__(self, nome=None, email=None, senha=None):
+		super().__init__(nome)
+		self.email = email
+		self.senha = senha
+	
+	@property
+	def email(self):
+		return self.__email
+
+	@email.setter
+	def email(self, email):
+		self.__email = email
+
+	@property
+	def senha(self):
+		return self.__senha
+
+	@senha.setter
+	def senha(self, senha):
+		self.__senha = senha
+
