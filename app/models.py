@@ -89,7 +89,7 @@ class Modulo(Component):
 	__tablename__ = 'modulo'
 
 	id_modulo = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
-	component = db.relationship("Component")
+	component = db.relationship("Component", primaryjoin="and_(Modulo.id_modulo==Component.id_component)")
 	components = db.relationship(
         'Component',
         secondary=modulo_component,
@@ -103,6 +103,7 @@ class ModuloPrivado(Modulo):
 	__tablename__ = 'modulo_privado'
 
 	id_modulo_privado =  db.Column(db.Integer(), db.ForeignKey("modulo.id_modulo"), primary_key=True)
+	modulo = db.relationship("Modulo", primaryjoin="and_(Modulo.id_modulo==Modulo_privado.id_modulo_privado)")
 	usuarios = db.relationship(
         'Usuario',
         secondary=modulo_usuario,
