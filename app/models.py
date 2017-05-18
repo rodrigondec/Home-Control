@@ -69,3 +69,20 @@ class Dispositivo(object):
 		self.identificador=Dispositivo.identificador
 		Dispositivo.identificador += 1
 
+class Sensor(Dispositivo):
+	"""docstring for Sensor"""
+	def __init__(self):
+		super().__init__()
+		self.arg = arg
+
+class Interruptor(Dispositivo):
+	"""docstring for Interruptor"""
+	def __init__(self, arg):
+		super().__init__()
+		self.arg = arg
+
+class Potenciometro(Dispositivo):
+	"""docstring for Potenciometro"""
+	def __init__(self, arg):
+		self.arg = arg
+
