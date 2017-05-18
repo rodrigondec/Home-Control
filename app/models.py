@@ -115,3 +115,22 @@ class Leaf(Component):
 		self.dispositivos = dispositivos
 		self.monitor = monitor
 
+class Modulo(Component):
+	"""docstring for Modulo"""
+	def __init__(self, nome=None, components=[]):
+		if self.__class__ is Modulo:
+			raise TypeError('abstract class cannot be instantiated')
+		super().__init__(nome)
+		self.components = []
+
+class ModuloPublico(Modulo):
+	"""docstring for ModuloPublico"""
+	def __init__(self, nome=None, components=[]):
+		super().__init__(nome, components)
+
+class ModuloPrivado(Modulo):
+	"""docstring for ModuloPublico"""
+	def __init__(self, nome=None, components=[], usuarios=[]):
+		super().__init__(nome, components)
+		self.usuarios = usuarios
+
