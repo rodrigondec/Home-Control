@@ -85,14 +85,15 @@ class Leaf(Component):
 	# children = relationship("Child")
 	monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
-	id_modulo = db.Column(db.Integer, primary_key=True)
-	component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	def __init__(self, nome):
 		Component.__init__(self, nome, self.__tablename__)
 
 class Modulo(Component):
 	__tablename__ = 'modulo'
 
+	# id_modulo = db.Column(db.Integer, primary_key=True)
+	id_modulo = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
+	# component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	component = db.relationship("Component")
 	components = db.relationship(
         'Component',
