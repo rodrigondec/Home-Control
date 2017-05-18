@@ -91,21 +91,21 @@ class Uso(object):
 		
 class Monitor(AbstractName):
 	"""docstring for Monitor"""
-	def __init__(self, nome=None):
+	def __init__(self, nome):
 		if self.__class__ is Monitor:
 			raise TypeError('abstract class cannot be instantiated')
 		super().__init__(nome)
 
 class Component(AbstractName):
 	"""docstring for Component"""
-	def __init__(self, nome=None):
+	def __init__(self, nome):
 		super().__init__(nome)
 		if self.__class__ is Component:
 			raise TypeError('abstract class cannot be instantiated')
 
 class Leaf(Component):
 	"""docstring for Propriedade"""
-	def __init__(self, nome=None, embarcado=None, dispositivos=[], monitor=None):
+	def __init__(self, nome, embarcado=None, dispositivos=[], monitor=None):
 		super().__init__(nome)
 		self.embarcado = embarcado
 		self.dispositivos = dispositivos
@@ -113,7 +113,7 @@ class Leaf(Component):
 
 class Modulo(Component):
 	"""docstring for Modulo"""
-	def __init__(self, nome=None, components=[]):
+	def __init__(self, nome, components=[]):
 		if self.__class__ is Modulo:
 			raise TypeError('abstract class cannot be instantiated')
 		super().__init__(nome)
@@ -121,12 +121,12 @@ class Modulo(Component):
 
 class ModuloPublico(Modulo):
 	"""docstring for ModuloPublico"""
-	def __init__(self, nome=None, components=[]):
+	def __init__(self, nome, components=[]):
 		super().__init__(nome, components)
 
 class ModuloPrivado(Modulo):
 	"""docstring for ModuloPublico"""
-	def __init__(self, nome=None, components=[], usuarios=[]):
+	def __init__(self, nome, components=[], usuarios=[]):
 		super().__init__(nome, components)
 		self.usuarios = usuarios
 
