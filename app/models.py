@@ -93,3 +93,10 @@ class Uso(object):
 		self.dispositivo = dispositivo
 		self.comando = comando
 		
+class Monitor(AbstractName):
+	"""docstring for Monitor"""
+	def __init__(self, nome=None):
+		if self.__class__ is Monitor:
+			raise TypeError('abstract class cannot be instantiated')
+		super().__init__(nome)
+
