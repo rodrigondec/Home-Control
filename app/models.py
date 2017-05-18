@@ -80,6 +80,7 @@ class Leaf(Component):
 	component = db.relationship("Component")
 	embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 	dispositivos = db.relationship("Dispositivo", back_populates="leaf")
+	usos = db.relationship("Uso", back_populates="leaf")
 	monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
 	def __init__(self, nome):
@@ -168,6 +169,8 @@ class Uso(db.Model):
 	__tablename__ = 'uso'
 
 	id_uso = db.Column(db.Integer, primary_key=True)
+	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+	leaf = db.relationship("Leaf", back_populates="usos")
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
 	dispositivo = db.relationship("Dispositivo", back_populates="usos")
 	comando = db.Column(db.String(30))
