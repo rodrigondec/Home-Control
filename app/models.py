@@ -100,3 +100,18 @@ class Monitor(AbstractName):
 			raise TypeError('abstract class cannot be instantiated')
 		super().__init__(nome)
 
+class Component(AbstractName):
+	"""docstring for Component"""
+	def __init__(self, nome=None):
+		super().__init__(nome)
+		if self.__class__ is Component:
+			raise TypeError('abstract class cannot be instantiated')
+
+class Leaf(Component):
+	"""docstring for Propriedade"""
+	def __init__(self, nome=None, embarcado=None, dispositivos=[], monitor=None):
+		super().__init__(nome)
+		self.embarcado = embarcado
+		self.dispositivos = dispositivos
+		self.monitor = monitor
+
