@@ -41,7 +41,7 @@ class TemplateName(db.Model):
 
 	nome = db.Column(db.String(80))
 
-	def __init__(nome):
+	def __init__(self, nome):
 		if self.__class__ is TemplateName:
 			raise TypeError('abstract class cannot be instantiated')
 		self.nome = nome
@@ -51,7 +51,7 @@ class Usuario(TemplateName):
 	email = db.Column(db.String(50), unique=True)
 	senha = db.Column(db.String(64))
 
-	def __init__(nome, email, senha):
+	def __init__(self, nome, email, senha):
 		super().__init__(nome)
 		self.email = email
 		self.senha = senha
@@ -63,8 +63,8 @@ class Component(TemplateName):
 	id_component = db.Column(db.Integer, primary_key=True)
 	tipo = db.Column(db.String(10))
 
-	def __init__(nome, tipo):
-		super().__init__(nome)
+	def __init__(self, nome, tipo):
+		super().__init__(self, nome)
 		self.tipo = tipo
 
 class Leaf(db.Model):
@@ -73,6 +73,7 @@ class Leaf(db.Model):
 	component = db.relationship("Component")
 	embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 	dispositivos = db.relationship("Dispositivo", back_populates="leaf")
+	# children = relationship("Child")
 	monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
 class Modulo(db.Model):
@@ -100,7 +101,7 @@ class Embarcado(db.Model):
 	ip = db.Column(db.String(15))
 	mac = db.Column(db.String(20))
 
-	def __init__(ip, mac):
+	def __init__(self, ip, mac):
 		self.ip = ip
 		self.mac = mac
 
@@ -108,10 +109,11 @@ class Dispositivo(db.Model):
 	id_dispositivo = db.Column(db.Integer, primary_key=True)
 	porta = db.Column(db.Integer)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+	leaf = db.relationship("Leaf", back_populates="dispositivos")
 	usos = db.relationship("Uso", back_populates="dispositivo")
 	tipo = db.Column(db.String(10))
 
-	def __init__(porta, tipo):
+	def __init__(self, porta, tipo):
 		self.porta = porta
 		self.tipo = tipo
 
@@ -133,10 +135,11 @@ class Potenciometro(db.Model):
 class Uso(db.Model):
 	id_uso = db.Column(db.Integer, primary_key=True)
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
+	dispositivo = db.relationship("Dispositivo", back_populates="usos")
 	comando = db.Column(db.String(30))
 	hora = db.Column(db.DateTime, default=db.func.now())
 
-	def __init__(comando):
+	def __init__(self, comando):
 		self.comando = comando
 
 class Monitor(TemplateName):
@@ -144,5 +147,5 @@ class Monitor(TemplateName):
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
 	leaf = db.relationship("Leaf", back_populates="monitor")
 
-	def __init__(nome):
+	def __init__(self, nome):
 		super().__init__(nome)
