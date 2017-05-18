@@ -1,5 +1,5 @@
 class AbstractName(object):
-	def __init__(self, nome=None):
+	def __init__(self, nome):
 		if self.__class__ is AbstractName:
 			raise TypeError('abstract class cannot be instantiated')
 		self.nome = nome
@@ -15,26 +15,22 @@ class AbstractName(object):
 	def __str__(self):
 		return self.nome
 
-class Propriedade(AbstractName):
-	"""docstring for Propriedade"""
-	def __init__(self, nome=None, components=[], usuarios=[]):
-		super().__init__(nome)
-		self.components = components
-		self.usuarios = usuarios
-
-	def add_usuario(self, usuario):
-		if not(isinstance(usuario, Usuario)):
-			raise TypeError('Precisa ser um objeto do tipo Usuario')
-		self.usuarios.append(usuario)
+class Client(object):
+	"""docstring for Client"""
+	def __init__(self, root):
+		if not(isinstance(root, Component)):
+			raise TypeError('Precisa ser um objeto do tipo Component')
+		self.root = root
 
 	def add_component(self, component):
-		if not(isinstance(component, Component)):
-			raise TypeError('Precisa ser um objeto do tipo Component')
-		self.components.append(component)
+		self.root.add_component(component)
+
+	def __str__(self):
+		return self.root.nome
 
 class Usuario(AbstractName):
 	"""docstring for Usuario"""
-	def __init__(self, nome=None, email=None, senha=None):
+	def __init__(self, nome, email, senha):
 		super().__init__(nome)
 		self.email = email
 		self.senha = senha
