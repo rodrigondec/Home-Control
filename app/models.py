@@ -47,38 +47,51 @@ class TemplateName(db.Model):
 		self.nome = nome
 
 class Usuario(TemplateName):
+	__tablename__ = 'usuario'
+
 	id_usuario = db.Column(db.Integer, primary_key=True)
 	email = db.Column(db.String(50), unique=True)
 	senha = db.Column(db.String(64))
 
 	def __init__(self, nome, email, senha):
-		super().__init__(nome)
+		TemplateName.__init__(self, nome)
 		self.email = email
 		self.senha = senha
 
 class Client(db.Model):
-    id_client = db.Column(db.Integer, primary_key=True)
+	__tablename__ = 'client'
+
+	id_client = db.Column(db.Integer, primary_key=True)
 
 class Component(TemplateName):
+	__tablename__ = 'component'
+
 	id_component = db.Column(db.Integer, primary_key=True)
-	tipo = db.Column(db.String(10))
+	tipo = db.Column(db.String(15))
 
 	def __init__(self, nome, tipo):
-		super().__init__(self, nome)
+		TemplateName.__init__(self, nome)
 		self.tipo = tipo
 
-class Leaf(db.Model):
 	id_leaf = db.Column(db.Integer, primary_key=True)
 	component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
+class Leaf(Component):
+	__tablename__ = 'leaf'
+
 	component = db.relationship("Component")
 	embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 	dispositivos = db.relationship("Dispositivo", back_populates="leaf")
 	# children = relationship("Child")
 	monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
-class Modulo(db.Model):
 	id_modulo = db.Column(db.Integer, primary_key=True)
 	component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
+	def __init__(self, nome):
+		Component.__init__(self, nome, self.__tablename__)
+
+class Modulo(Component):
+	__tablename__ = 'modulo'
+
 	component = db.relationship("Component")
 	components = db.relationship(
         'Component',
@@ -86,7 +99,12 @@ class Modulo(db.Model):
         backref=db.backref('modulo', lazy='dynamic')
     )
 
+	def __init__(self, nome):
+		Component.__init__(self, nome, self.__tablename__)
+
 class ModuloPrivado(Modulo):
+	__tablename__ = 'modulo_privado'
+
 	id_modulo_privado =  db.Column(db.Integer(), db.ForeignKey("modulo.id_modulo"), primary_key=True)
 	usuarios = db.relationship(
         'Usuario',
@@ -94,7 +112,12 @@ class ModuloPrivado(Modulo):
         backref=db.backref('modulos', lazy='dynamic')
     )
 
+	def __init__(self, nome):
+		Component.__init__(self, nome, self.__tablename__)
+
 class Embarcado(db.Model):
+	__tablename__ = 'embarcado'
+
 	id_embarcado = db.Column(db.Integer, primary_key=True)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
 	leaf = db.relationship("Leaf", back_populates="embarcado")
@@ -106,33 +129,45 @@ class Embarcado(db.Model):
 		self.mac = mac
 
 class Dispositivo(db.Model):
+	__tablename__ = 'dispositivo'
+
 	id_dispositivo = db.Column(db.Integer, primary_key=True)
 	porta = db.Column(db.Integer)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
 	leaf = db.relationship("Leaf", back_populates="dispositivos")
 	usos = db.relationship("Uso", back_populates="dispositivo")
-	tipo = db.Column(db.String(10))
+	tipo = db.Column(db.String(15))
 
 	def __init__(self, porta, tipo):
 		self.porta = porta
 		self.tipo = tipo
 
-class Sensor(db.Model):
 	id_sensor =  db.Column(db.Integer, primary_key=True)
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
 	dispositivo = db.relationship("Dispositivo")
+class Sensor(Dispositivo):
+	__tablename__ = 'sensor'
 
-class Interruptor(db.Model):
 	id_interruptor =  db.Column(db.Integer, primary_key=True)
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
 	dispositivo = db.relationship("Dispositivo")
 
-class Potenciometro(db.Model):
 	id_potenciometro =  db.Column(db.Integer, primary_key=True)
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
 	dispositivo = db.relationship("Dispositivo")
+class Interruptor(Dispositivo):
+	__tablename__ = 'interruptor'
+
+	def __init__(self, porta):
+		Dispositivo.__init__(porta, self.__tablename__)
+class Potenciometro(Dispositivo):
+	__tablename__ = 'potenciometro'
+	def __init__(self, porta):
+		Dispositivo.__init__(self, porta, self.__tablename__)
 
 class Uso(db.Model):
+	__tablename__ = 'uso'
+
 	id_uso = db.Column(db.Integer, primary_key=True)
 	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
 	dispositivo = db.relationship("Dispositivo", back_populates="usos")
@@ -143,9 +178,11 @@ class Uso(db.Model):
 		self.comando = comando
 
 class Monitor(TemplateName):
+	__tablename__ = 'monitor'
+
 	id_monitor = db.Column(db.Integer, primary_key=True)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
 	leaf = db.relationship("Leaf", back_populates="monitor")
 
 	def __init__(self, nome):
-		super().__init__(nome)
+		TemplateName.__init__(self, nome)
