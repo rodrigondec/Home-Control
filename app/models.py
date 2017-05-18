@@ -86,3 +86,10 @@ class Potenciometro(Dispositivo):
 	def __init__(self, arg):
 		self.arg = arg
 
+class Uso(object):
+	"""docstring for Uso"""
+	def __init__(self, dispositivo=None, comando=None):
+		super(Uso, self).__init__()
+		self.dispositivo = dispositivo
+		self.comando = comando
+		
