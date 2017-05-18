@@ -55,3 +55,17 @@ class Usuario(AbstractName):
 	def senha(self, senha):
 		self.__senha = senha
 
+class Embarcado(object):
+	"""docstring for Embarcado"""
+	def __init__(self, ip):
+		self.ip = ip
+		
+class Dispositivo(object):
+	"""docstring for Dispositivo"""
+	identificador=1
+	def __init__(self):
+		if self.__class__ is Dispositivo:
+			raise TypeError('abstract class cannot be instantiated')
+		self.identificador=Dispositivo.identificador
+		Dispositivo.identificador += 1
+
