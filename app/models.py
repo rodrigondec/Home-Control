@@ -73,11 +73,12 @@ class Component(TemplateName):
 		TemplateName.__init__(self, nome)
 		self.tipo = tipo
 
-	id_leaf = db.Column(db.Integer, primary_key=True)
-	component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 class Leaf(Component):
 	__tablename__ = 'leaf'
 
+	# id_leaf = db.Column(db.Integer, primary_key=True)
+	id_leaf = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
+	# component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	component = db.relationship("Component")
 	embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 	dispositivos = db.relationship("Dispositivo", back_populates="leaf")
