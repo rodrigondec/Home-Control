@@ -12,9 +12,24 @@ modulo_usuario = db.Table(
         db.ForeignKey('usuario.id_usuario')
     ),
     db.Column(
-        'id_modulo',
+        'id_modulo_privado',
         db.Integer,
         db.ForeignKey('modulo_privado.id_modulo_privado')
+    )
+)
+
+modulo_component = db.Table(
+    'modulo_component',
+    db.Column(
+        'id_component',
+        db.Integer,
+        db.ForeignKey('component.id_component'),
+        unique=True
+    ),
+    db.Column(
+        'id_modulo',
+        db.Integer,
+        db.ForeignKey('modulo.id_modulo')
     )
 )
 
@@ -22,24 +37,24 @@ modulo_usuario = db.Table(
 # Models and their simple relantionships -------------------------------------
 
 class TemplateName(db.Model):
-    __abstract__ = True
+	__abstract__ = True
 
-    nome = db.Column(db.String(80))
+	nome = db.Column(db.String(80))
 
-    def __init__(nome):
-    	if self.__class__ is TemplateName:
+	def __init__(nome):
+		if self.__class__ is TemplateName:
 			raise TypeError('abstract class cannot be instantiated')
 		self.nome = nome
 
 class Usuario(TemplateName):
-    id_usuario = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(50), unique=True)
-    senha = db.Column(db.String(64))
+	id_usuario = db.Column(db.Integer, primary_key=True)
+	email = db.Column(db.String(50), unique=True)
+	senha = db.Column(db.String(64))
 
-    def __init__(nome, email, senha):
+	def __init__(nome, email, senha):
 		super().__init__(nome)
-    	self.email = email
-    	self.senha = senha
+		self.email = email
+		self.senha = senha
 
 class Client(db.Model):
     id_client = db.Column(db.Integer, primary_key=True)
@@ -64,7 +79,11 @@ class Modulo(db.Model):
 	id_modulo = db.Column(db.Integer, primary_key=True)
 	component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	component = db.relationship("Component")
-	components = db.relationship("Component", back_populates="modulo")
+	components = db.relationship(
+        'Component',
+        secondary=modulo_component,
+        backref=db.backref('modulo', lazy='dynamic')
+    )
 
 class ModuloPrivado(Modulo):
 	id_modulo_privado =  db.Column(db.Integer(), db.ForeignKey("modulo.id_modulo"), primary_key=True)
