@@ -14,3 +14,20 @@ class AbstractName(object):
 
 	def __str__(self):
 		return self.nome
+
+class Propriedade(AbstractName):
+	"""docstring for Propriedade"""
+	def __init__(self, nome=None, components=[], usuarios=[]):
+		super().__init__(nome)
+		self.components = components
+		self.usuarios = usuarios
+
+	def add_usuario(self, usuario):
+		if not(isinstance(usuario, Usuario)):
+			raise TypeError('Precisa ser um objeto do tipo Usuario')
+		self.usuarios.append(usuario)
+
+	def add_component(self, component):
+		if not(isinstance(component, Component)):
+			raise TypeError('Precisa ser um objeto do tipo Component')
+		self.components.append(component)
