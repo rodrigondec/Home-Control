@@ -76,13 +76,10 @@ class Component(TemplateName):
 class Leaf(Component):
 	__tablename__ = 'leaf'
 
-	# id_leaf = db.Column(db.Integer, primary_key=True)
 	id_leaf = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
-	# component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	component = db.relationship("Component")
 	embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 	dispositivos = db.relationship("Dispositivo", back_populates="leaf")
-	# children = relationship("Child")
 	monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
 	def __init__(self, nome):
@@ -91,9 +88,7 @@ class Leaf(Component):
 class Modulo(Component):
 	__tablename__ = 'modulo'
 
-	# id_modulo = db.Column(db.Integer, primary_key=True)
 	id_modulo = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
-	# component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
 	component = db.relationship("Component")
 	components = db.relationship(
         'Component',
