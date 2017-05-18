@@ -119,6 +119,11 @@ class Modulo(Component):
 		super().__init__(nome)
 		self.components = []
 
+	def add_component(self, component):
+		if not(isinstance(component, Component)):
+			raise TypeError('Precisa ser um objeto do tipo Component')
+		self.components.append(component)
+
 class ModuloPublico(Modulo):
 	"""docstring for ModuloPublico"""
 	def __init__(self, nome, components=[]):
