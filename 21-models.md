@@ -1,6 +1,8 @@
 # Diagrama de classes
 
-## ![](/Class Diagram.png)Pattern Composite
+![](/Documents/Class Diagram.png)
+
+## Pattern Composite
 
 ### Client, Component, Leaf, Módulo, MóduloPrivado
 
@@ -27,16 +29,16 @@ Outros exemplos:
 
 #### Controle de um condomínio
 
-*  Um condomínio é o `MóduloPrivado` _**Condomínio**_ de um `Client`
-  *   _**Condomínio**_ terá o `MóduloPrivado` _**AreasRestritas**_
+* Um condomínio é o `MóduloPrivado` _**Condomínio**_ de um `Client`
+  * _**Condomínio**_ terá o `MóduloPrivado` _**AreasRestritas**_
     * _**AreasRestritas**_ terá os `Leafs` _**Jardim**_, _**Piscina**_, _**Sauna**_ e etc
   * _**Condomínio**_ terá o `Leaf` _**Entrada**_ e etc
-  *  _**Condomínio**_ terá os `MódulosPrivados` _**Prédio a**_, _**Prédio b**_, _**Prédio c**_ e etc
-    *  _**Prédio a**_ terá os `Leafs` _**Elevador**_, _**Entrada**_, _**Escada**_ e etc
-    *  _**Prédio a**_ terá os `MódulosPrivados` _**Andar 1**_, _**Andar 2**_, _**Andar 3**_, _**Apt 101**_, _**Apto 203**_ e etc
-      *  _**Apto 101**_ terá os `Leafs` _**Sala**_, _**Cozinha**_, _**Entrada**_ e etc
-      *  _**Apto 101**_ terá os `MódulosPrivados` _**Quarto de fulano**_, _**Quarto de cicrano**_ e etc
-        * _**Quarto de fulano**_ terá o `Leaf` _**Dispositivos quarto de fulano**_
+  * _**Condomínio**_ terá os `MódulosPrivados` _**Prédio a**_, _**Prédio b**_, _**Prédio c**_ e etc
+    * _**Prédio a**_ terá os `Leafs` _**Elevador**_, _**Entrada**_, _**Escada**_ e etc
+    * _**Prédio a**_ terá os `MódulosPrivados` _**Andar 1**_, _**Andar 2**_, _**Andar 3**_, _**Apt 101**_, _**Apto 203**_ e etc
+    * _**Apto 101**_ terá os `Leafs` _**Sala**_, _**Cozinha**_, _**Entrada**_ e etc
+    * _**Apto 101**_ terá os `MódulosPrivados` _**Quarto de fulano**_, _**Quarto de cicrano**_ e etc
+      * _**Quarto de fulano**_ terá o `Leaf` _**Dispositivos quarto de fulano**_
 
 ## Pontos de extensão
 
