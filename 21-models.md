@@ -20,35 +20,23 @@ Outros exemplos:
 
 #### Controle de uma casa
 
-* Uma casa é uma \`propriedade\` \*\*\*residência\*\*\*
-
-* \*\*\*residência\*\*\* tem um \`módulo público\` \*\*\*home\*\*\*
-
-  * \*\*\*home\*\*\* terá os \`leafs\` \*\*\*sala\*\*\*, \*\*\*cozinha\*\*\*, \*\*\*jardim\*\*\*, \*\*\*entrada\*\*\* e etc
-
-  * \*\*\*home\*\*\* terá os \`módulos privado\`\` \*\*\*quarto de fulano\*\*\*, \*\*\*quarto de cicrano\*\*\* e etc
-
-    * \*\*\*quarto de fulano\*\*\* terá o \`leaf\` \*\*\*dispositivos quarto de fulano\*\*\*
+* Uma casa é o `MóduloPrivado` _**Residência**_ de um `Client`
+  * _**Residência**_ terá os `Leafs` _**Sala**_, _**Cozinha**_, _**Jardim**_, _**Portão**_ e etc
+  * _**Residência**_ terá os `MódulosPrivados` _**Quarto de fulano**_, _**Quarto de cicrano**_ e etc
+    * _**Quarto de fulano**_ terá o `Leaf` _**Dispositivos quarto de fulano**_
 
 #### Controle de um condomínio
 
-* Um condomínio é uma \`propriedade\` \*\*\*propriedade\_condomínio\*\*\*
-
-* \*\*\*propriedade\_condomínio\*\*\* terá o \`módulo público\` \*\*\*condomínio\*\*\*
-
-  * \*\*\*condomínio\*\*\* terá os \`leafs\` \*\*\*jardim\*\*\*, \*\*\*piscina\*\*\*, \*\*\*sauna\*\*\*, \*\*\*entrada\*\*\* e etc
-
-  * \*\*\*condomínio\*\*\* terá os \`módulos privados\` \*\*\*prédio a\*\*\*, \*\*\*prédio b\*\*\*, \*\*\*prédio b\*\*\* e etc
-
-    * \*\*\*prédio a\*\*\* terá os \`leafs\` \*\*\*elevador\*\*\*, \*\*\*entrada\*\*\*, \*\*\*escada\*\*\* e etc
-
-    * \*\*\*prédio a\*\*\* terá os \`módulos privados\` \*\*\*andar 1\*\*\*, \*\*\*andar 2\*\*\*, \*\*\*andar 3\*\*\*, \*\*\*apt 101\*\*\*, \*\*\*apto 203\*\*\* e etc
-
-      * \*\*\*apto 101\*\*\* terá os \`leafs\` \*\*\*sala\*\*\*, \*\*\*cozinha\*\*\*, \*\*\*entrada\*\*\* e etc
-
-      * \*\*\*apto 101\*\*\* terá os \`módulos privados\` \*\*\*quarto de fulano\*\*\*, \*\*\*quarto de cicrano\*\*\* e etc
-
-        * \*\*\*quarto de fulano\*\*\* terá o \`leaf\` \*\*\*dispositivos quarto de fulano\*\*\*
+*  Um condomínio é o `MóduloPrivado` _**Condomínio**_ de um `Client`
+  *   _**Condomínio**_ terá o `MóduloPrivado` _**AreasRestritas**_
+    * _**AreasRestritas**_ terá os `Leafs` _**Jardim**_, _**Piscina**_, _**Sauna**_ e etc
+  * _**Condomínio**_ terá o `Leaf` _**Entrada**_ e etc
+  *  _**Condomínio**_ terá os `MódulosPrivados` _**Prédio a**_, _**Prédio b**_, _**Prédio c**_ e etc
+    *  _**Prédio a**_ terá os `Leafs` _**Elevador**_, _**Entrada**_, _**Escada**_ e etc
+    *  _**Prédio a**_ terá os `MódulosPrivados` _**Andar 1**_, _**Andar 2**_, _**Andar 3**_, _**Apt 101**_, _**Apto 203**_ e etc
+      *  _**Apto 101**_ terá os `Leafs` _**Sala**_, _**Cozinha**_, _**Entrada**_ e etc
+      *  _**Apto 101**_ terá os `MódulosPrivados` _**Quarto de fulano**_, _**Quarto de cicrano**_ e etc
+        * _**Quarto de fulano**_ terá o `Leaf` _**Dispositivos quarto de fulano**_
 
 ## Pontos de extensão
 
