@@ -174,6 +174,7 @@ class Potenciometro(Dispositivo):
         Dispositivo.__init__(self, porta, self.__tablename__)
 
 
+class Uso(TemplateStatus):
 
 	id_uso = db.Column(db.Integer, primary_key=True)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
