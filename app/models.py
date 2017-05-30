@@ -175,24 +175,35 @@ class Potenciometro(Dispositivo):
 
 
 class Uso(TemplateStatus):
+    __tablename__ = 'uso'
+    id_uso = db.Column(db.Integer, primary_key=True)
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf = db.relationship("Leaf", back_populates="usos")
+    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = db.relationship("Dispositivo", back_populates="usos")
+    comando = db.Column(db.String(30))
+    hora = db.Column(db.DateTime, default=db.func.now())
 
-	id_uso = db.Column(db.Integer, primary_key=True)
-	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
-	leaf = db.relationship("Leaf", back_populates="usos")
-	dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-	dispositivo = db.relationship("Dispositivo", back_populates="usos")
-	comando = db.Column(db.String(30))
-	hora = db.Column(db.DateTime, default=db.func.now())
+    def __init__(self, status):
+        TemplateStatus.__init__(self, status)
 
-	def __init__(self, comando):
-		self.comando = comando
 
-class Monitor(TemplateName):
-	__tablename__ = 'monitor'
 
 	id_monitor = db.Column(db.Integer, primary_key=True)
 	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
 	leaf = db.relationship("Leaf", back_populates="monitor")
 
 	def __init__(self, nome):
-		TemplateName.__init__(self, nome)
+		TemplateName.__init__(self, nome)class Monitor(TemplateName):
+
+
+
+
+class Monitor(TemplateName):
+    __tablename__ = 'monitor'
+    id_monitor = db.Column(db.Integer, primary_key=True)
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf = db.relationship("Leaf", back_populates="monitor")
+
+    def __init__(self, nome):
+        TemplateName.__init__(self, nome)
