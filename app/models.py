@@ -188,15 +188,28 @@ class Uso(TemplateStatus):
         TemplateStatus.__init__(self, status)
 
 
+class Regra(TemplateStatus):
+    __tablename__ = 'regra'
+    id_regra = db.Column(db.Integer, primary_key=True)
 
-	id_monitor = db.Column(db.Integer, primary_key=True)
-	leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
-	leaf = db.relationship("Leaf", back_populates="monitor")
+    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = db.relationship("Dispositivo", back_populates="regras")
 
-	def __init__(self, nome):
-		TemplateName.__init__(self, nome)class Monitor(TemplateName):
+    monitor_id = db.Column(db.Integer, db.ForeignKey('monitor.id_monitor'))
+    monitor = db.relationship("Monitor", back_populates="regras")
+
+    def __init__(self, status):
+        TemplateStatus.__init__(self, status)
 
 
+class RegraCronometrada(Regra):
+    __tablename__ = 'regra_cronometrada'
+    id_regra_cronometrada = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    hora = db.Column(db.DateTime)
+
+    def __init__(self, hora, status):
+        Regra.__init__(self, status)
+        self.hora = hora
 
 
 class Monitor(TemplateName):
