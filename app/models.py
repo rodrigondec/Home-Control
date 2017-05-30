@@ -1,6 +1,4 @@
 from app import db
-from sqlalchemy.ext.declarative import declared_attr
-
 
 # Many-to-many helper tables (for public access, use models only) -----------
 
@@ -35,6 +33,11 @@ modulo_component = db.Table(
 
 
 # Models and their simple relantionships -------------------------------------
+
+class TemplateStatus(db.Model):
+    __abstract__ = True
+    status = db.Column(db.String(30))
+
 
 class TemplateName(db.Model):
 	__abstract__ = True
