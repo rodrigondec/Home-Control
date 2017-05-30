@@ -101,7 +101,7 @@ class Modulo(Component):
     components = db.relationship(
         'Component',
         secondary=modulo_component,
-        backref=db.backref('modulo', lazy='dynamic')
+        backref=db.backref('component_modulo', lazy='dynamic')
     )
 
     def __init__(self, nome):
@@ -111,7 +111,7 @@ class Modulo(Component):
 class ModuloPrivado(Modulo):
     __tablename__ = 'modulo_privado'
     id_modulo_privado = db.Column(db.Integer(), db.ForeignKey("modulo.id_modulo"), primary_key=True)
-    modulo = db.relationship("Modulo", primaryjoin="and_(Modulo.id_modulo==Modulo_privado.id_modulo_privado)")
+    modulo = db.relationship("Modulo", primaryjoin="and_(Modulo.id_modulo==ModuloPrivado.id_modulo_privado)")
     usuarios = db.relationship(
         'Usuario',
         secondary=modulo_usuario,
@@ -217,6 +217,7 @@ class Monitor(TemplateName):
     id_monitor = db.Column(db.Integer, primary_key=True)
     leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
     leaf = db.relationship("Leaf", back_populates="monitor")
+    regras = db.relationship("Regra", back_populates="monitor")
 
     def __init__(self, nome):
         TemplateName.__init__(self, nome)
