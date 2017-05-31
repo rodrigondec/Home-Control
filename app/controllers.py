@@ -2,6 +2,9 @@ from flask import render_template, Blueprint
 from app import app, dados
 from app.models import *
 
+# @TODO Adicionar controllers
+# @TODO Adicionar views
+
 @app.route('/')
 def index():
 	print(dados)
