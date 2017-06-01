@@ -35,11 +35,11 @@ def not_found(error):
 from app.controllers.dashboard import mod_dashboard as dashboard_module
 from app.controllers.propriedade import mod_propriedade as propriedade_module
 from app.controllers.usuario import mod_usuario as usuario_module
-from app.controllers.login import mod_login as login_module
+# from app.controllers.login import mod_login as login_module
 
 app.register_blueprint(dashboard_module)
 app.register_blueprint(propriedade_module)
 app.register_blueprint(usuario_module)
-app.register_blueprint(login_module)
+# app.register_blueprint(login_module)
 
 db.create_all()
