@@ -69,12 +69,16 @@ class Usuario(TemplateName):
 class Client(db.Model):
     __tablename__ = 'client'
     id_client = db.Column(db.Integer, primary_key=True)
+    component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
+    component = db.relationship("Component", uselist=False)
 
 
 class Component(TemplateName):
     __tablename__ = 'component'
     id_component = db.Column(db.Integer, primary_key=True)
     tipo = db.Column(db.String(15))
+    # client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    # client = db.relationship("Client", back_populates="component")
 
     def __init__(self, nome, tipo):
         TemplateName.__init__(self, nome)
