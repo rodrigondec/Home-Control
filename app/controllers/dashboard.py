@@ -9,4 +9,4 @@ mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/')
 # @mod_dashboard.route('/')
 @mod_dashboard.route('/')
 def index():
-    return 'INDEX DASHBOARD'
+    return render_template('index.html')

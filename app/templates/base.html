@@ -3,8 +3,24 @@
         <title>{% block head %}{% endblock %}</title>
     </head>
     <body>
-        <div><a href="/">Home Control</a></div>
+        <div>
+            <ul>
+                <li><a href="/">Home Control</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/login/out">Logout</a></li>
+            </ul>
+
+        </div>
         <hr>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }} </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </body>
 </html>
