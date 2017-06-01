@@ -93,6 +93,15 @@ class Leaf(Component):
     def __init__(self, nome):
         Component.__init__(self, nome, self.__tablename__)
 
+    def add_uso(self, uso):
+        self.usos.append(uso)
+
+    def add_dispositivo(self, dispositivo):
+        self.dispositivos.append(dispositivo)
+
+    def remove_dispositivo(self, dispositivo):
+        self.dispositivos.remove(dispositivo)
+
 
 class Modulo(Component):
     __tablename__ = 'modulo'
@@ -107,6 +116,12 @@ class Modulo(Component):
     def __init__(self, nome):
         Component.__init__(self, nome, self.__tablename__)
 
+    def add_component(self, component):
+        self.components.append(component)
+
+    def remove_component(self, component):
+        self.components.remove(component)
+
 
 class ModuloPrivado(Modulo):
     __tablename__ = 'modulo_privado'
@@ -120,6 +135,12 @@ class ModuloPrivado(Modulo):
 
     def __init__(self, nome):
         Component.__init__(self, nome, self.__tablename__)
+
+    def add_usuario(self, usuario):
+        self.usuarios.append(usuario)
+
+    def remove_usuario(self, usuario):
+        self.usuarios.remove(usuario)
 
 
 class Embarcado(db.Model):
