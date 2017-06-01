@@ -7,7 +7,7 @@ from app.models import *
 mod_login = Blueprint('login', __name__, url_prefix='/login')
 
 
-@mod_login.route('/do', methods=['GET', 'POST'])
+@mod_login.route('/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
