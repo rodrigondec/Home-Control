@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, flash, redirect, session, url_for
 from app.forms import LoginForm
 from app.models import *
 
-mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard')
+mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard', template_folder='templates')
 
 
 @mod_dashboard.route('/')
