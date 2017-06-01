@@ -9,8 +9,6 @@ pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 
-dados = {}
-
 app.config.from_object('config')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -34,8 +32,14 @@ def not_found(error):
     app.logger.error(error)
     return error
 
-from app.controllers import mod_propriedade as propriedade_module
+from app.controllers.dashboard import mod_dashboard as dashboard_module
+from app.controllers.propriedade import mod_propriedade as propriedade_module
+from app.controllers.usuario import mod_usuario as usuario_module
+from app.controllers.login import mod_login as login_module
 
+app.register_blueprint(dashboard_module)
 app.register_blueprint(propriedade_module)
+app.register_blueprint(usuario_module)
+app.register_blueprint(login_module)
 
 db.create_all()
