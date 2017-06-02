@@ -371,6 +371,20 @@ class Regra(db.Model):
             raise TypeError('abstract class cannot be instantiated')
 
 
+class RegraInterruptor(Regra):
+    __tablename__ = 'regra_interruptor'
+    id_regra_interruptor = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    valor = db.Column(db.Boolean)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, valor):
+        if not isinstance(valor, bool):
+            raise Exception("Valor não é um boolean")
+        Regra.__init__(self)
+        self.valor = valor
+
+
 class RegraCronometrada(Regra):
     __tablename__ = 'regra_cronometrada'
     id_regra_cronometrada = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
