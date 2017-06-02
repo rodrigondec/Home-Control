@@ -256,6 +256,15 @@ class Sensor(Dispositivo):
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta)
+        self.valor = None
+
+    def set_valor(self, valor):
+        if not isinstance(valor, float):
+            raise Exception("Valor precisa ser float")
+        self.valor = valor
+
+    def get_valor(self):
+        return self.valor
 
 
 class Interruptor(Dispositivo):
@@ -265,7 +274,16 @@ class Interruptor(Dispositivo):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
-        Dispositivo.__init__(self, porta, self.__tablename__)
+        Dispositivo.__init__(self, porta)
+        self.valor = None
+
+    def set_valor(self, valor):
+        if not isinstance(valor, bool):
+            raise Exception("Valor precisa ser boolean")
+        self.valor = valor
+
+    def get_valor(self):
+        return self.valor
 
 
 class Potenciometro(Dispositivo):
@@ -275,7 +293,16 @@ class Potenciometro(Dispositivo):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
-        Dispositivo.__init__(self, porta, self.__tablename__)
+        Dispositivo.__init__(self, porta)
+        self.valor = None
+
+        def set_valor(self, valor):
+            if not isinstance(valor, float):
+                raise Exception("Valor precisa ser float")
+            self.valor = valor
+
+        def get_valor(self):
+            return self.valor
 
 
 class Uso(db.Model):
