@@ -356,7 +356,6 @@ class UsoPotenciometro(Uso):
 class Regra(db.Model):
     __tablename__ = 'regra'
     id_regra = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(30))
 
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
     dispositivo = db.relationship("Dispositivo", back_populates="regras")
@@ -365,13 +364,11 @@ class Regra(db.Model):
     monitor = db.relationship("Monitor", back_populates="regras")
 
     tipo = db.Column(db.String(30))
-    __mapper_args__ = {
-        'polymorphic_identity': __tablename__,
-        'polymorphic_on': tipo
-    }
+    __mapper_args__ = {'polymorphic_on': tipo}
 
-    def __init__(self, status):
-        self.status = status
+    def __init__(self):
+        if self.__class__ is Regra:
+            raise TypeError('abstract class cannot be instantiated')
 
 
 class RegraCronometrada(Regra):
