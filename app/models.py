@@ -444,11 +444,23 @@ class RegraCronometradaPotenciometro(RegraCronometrada):
         RegraCronometrada.__init__(self, hora)
         self.valor = valor
 
+
+class Monitor(db.Model):
     __tablename__ = 'monitor'
     id_monitor = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(80))
+
     leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
     leaf = db.relationship("Leaf", back_populates="monitor")
+
     regras = db.relationship("Regra", back_populates="monitor")
 
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
     def __init__(self, nome):
-        TemplateName.__init__(self, nome)
+        if self.__class__ is Monitor:
+            raise TypeError('abstract class cannot be instantiated')
+        self.nome = nome
+
+
