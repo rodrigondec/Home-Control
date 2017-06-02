@@ -385,6 +385,20 @@ class RegraInterruptor(Regra):
         self.valor = valor
 
 
+class RegraPotenciometro(Regra):
+    __tablename__ = 'regra_potenciometro'
+    id_regra_potenciometro = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    valor = db.Column(db.Float)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, valor):
+        if not isinstance(valor, float):
+            raise Exception("Valor não é um float")
+        Regra.__init__(self)
+        self.valor = valor
+
+
 class RegraCronometrada(Regra):
     __tablename__ = 'regra_cronometrada'
     id_regra_cronometrada = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
