@@ -100,6 +100,62 @@ class Leaf(Component):
     def remove_dispositivo(self, dispositivo):
         self.dispositivos.remove(dispositivo)
 
+    def atualizar_sensor(self, sensor):
+        if sensor in self.dispositivos:
+            # Mock de acesso ao servidor pegando:
+            # self.embarcado.ip < ip do servidor de embarcado
+            # sensor.porta < porta do sensor no embarcado
+            # request para: 'http://'+self.embarcado.ip+'/sensor/'+sensor.porta
+            # retorna um valor
+            return_value = 31.5
+            sensor.set_valor(return_value)
+        else:
+            raise Exception("Sensor não achado")
+
+    def atualizar_interruptor(self, interruptor):
+        if interruptor in self.dispositivos:
+            # Mock de acesso ao servidor pegando:
+            # self.embarcado.ip < ip do servidor de embarcado
+            # interruptor.porta < porta do sensor no embarcado
+            # request para: 'http://'+self.embarcado.ip+'/interruptor/'+interruptor.porta
+            # retorna um valor
+            return_value = True
+            interruptor.set_valor(return_value)
+        else:
+            raise Exception("Interruptor não achado")
+
+    def atualizar_potenciometro(self, potenciometro):
+        if potenciometro in self.dispositivos:
+            # Mock de acesso ao servidor pegando:
+            # self.embarcado.ip < ip do servidor de embarcado
+            # interruptor.porta < porta do sensor no embarcado
+            # request para: 'http://'+self.embarcado.ip+'/potenciometro/'+potenciometro.porta
+            # retorna um valor
+            return_value = 50.5
+            potenciometro.set_valor(return_value)
+        else:
+            raise Exception("Interruptor não achado")
+
+    def alterar_interruptor(self, interruptor, valor):
+        if interruptor in self.dispositivos:
+            # Mock de acesso ao servidor pegando:
+            # self.embarcado.ip < ip do servidor de embarcado
+            # interruptor.porta < porta do sensor no embarcado
+            # request para: 'http://'+self.embarcado.ip+'/interruptor/'+interruptor.porta+'/'+valor
+            self.atualizar_interruptor(interruptor)
+        else:
+            raise Exception("Interruptor não achado")
+
+    def alterar_potenciometro(self, potenciometro, valor):
+        if potenciometro in self.dispositivos:
+            # Mock de acesso ao servidor pegando:
+            # self.embarcado.ip < ip do servidor de embarcado
+            # interruptor.porta < porta do sensor no embarcado
+            # request para: 'http://'+self.embarcado.ip+'/potenciometro/'+potenciometro.porta+'/'+valor
+            self.atualizar_potenciometro(potenciometro)
+        else:
+            raise Exception("Interruptor não achado")
+
 
 class Modulo(Component):
     __tablename__ = 'modulo'
