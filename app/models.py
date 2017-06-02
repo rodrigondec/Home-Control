@@ -73,16 +73,17 @@ class Client(db.Model):
     component = db.relationship("Component", uselist=False)
 
 
-class Component(TemplateName):
+class Component(db.Model):
     __tablename__ = 'component'
     id_component = db.Column(db.Integer, primary_key=True)
-    tipo = db.Column(db.String(15))
-    # client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
-    # client = db.relationship("Client", back_populates="component")
+    nome = db.Column(db.String(80))
 
-    def __init__(self, nome, tipo):
+    tipo = db.Column(db.String(15))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
         TemplateName.__init__(self, nome)
-        self.tipo = tipo
+    def __init__(self, nome):
+        self.nome = nome
 
 
 class Leaf(Component):
@@ -94,8 +95,10 @@ class Leaf(Component):
     usos = db.relationship("Uso", back_populates="leaf")
     monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
     def __init__(self, nome):
-        Component.__init__(self, nome, self.__tablename__)
+        Component.__init__(self, nome)
 
     def add_uso(self, uso):
         self.usos.append(uso)
@@ -117,8 +120,10 @@ class Modulo(Component):
         backref=db.backref('component_modulo', lazy='dynamic')
     )
 
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
     def __init__(self, nome):
-        Component.__init__(self, nome, self.__tablename__)
+        Component.__init__(self, nome)
 
     def add_component(self, component):
         self.components.append(component)
@@ -137,14 +142,22 @@ class ModuloPrivado(Modulo):
         backref=db.backref('modulos', lazy='dynamic')
     )
 
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
     def __init__(self, nome):
-        Component.__init__(self, nome, self.__tablename__)
+        Component.__init__(self, nome)
 
     def add_usuario(self, usuario):
         self.usuarios.append(usuario)
 
     def remove_usuario(self, usuario):
         self.usuarios.remove(usuario)
+
+    def add_component(self, component):
+        self.components.append(component)
+
+    def remove_component(self, component):
+        self.components.remove(component)
 
 
 class Embarcado(db.Model):
@@ -168,24 +181,31 @@ class Dispositivo(db.Model):
     leaf = db.relationship("Leaf", back_populates="dispositivos")
     usos = db.relationship("Uso", back_populates="dispositivo")
     regras = db.relationship("Regra", back_populates="dispositivo")
-    tipo = db.Column(db.String(15))
 
-    def __init__(self, porta, tipo):
+    tipo = db.Column(db.String(15))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self, porta):
+        if self.__class__ is Dispositivo:
+            raise TypeError('abstract class cannot be instantiated')
         self.porta = porta
-        self.tipo = tipo
 
 
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
     id_sensor = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
 
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
     def __init__(self, porta):
-        Dispositivo.__init__(self, porta, self.__tablename__)
+        Dispositivo.__init__(self, porta)
 
 
 class Interruptor(Dispositivo):
     __tablename__ = 'interruptor'
     id_interruptor = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta, self.__tablename__)
@@ -194,6 +214,8 @@ class Interruptor(Dispositivo):
 class Potenciometro(Dispositivo):
     __tablename__ = 'potenciometro'
     id_potenciometro = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta, self.__tablename__)
