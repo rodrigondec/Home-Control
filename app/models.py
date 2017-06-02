@@ -315,11 +315,42 @@ class Uso(db.Model):
 
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
     dispositivo = db.relationship("Dispositivo", back_populates="usos")
-    comando = db.Column(db.String(30))
-    hora = db.Column(db.DateTime, default=db.func.now())
 
-    def __init__(self, status):
-        TemplateStatus.__init__(self, status)
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self, hora):
+        if self.__class__ is Regra:
+            raise TypeError('abstract class cannot be instantiated')
+        self.hora = hora
+
+
+class UsoInterruptor(Uso):
+    __tablename__ = 'uso_interruptor'
+    id_uso_interruptor = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
+    valor = db.Column(db.Boolean)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, hora, valor):
+        if not isinstance(valor, bool):
+            raise Exception("Valor não é um boolean")
+        Uso.__init__(self, hora)
+        self.valor = valor
+
+
+class UsoPotenciometro(Uso):
+    __tablename__ = 'uso_potenciometro'
+    id_uso_potenciometro = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
+    valor = db.Column(db.Float)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, hora, valor):
+        if not isinstance(valor, float):
+            raise Exception("Valor não é um boolean")
+        Uso.__init__(self, hora)
+        self.valor = valor
 
 
 class Regra(db.Model):
