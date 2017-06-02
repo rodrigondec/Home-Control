@@ -474,3 +474,11 @@ class MonitorHorario(Monitor):
         Monitor.__init__(self, nome)
 
 
+class MonitorAutomatico(Monitor):
+    __tablename__ = 'monitor_automatico'
+    id_moitor_automatico = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, nome):
+        Monitor.__init__(self, nome)
