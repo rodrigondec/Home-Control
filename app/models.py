@@ -406,8 +406,10 @@ class RegraCronometrada(Regra):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora, status):
-        Regra.__init__(self, status)
+    def __init__(self, hora):
+        if self.__class__ is RegraCronometrada:
+            raise TypeError('abstract class cannot be instantiated')
+        Regra.__init__(self)
         self.hora = hora
 
 
