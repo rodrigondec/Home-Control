@@ -81,8 +81,9 @@ class Component(db.Model):
     tipo = db.Column(db.String(15))
     __mapper_args__ = {'polymorphic_on': tipo}
 
-        TemplateName.__init__(self, nome)
     def __init__(self, nome):
+        if self.__class__ is Dispositivo:
+            raise TypeError('abstract class cannot be instantiated')
         self.nome = nome
 
 
