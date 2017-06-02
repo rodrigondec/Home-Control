@@ -5,29 +5,29 @@ from app import db
 modulo_usuario = db.Table(
     'modulo_usuario',
     db.Column(
-        'id_usuario',
-        db.Integer,
-        db.ForeignKey('usuario.id_usuario')
-    ),
-    db.Column(
         'id_modulo_privado',
         db.Integer,
         db.ForeignKey('modulo_privado.id_modulo_privado')
+    ),
+    db.Column(
+        'id_usuario',
+        db.Integer,
+        db.ForeignKey('usuario.id_usuario')
     )
 )
 
 modulo_component = db.Table(
     'modulo_component',
     db.Column(
+        'id_modulo',
+        db.Integer,
+        db.ForeignKey('modulo.id_modulo')
+    ),
+    db.Column(
         'id_component',
         db.Integer,
         db.ForeignKey('component.id_component'),
         unique=True
-    ),
-    db.Column(
-        'id_modulo',
-        db.Integer,
-        db.ForeignKey('modulo.id_modulo')
     )
 )
 
