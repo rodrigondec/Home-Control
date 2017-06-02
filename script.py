@@ -1,34 +1,39 @@
 from app.models import *
 from app import db
 
-# obj = Usuario('rodrigo', 'rodrigondec@gmail.com', 'rodrigo123')
-# obj2 = Sensor(13)
-# obj3 = ModuloPrivado('quarto')
-# obj4 = Modulo('jardim')
-
-# print(obj.tipo)
-# db.session.add(obj)
-# db.session.add(obj2)
-# db.session.add(obj3)
-# db.session.add(obj4)
-
-# obj = Client()
-# obj1 = ModuloPrivado('Casa rod')
-# db.session.add(obj)
-# db.session.add(obj1)
-# obj.component = obj1
-
+client = Client()
+db.session.add(client)
 # client = Client.query.filter_by(id_client=1).first()
-# modulo = ModuloPrivado.query.filter_by(id_modulo_privado=3).first()
-# quarto = ModuloPrivado.query.filter_by(id_modulo_privado=1).first()
-# client.component = modulo.component
-# modulo.add_component(quarto.component)
-# leaf = Leaf('dispositivos quarto')
-# db.session.add(leaf)
-# db.session.commit()
-# quarto.modulo.add_component(leaf.component)
 
-# leaf = Leaf.query.filter_by(id_leaf=6).first()
-# db.session.delete(leaf)
+casa = ModuloPrivado('Casa rod')
+# db.session.add(casa)
+# casa = ModuloPrivado.query.filter_by(id_modulo_privado=1).first()
+client.component = casa
+
+usuario = Usuario('rodrigo', 'rodrigondec@gmail.com', 'rodrigo123')
+# db.session.add(usuario)
+# usuario = Usuario.query.filter_by(id_usuario=1).first()
+casa.add_usuario(usuario)
+
+quarto = ModuloPrivado('Quarto de rods')
+# db.session.add(quarto)
+# quarto = ModuloPrivado.query.filter_by(id_modulo_privado=5).first()
+casa.add_component(quarto)
+
+leaf = Leaf('Dispositivos do quarto de rods')
+# db.session.add(leaf)
+# leaf = Leaf.query.filter_by(id_leaf=7).first()
+quarto.add_component(leaf)
+
+embarcado = Embarcado('0.0.0.0', 'ex:abcd:efgh:ijkl')
+# db.session.add(embarcado)
+# embarcado = Embarcado.query.filter_by(id_embarcado=1).first()
+leaf.embarcado = embarcado
+
+sensor = Sensor(13)
+# db.session.add(sensor)
+# sensor = Sensor.query.filter_by(id_sensor=1).first()
+leaf.add_dispositivo(sensor)
+
 
 db.session.commit()
