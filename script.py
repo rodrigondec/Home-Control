@@ -1,5 +1,6 @@
 from app.models import *
 from app import db
+from datetime import datetime
 
 # client = Client()
 # db.session.add(client)
@@ -20,7 +21,7 @@ quarto = ModuloPrivado.query.filter_by(id_modulo_privado=2).first()
 # leaf = Leaf('Dispositivos do quarto de rods')
 leaf = Leaf.query.filter_by(id_leaf=3).first()
 # quarto.add_component(leaf)
-
+#
 # embarcado = Embarcado('0.0.0.0', 'ex:abcd:efgh:ijkl')
 embarcado = Embarcado.query.filter_by(id_embarcado=1).first()
 # leaf.embarcado = embarcado
@@ -39,9 +40,12 @@ potenciometro = Potenciometro.query.filter_by(id_potenciometro=3).first()
 # leaf.add_dispositivo(potenciometro)
 # leaf.alterar_potenciometro(potenciometro, 80.5)
 
+# monitor = MonitorHorario("custom")
+monitor = MonitorHorario.query.filter_by(id_monitor_horario=1).first()
+# leaf.monitor = monitor
 
-
-# @TODO adicionar regra
-# @TODO adicionar monitor
+# regra = RegraCronometradaInterruptor(interruptor, True, datetime.now())
+regra = RegraCronometradaInterruptor.query.filter_by(id_regra_cronometrada_interruptor=1).first()
+# monitor.add_regra(regra)
 
 db.session.commit()
