@@ -262,7 +262,7 @@ class Sensor(Dispositivo):
 
     def set_valor(self, valor):
         if not isinstance(valor, float):
-            raise Exception("Valor precisa ser float")
+            raise TypeError("Valor precisa ser float")
         self.valor = valor
 
     def get_valor(self):
@@ -281,7 +281,7 @@ class Interruptor(Dispositivo):
 
     def set_valor(self, valor):
         if not isinstance(valor, bool):
-            raise Exception("Valor precisa ser boolean")
+            raise TypeError("Valor precisa ser boolean")
         self.valor = valor
 
     def get_valor(self):
@@ -300,7 +300,7 @@ class Potenciometro(Dispositivo):
 
     def set_valor(self, valor):
         if not isinstance(valor, float):
-            raise Exception("Valor precisa ser float")
+            raise TypeError("Valor precisa ser float")
         self.valor = valor
 
     def get_valor(self):
@@ -336,7 +336,7 @@ class UsoInterruptor(Uso):
 
     def __init__(self, interruptor, valor):
         if not isinstance(valor, bool):
-            raise Exception("Valor não é um boolean")
+            raise TypeError("Valor não é um boolean")
         Uso.__init__(self, interruptor)
         self.valor = valor
 
@@ -350,7 +350,7 @@ class UsoPotenciometro(Uso):
 
     def __init__(self, potenciometro, valor):
         if not isinstance(valor, float):
-            raise Exception("Valor não é um boolean")
+            raise TypeError("Valor não é um boolean")
         Uso.__init__(self, potenciometro)
         self.valor = valor
 
@@ -368,9 +368,10 @@ class Regra(db.Model):
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
-    def __init__(self):
+    def __init__(self, dispositivo):
         if self.__class__ is Regra:
             raise TypeError('abstract class cannot be instantiated')
+        self.dispositivo = dispositivo
 
 
 class RegraInterruptor(Regra):
@@ -380,10 +381,12 @@ class RegraInterruptor(Regra):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, valor):
+    def __init__(self, interruptor, valor):
         if not isinstance(valor, bool):
-            raise Exception("Valor não é um boolean")
-        Regra.__init__(self)
+            raise TypeError("Valor não é um boolean")
+        if not isinstance(interruptor, Interruptor):
+            raise TypeError("Dispositivo passado não é um Interruptor")
+        Regra.__init__(self, interruptor)
         self.valor = valor
 
 
@@ -394,10 +397,12 @@ class RegraPotenciometro(Regra):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, valor):
+    def __init__(self, potenciometro, valor):
         if not isinstance(valor, float):
-            raise Exception("Valor não é um float")
-        Regra.__init__(self)
+            raise TypeError("Valor não é um float")
+        if not isinstance(potenciometro, Potenciometro):
+            raise TypeError("Dispositivo passado não é um Potenciometro")
+        Regra.__init__(self, potenciometro)
         self.valor = valor
 
 
@@ -408,14 +413,14 @@ class RegraCronometrada(Regra):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora):
+    def __init__(self, dispositivo, hora):
         if self.__class__ is RegraCronometrada:
             raise TypeError('abstract class cannot be instantiated')
-        Regra.__init__(self)
+        Regra.__init__(self, dispositivo)
         self.hora = hora
 
 
-class RegraConometradaInterruptor(RegraCronometrada):
+class RegraCronometradaInterruptor(RegraCronometrada):
     __tablename__ = 'regra_cronometrada_interruptor'
     id_regra_cronometrada_interruptor = db.Column(db.Integer(),
                                                   db.ForeignKey("regra_cronometrada.id_regra_cronometrada"),
@@ -424,10 +429,12 @@ class RegraConometradaInterruptor(RegraCronometrada):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora, valor):
+    def __init__(self, interruptor, valor, hora):
         if not isinstance(valor, bool):
-            raise Exception("Valor não é um boolean")
-        RegraCronometrada.__init__(self, hora)
+            raise TypeError("Valor não é um boolean")
+        if not isinstance(interruptor, Interruptor):
+            raise TypeError("Dispositivo passado não é um Interruptor")
+        RegraCronometrada.__init__(self, interruptor, hora)
         self.valor = valor
 
 
@@ -440,9 +447,11 @@ class RegraCronometradaPotenciometro(RegraCronometrada):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora, valor):
+    def __init__(self, potenciometro, valor, hora):
         if not isinstance(valor, float):
-            raise Exception("Valor não é um float")
+            raise TypeError("Valor não é um float")
+        if not isinstance(potenciometro, Potenciometro):
+            raise TypeError("Dispositivo passado não é um Potenciometro")
         RegraCronometrada.__init__(self, hora)
         self.valor = valor
 
@@ -474,6 +483,16 @@ class MonitorHorario(Monitor):
 
     def __init__(self, nome):
         Monitor.__init__(self, nome)
+
+    def add_regra(self, regra):
+        if regra in self.regras:
+            raise Exception("Regra duplicada")
+        if not isinstance(regra, RegraCronometrada):
+            raise TypeError("Precisa ser uma RegraCronometrada")
+        self.regras.append(regra)
+
+    def remove_regra(self, regra):
+        self.regras.remove(regra)
 
 
 class MonitorAutomatico(Monitor):
