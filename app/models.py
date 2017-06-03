@@ -298,13 +298,13 @@ class Potenciometro(Dispositivo):
         Dispositivo.__init__(self, porta)
         self.valor = None
 
-        def set_valor(self, valor):
-            if not isinstance(valor, float):
-                raise Exception("Valor precisa ser float")
-            self.valor = valor
+    def set_valor(self, valor):
+        if not isinstance(valor, float):
+            raise Exception("Valor precisa ser float")
+        self.valor = valor
 
-        def get_valor(self):
-            return self.valor
+    def get_valor(self):
+        return self.valor
 
 
 class Uso(db.Model):
@@ -321,10 +321,10 @@ class Uso(db.Model):
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
-    def __init__(self, hora):
+    def __init__(self, dispositivo):
         if self.__class__ is Regra:
             raise TypeError('abstract class cannot be instantiated')
-        self.hora = hora
+        self.dispositivo = dispositivo
 
 
 class UsoInterruptor(Uso):
@@ -334,10 +334,10 @@ class UsoInterruptor(Uso):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora, valor):
+    def __init__(self, interruptor, valor):
         if not isinstance(valor, bool):
             raise Exception("Valor não é um boolean")
-        Uso.__init__(self, hora)
+        Uso.__init__(self, interruptor)
         self.valor = valor
 
 
@@ -348,10 +348,10 @@ class UsoPotenciometro(Uso):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, hora, valor):
+    def __init__(self, potenciometro, valor):
         if not isinstance(valor, float):
             raise Exception("Valor não é um boolean")
-        Uso.__init__(self, hora)
+        Uso.__init__(self, potenciometro)
         self.valor = valor
 
 
