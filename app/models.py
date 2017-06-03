@@ -143,6 +143,7 @@ class Leaf(Component):
             # interruptor.porta < porta do sensor no embarcado
             # request para: 'http://'+self.embarcado.ip+'/interruptor/'+interruptor.porta+'/'+valor
             self.atualizar_interruptor(interruptor)
+            self.add_uso(UsoInterruptor(interruptor, valor))
         else:
             raise Exception("Interruptor não achado")
 
@@ -153,6 +154,7 @@ class Leaf(Component):
             # interruptor.porta < porta do sensor no embarcado
             # request para: 'http://'+self.embarcado.ip+'/potenciometro/'+potenciometro.porta+'/'+valor
             self.atualizar_potenciometro(potenciometro)
+            self.add_uso(UsoPotenciometro(potenciometro, valor))
         else:
             raise Exception("Interruptor não achado")
 
