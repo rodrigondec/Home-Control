@@ -3,14 +3,15 @@ from app import app
 from app.models import *
 from app.forms import UsuarioForm
 
-mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates/usuario')
-
+mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates')
+# @TODO fazer metodos controlador usuario
+# @TODO fazer views usuario
 
 @mod_usuario.route('/')
-def usuario_index():
+def index():
     if 'logged_in' in session:
         print(session['logged_in'])
-        return 'dados'
+        return render_template('usuario/index.html')
     else:
         abort(403)
 

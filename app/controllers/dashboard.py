@@ -1,15 +1,15 @@
-from flask import render_template, Blueprint, flash, redirect, session, url_for
+from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app.forms import LoginForm
 from app.models import *
 
-mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard', template_folder='templates/dashboard')
-
+mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard', template_folder='templates')
+# @TODO fazer view index
 
 @mod_dashboard.route('/')
 def index():
     if 'logged_in' in session:
         print(session['logged_in'])
-    return render_template('index.html')
+    return render_template('dashboard/index.html')
 
 
 @mod_dashboard.route('/login', methods=['GET', 'POST'])
@@ -34,8 +34,3 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('dashboard.index'))
-
-
-@mod_dashboard.route('/oi')
-def oi():
-    return 'TESTE'
