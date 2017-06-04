@@ -1,10 +1,27 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import app
 from app.models import *
 
-mod_propriedade = Blueprint('propriedade', __name__, url_prefix='/propriedade', template_folder='templates')
+mod_component = Blueprint('component', __name__, url_prefix='/component', template_folder='templates')
+# @TODO fazer metodos controlador component
+# @TODO fazer views component
+
+@mod_component.route('/')
+def index():
+    return "component index"
 
 
-@mod_propriedade.route('/')
-def propriedade_index():
-	return "propriedade index"
+def listar_modulos():
+    pass
+
+
+def listar_dispositivos():
+    pass
+
+
+def alterar_interruptor():
+    pass
+
+
+def alterar_potenciometro():
+    pass
