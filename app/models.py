@@ -42,10 +42,26 @@ class Usuario(db.Model):
     email = db.Column(db.String(50), unique=True)
     senha = db.Column(db.String(64))
 
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_identity': __tablename__,
+                       'polymorphic_on': tipo}
+
     def __init__(self, nome, email, senha):
         self.nome = nome
         self.email = email
         self.senha = senha
+
+class Administrador(Usuario):
+    __tablename__ = 'administrador'
+    id_administador = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
+
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id_client'))
+    client = db.relationship("Client", uselist=False, backref=db.backref('administrador', lazy='dynamic'))
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, nome, email, senha):
+        Usuario.__init__(self, nome, email, senha)
 
 
 class Client(db.Model):
