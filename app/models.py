@@ -51,9 +51,10 @@ class Usuario(db.Model):
         self.email = email
         self.senha = senha
 
+
 class Administrador(Usuario):
     __tablename__ = 'administrador'
-    id_administador = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
+    id_administrador = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
 
     client_id = db.Column(db.Integer, db.ForeignKey('client.id_client'))
     client = db.relationship("Client", uselist=False, backref=db.backref('administrador', lazy='dynamic'))
