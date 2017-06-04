@@ -7,4 +7,9 @@ mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_fol
 
 @mod_usuario.route('/')
 def usuario_index():
-	return "usuario index"
+    if 'logged_in' in session:
+        print(session['logged_in'])
+        return 'dados'
+    else:
+        abort(403)
+

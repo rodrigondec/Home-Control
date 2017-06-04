@@ -32,6 +32,11 @@ def not_found(error):
     app.logger.error(error)
     return error
 
+@app.errorhandler(403)
+def not_authorized(error):
+    app.logger.error(error)
+    return error
+
 from app.controllers.dashboard import mod_dashboard as dashboard_module
 from app.controllers.propriedade import mod_propriedade as propriedade_module
 from app.controllers.usuario import mod_usuario as usuario_module
