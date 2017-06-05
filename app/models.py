@@ -5,9 +5,9 @@ from app import db
 modulo_usuario = db.Table(
     'modulo_usuario',
     db.Column(
-        'id_modulo_privado',
+        'id_component',
         db.Integer,
-        db.ForeignKey('modulo_privado.id_modulo_privado')
+        db.ForeignKey('modulo_privado.id_component')
     ),
     db.Column(
         'id_usuario',
@@ -19,12 +19,12 @@ modulo_usuario = db.Table(
 modulo_component = db.Table(
     'modulo_component',
     db.Column(
-        'id_modulo',
+        'id_component_pai',
         db.Integer,
-        db.ForeignKey('modulo.id_modulo')
+        db.ForeignKey('modulo.id_component')
     ),
     db.Column(
-        'id_component',
+        'id_component_filho',
         db.Integer,
         db.ForeignKey('component.id_component'),
         unique=True
@@ -54,7 +54,7 @@ class Usuario(db.Model):
 
 class Administrador(Usuario):
     __tablename__ = 'administrador'
-    id_administrador = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
+    id_usuario = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
 
     client_id = db.Column(db.Integer, db.ForeignKey('client.id_client'))
     client = db.relationship("Client", uselist=False, back_populates='administrador')
@@ -91,7 +91,7 @@ class Component(db.Model):
 
 class Leaf(Component):
     __tablename__ = 'leaf'
-    id_leaf = db.Column(db.Integer(), db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
+    id_component = db.Column(db.Integer(), db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
 
     embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 
@@ -180,7 +180,7 @@ class Leaf(Component):
 
 class Modulo(Component):
     __tablename__ = 'modulo'
-    id_modulo = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
+    id_component = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
 
     components = db.relationship(
         'Component',
@@ -204,7 +204,7 @@ class Modulo(Component):
 
 class ModuloPrivado(Modulo):
     __tablename__ = 'modulo_privado'
-    id_modulo_privado = db.Column(db.Integer(), db.ForeignKey("modulo.id_modulo"), primary_key=True)
+    id_component = db.Column(db.Integer(), db.ForeignKey("modulo.id_component"), primary_key=True)
 
     usuarios = db.relationship(
         'Usuario',
@@ -240,7 +240,7 @@ class Embarcado(db.Model):
     ip = db.Column(db.String(15))
     mac = db.Column(db.String(20))
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
     leaf = db.relationship("Leaf", back_populates="embarcado")
 
     def __init__(self, ip, mac):
@@ -253,7 +253,7 @@ class Dispositivo(db.Model):
     id_dispositivo = db.Column(db.Integer, primary_key=True)
     porta = db.Column(db.Integer)
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
     leaf = db.relationship("Leaf", back_populates="dispositivos")
 
     usos = db.relationship("Uso", back_populates="dispositivo")
@@ -271,7 +271,7 @@ class Dispositivo(db.Model):
 
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
-    id_sensor = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -290,7 +290,7 @@ class Sensor(Dispositivo):
 
 class Interruptor(Dispositivo):
     __tablename__ = 'interruptor'
-    id_interruptor = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -309,7 +309,7 @@ class Interruptor(Dispositivo):
 
 class Potenciometro(Dispositivo):
     __tablename__ = 'potenciometro'
-    id_potenciometro = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -331,7 +331,7 @@ class Uso(db.Model):
     id_uso = db.Column(db.Integer, primary_key=True)
     hora = db.Column(db.DateTime, default=db.func.now())
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
     leaf = db.relationship("Leaf", back_populates="usos")
 
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
@@ -348,7 +348,7 @@ class Uso(db.Model):
 
 class UsoInterruptor(Uso):
     __tablename__ = 'uso_interruptor'
-    id_uso_interruptor = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
+    id_uso = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
     valor = db.Column(db.Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -362,7 +362,7 @@ class UsoInterruptor(Uso):
 
 class UsoPotenciometro(Uso):
     __tablename__ = 'uso_potenciometro'
-    id_uso_potenciometro = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
+    id_uso = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
     valor = db.Column(db.Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -395,7 +395,7 @@ class Regra(db.Model):
 
 class RegraInterruptor(Regra):
     __tablename__ = 'regra_interruptor'
-    id_regra_interruptor = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
     valor = db.Column(db.Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -411,7 +411,7 @@ class RegraInterruptor(Regra):
 
 class RegraPotenciometro(Regra):
     __tablename__ = 'regra_potenciometro'
-    id_regra_potenciometro = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
     valor = db.Column(db.Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -427,7 +427,7 @@ class RegraPotenciometro(Regra):
 
 class RegraCronometrada(Regra):
     __tablename__ = 'regra_cronometrada'
-    id_regra_cronometrada = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
     hora = db.Column(db.DateTime)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -441,9 +441,9 @@ class RegraCronometrada(Regra):
 
 class RegraCronometradaInterruptor(RegraCronometrada):
     __tablename__ = 'regra_cronometrada_interruptor'
-    id_regra_cronometrada_interruptor = db.Column(db.Integer(),
-                                                  db.ForeignKey("regra_cronometrada.id_regra_cronometrada"),
-                                                  primary_key=True)
+    id_regra = db.Column(db.Integer(),
+                         db.ForeignKey("regra_cronometrada.id_regra"),
+                         primary_key=True)
     valor = db.Column(db.Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -459,9 +459,9 @@ class RegraCronometradaInterruptor(RegraCronometrada):
 
 class RegraCronometradaPotenciometro(RegraCronometrada):
     __tablename__ = 'regra_cronometrada_potenciometro'
-    id_regra_cronometrada_potenciometro = db.Column(db.Integer(),
-                                                    db.ForeignKey("regra_cronometrada.id_regra_cronometrada"),
-                                                    primary_key=True)
+    id_regra = db.Column(db.Integer(),
+                         db.ForeignKey("regra_cronometrada.id_regra"),
+                         primary_key=True)
     valor = db.Column(db.Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -480,7 +480,7 @@ class Monitor(db.Model):
     id_monitor = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80))
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_leaf'))
+    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
     leaf = db.relationship("Leaf", back_populates="monitor")
 
     regras = db.relationship("Regra", back_populates="monitor")
@@ -496,7 +496,7 @@ class Monitor(db.Model):
 
 class MonitorHorario(Monitor):
     __tablename__ = 'monitor_horario'
-    id_moitor_horario = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
+    id_monitor = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -516,7 +516,7 @@ class MonitorHorario(Monitor):
 
 class MonitorAutomatico(Monitor):
     __tablename__ = 'monitor_automatico'
-    id_moitor_automatico = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
+    id_monitor = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 

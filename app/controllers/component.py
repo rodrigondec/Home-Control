@@ -18,7 +18,7 @@ def index():
 def cadastrar_propriedade():
     if 'logged_in' in session:
         print(session['id_usuario'])
-        admin = Administrador.query.filter_by(id_administrador=session['id_usuario']).first()
+        admin = Administrador.query.filter_by(id_usuario=session['id_usuario']).first()
         if admin is not None and admin.client is None:
             form = ClientForm()
             if form.validate_on_submit():
