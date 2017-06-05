@@ -49,7 +49,7 @@ def cadastrar_propriedade():
 
 
 @mod_component.route('/cadastrar/<id_component_pai>')
-def cadastrar_component():
+def cadastrar_component(id_component_pai):
     pass
 
 
