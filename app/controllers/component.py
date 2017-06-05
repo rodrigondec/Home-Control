@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
 from app.models import *
-from app.forms import ClientForm, DispositivoForm
+from app.forms import ClientForm, DispositivoForm, ComponentForm
 
 mod_component = Blueprint('component', __name__, url_prefix='/component', template_folder='templates')
 # @TODO fazer metodos controlador component
@@ -50,7 +50,28 @@ def cadastrar_propriedade():
 
 @mod_component.route('/cadastrar/<id_component_pai>', methods=['GET', 'POST'])
 def cadastrar_component(id_component_pai):
-    return 'cadastrar'
+    form = ComponentForm()
+    if form.validate_on_submit():
+        if form.tipo_component.data == 'Leaf':
+            component = Leaf(form.nome.data)
+        elif form.tipo_component.data == 'Modulo':
+            component = Modulo(form.nome.data)
+        else:
+            component = ModuloPrivado(form.nome.data)
+
+        component_pai = Component.query.filter_by(id_component=id_component_pai).first()
+        if component_pai is None:
+            flash('Erro no id do component escolhido')
+            return redirect(url_for('component.listar_components'))
+
+        component_pai.add_component(component)
+
+        db.session.add(component)
+        db.session.commit()
+        flash('Cmponent criado com sucesso')
+
+        return redirect(url_for('component.listar_components'))
+    return render_template('component/cadastrar_component.html', form=form)
 
 @mod_component.route('/<id_leaf>/dispositivo/cadastrar/', methods=['GET', 'POST'])
 def cadastrar_dispositivo(id_leaf):
@@ -66,7 +87,7 @@ def cadastrar_dispositivo(id_leaf):
         leaf_pai = Leaf.query.filter_by(id_component=id_leaf).first()
         if leaf_pai is None:
             flash('Erro no id do component escolhido')
-            return redirect(url_for('component.index'))
+            return redirect(url_for('component.listar_components'))
 
         leaf_pai.add_dispositivo(dispositivo)
 

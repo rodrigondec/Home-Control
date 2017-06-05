@@ -20,11 +20,14 @@
 						<td>{{ dispositivo.id_dispositivo }}</td>
 						<td>{{ dispositivo.valor }}</td>
 						<td>{{ dispositivo.tipo }}</td>
-						<td><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
 						{% if dispositivo.tipo == 'interruptor' %}
+						<td><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
 						<td><a href='/component/alterar_interruptor/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
 						{% elif dispositivo.tipo == 'potenciometro' %}
+						<td><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
 						<td><a href='/component/alterar_potenciometro/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
+						{% elif dispositivo.tipo == 'sensor' %}
+						<td colspan="2"><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
 						{% endif %}
 					</tr>
 					{% endfor %}
@@ -33,4 +36,4 @@
 		</div>
 	</div>
 </div>
-{% endblock %}				
+{% endblock %}
