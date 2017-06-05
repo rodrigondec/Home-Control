@@ -43,7 +43,7 @@ def listar_components():
 
 
 @mod_component.route('/listar_modulos/<id_modulo>')
-def listar_components_hierarquico(id_modulo):
+def listar_components_por_modulo(id_modulo):
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_modulos.html', components=components)
 
@@ -54,7 +54,7 @@ def cadastrar_component():
 
 
 @mod_component.route('/listar_dispositivos/<id_leaf>')
-def listar_dispositivos(id_leaf):
+def listar_dispositivos_por_leaf(id_leaf):
     dispositivos = Dispositivo.query.filter_by(id_leaf=id_leaf)
     return render_template('component/listar_modulos.html', dispositivos=dispositivos)
 
