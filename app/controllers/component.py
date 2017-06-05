@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
-from app.models import Component,Dispositivo, Leaf, Modulo, ModuloPrivado, Sensor, Interruptor, Potenciometro
+from app.models import *
 from app.forms import ClientForm, DispositivoForm
 
 mod_component = Blueprint('component', __name__, url_prefix='/component', template_folder='templates')
@@ -48,11 +48,11 @@ def cadastrar_propriedade():
         abort(403)
 
 
-@mod_component.route('/cadastrar_component/<id_component_pai>')
+@mod_component.route('/cadastrar/<id_component_pai>')
 def cadastrar_component(id_component_pai):
-    pass
+    return 'cadastrar'
 
-@mod_component.route('/cadstrar_dispositivo/<id_leaf>')
+@mod_component.route('/dispositivo/cadstrar/<id_leaf>')
 def cadastrar_dispositivo(id_leaf):
     form = DispositivoForm()
     if form.validate_on_submit():
