@@ -19,8 +19,17 @@
 				<td>{{ component.id_component }}</td>
                 <td>{{ component.nome }}</td>
                 <td>{{ component.tipo }}</td>
+				{% if component.tipo == 'leaf' %}
+				<td colspan="2"><a href='{{ component.id_component }}'>Botão 1</a></td>
+				{%else%}
+				<td><a href='{{ component.id_component }}'>Botão 1</a></td>
+				<td><a href='{{ component.id_component }}'>Botão 2</a></td>
+				{% endif %}
+				
 			</tr>
 		    {% endfor %}
+		</tbody>
+		</table>
         </div>
 </div>
 {% endblock %}				
