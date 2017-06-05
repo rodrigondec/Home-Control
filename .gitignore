@@ -93,4 +93,4 @@ ENV/
 .idea/
 
 # Project configuration
-config.py
+/config.py
