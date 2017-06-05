@@ -37,8 +37,14 @@ def cadastrar_propriedade():
 
 
 @mod_component.route('/listar_modulos')
-def listar_modulos():
-    components = Component.query.all()
+def listar_components():
+    components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
+    return render_template('component/listar_modulos.html', components=components)
+
+
+@mod_component.route('/listar_modulos/<id_modulo>')
+def listar_components_hierarquico(id_modulo):
+    components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_modulos.html', components=components)
 
 
@@ -47,8 +53,10 @@ def cadastrar_component():
     pass
 
 
-def listar_dispositivos():
-    pass
+@mod_component.route('/listar_dispositivos/<id_leaf>')
+def listar_dispositivos(id_leaf):
+    dispositivos = Dispositivo.query.filter_by(id_leaf=id_leaf)
+    return render_template('component/listar_modulos.html', dispositivos=dispositivos)
 
 
 def alterar_interruptor():
