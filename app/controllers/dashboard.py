@@ -3,7 +3,10 @@ from app.forms import LoginForm
 from app.models import *
 
 mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard', template_folder='templates')
+
+
 # @TODO fazer view index
+
 
 @mod_dashboard.route('/')
 def index():
@@ -18,15 +21,15 @@ def login():
     if form.validate_on_submit():
         usuario = Usuario.query.filter_by(email=form.email.data).first()
 
-        if usuario != None and usuario.senha == form.senha.data:
+        if usuario is not None and usuario.senha == form.senha.data:
             flash('Usuario logado!')
             session['logged_in'] = True
             session['id_usuario'] = usuario.id_usuario
             return redirect(url_for('dashboard.index'))
         else:
             flash('Email ou senha incorretos. Tente novamente!')
-            return render_template('login.html', form=form)
-    return render_template('login.html', form=form)
+            return render_template('dashboard/login.html', form=form)
+    return render_template('dashboard/login.html', form=form)
 
 
 @mod_dashboard.route('/logout', methods=['GET'])

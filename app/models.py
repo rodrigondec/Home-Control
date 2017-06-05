@@ -57,7 +57,7 @@ class Administrador(Usuario):
     id_administrador = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
 
     client_id = db.Column(db.Integer, db.ForeignKey('client.id_client'))
-    client = db.relationship("Client", uselist=False, backref=db.backref('administrador', lazy='dynamic'))
+    client = db.relationship("Client", uselist=False, back_populates='administrador')
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -68,6 +68,8 @@ class Administrador(Usuario):
 class Client(db.Model):
     __tablename__ = 'client'
     id_client = db.Column(db.Integer, primary_key=True)
+
+    administrador = db.relationship("Administrador", uselist=False, back_populates="client")
 
     component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
     component = db.relationship("Component", uselist=False)
