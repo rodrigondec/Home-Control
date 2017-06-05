@@ -52,7 +52,7 @@ def cadastrar_propriedade():
 def cadastrar_component(id_component_pai):
     pass
 
-@mod_component.route('/cadstrar_dispositivo/<id_leaf')
+@mod_component.route('/cadstrar_dispositivo/<id_leaf>')
 def cadastrar_dispositivo(id_leaf):
     pass
 
