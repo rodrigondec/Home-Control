@@ -48,11 +48,11 @@ def cadastrar_propriedade():
         abort(403)
 
 
-@mod_component.route('/cadastrar/<id_component_pai>')
+@mod_component.route('/cadastrar/<id_component_pai>', methods=['GET', 'POST'])
 def cadastrar_component(id_component_pai):
     return 'cadastrar'
 
-@mod_component.route('/dispositivo/cadstrar/<id_leaf>')
+@mod_component.route('/<id_leaf>/dispositivo/cadastrar/', methods=['GET', 'POST'])
 def cadastrar_dispositivo(id_leaf):
     form = DispositivoForm()
     if form.validate_on_submit():
