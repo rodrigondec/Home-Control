@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
-from app.models import *
+from app.models import Component,Dispositivo
 from app.forms import ClientForm
 
 mod_component = Blueprint('component', __name__, url_prefix='/component', template_folder='templates')
@@ -39,13 +39,13 @@ def cadastrar_propriedade():
 @mod_component.route('/listar_modulos')
 def listar_components():
     components = Component.query.all()
-    return render_template('component/listar_modulos.html', components=components)
+    return render_template('component/listar_components.html', components=components)
 
 
 @mod_component.route('/listar_modulos/<id_modulo>')
 def listar_components_por_modulo(id_modulo):
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
-    return render_template('component/listar_modulos.html', components=components)
+    return render_template('component/listar_components.html', components=components)
 
 
 @mod_component.route('/cadastrar/<id_component_pai>')
