@@ -37,8 +37,8 @@ def cadastrar_propriedade():
 
 
 def listar_modulos():
-    pass
-
+	components = Component.query.filter_by(tipo.like('modulo%')).all()
+	return render_template('component/listar_modulos.html', components=components)
 
 @mod_component.route('/cadastrar/<id_component_pai>')
 def cadastrar_component():
