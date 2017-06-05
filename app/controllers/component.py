@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
-from app.models import Component,Dispositivo
-from app.forms import ClientForm
+from app.models import Component,Dispositivo, Leaf, Modulo, ModuloPrivado, Sensor, Interruptor, Potenciometro
+from app.forms import ClientForm, DispositivoForm
 
 mod_component = Blueprint('component', __name__, url_prefix='/component', template_folder='templates')
 # @TODO fazer metodos controlador component
@@ -54,7 +54,23 @@ def cadastrar_component(id_component_pai):
 
 @mod_component.route('/cadstrar_dispositivo/<id_leaf>')
 def cadastrar_dispositivo(id_leaf):
-    pass
+    form = DispositivoForm()
+    if form.validate_on_submit():
+        if form.tipo_dispositivo.data == 'Sensor':
+            dispositivo = Sensor(form.porta.data)
+        elif form.tipo_dispositivo.data == 'Interruptor':
+            dispositivo = Interruptor(form.porta.data)
+        else:
+            dispositivo = Potenciometro(form.porta.data)
+        leaf_pai = Leaf.query.filter_by(id_component=id_leaf).first()
+        if leaf_pai is None:
+            flash('Erro no id do component escolhido')
+            return redirect(url_for('component.index'))
+        leaf_pai.add_dispositivo(dispositivo)
+        flash('Dispositivo criado com sucesso')
+
+        return redirect('/component/listar_dispositivos/'+id_leaf)
+    return render_template('component/cadastrar_dispositivo.html', form=form)
 
 
 def atualizar_dispositivo(id_dispositivo):

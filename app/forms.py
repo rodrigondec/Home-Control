@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired
 
@@ -22,8 +22,11 @@ class ClientForm(FlaskForm):
 
 class ComponentForm(FlaskForm):
     nome = StringField('nome', validators=[DataRequired()])
-    tipo_component = SelectField(u'Tipo Componente', choices=[('Leaf', 'Folha'), ('Modulo', 'Módulo'), ('ModuloPrivado', 'Módulo Privado')])
+    tipo_component = SelectField(u'Tipo Componente',
+                                 choices=[('Leaf', 'Folha'), ('Modulo', 'Módulo'), ('ModuloPrivado', 'Módulo Privado')])
 	
 
 class DispositivoForm(FlaskForm):
-    leaf = SelectField('leaf', validators=[DataRequired()])
+    porta = IntegerField('porta', validators=[DataRequired()])
+    tipo_dispositivo = SelectField(u'Tipo Dispositivo',
+                                 choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
