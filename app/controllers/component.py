@@ -36,6 +36,11 @@ def cadastrar_propriedade():
         abort(403)
 
 
+@mod_component.route('/cadastrar/<id_component_pai>')
+def cadastrar_component():
+    pass
+
+
 @mod_component.route('/listar_modulos')
 def listar_components():
     components = Component.query.all()
@@ -46,11 +51,6 @@ def listar_components():
 def listar_components_por_modulo(id_modulo):
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_components.html', components=components)
-
-
-@mod_component.route('/cadastrar/<id_component_pai>')
-def cadastrar_component():
-    pass
 
 
 @mod_component.route('/listar_dispositivos/<id_component>')
