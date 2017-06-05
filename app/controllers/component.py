@@ -35,7 +35,7 @@ def cadastrar_propriedade():
     else:
         abort(403)
 
-
+@mod_component.route('/component/listar_modulos')
 def listar_modulos():
 	components = Component.query.filter_by(tipo.like('modulo%')).all()
 	return render_template('component/listar_modulos.html', components=components)

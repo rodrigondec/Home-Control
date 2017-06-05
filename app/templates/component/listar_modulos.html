@@ -9,9 +9,9 @@
         <div class="col-md-6 col-md-offset-3">
             {% for component in components %}
             <tr>
-                <td>{{ components[0] }}</td>
-                <td>{{ components[1] }}</td>
-                <td>{{ components[2] }}</td>
+                <td>{{ component.id_component }}</td>
+                <td>{{ component.nome }}</td>
+                <td>{{ component.tipo }}</td>
             </tr>
 		{% endfor %}
                 <div class="panel-heading">
