@@ -37,13 +37,13 @@ def cadastrar_propriedade():
 
 
 @mod_component.route('/listar_modulos')
-def listar_modulos():
+def listar_components():
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_modulos.html', components=components)
 
 
 @mod_component.route('/listar_modulos/<id_modulo>')
-def listar_modulos_hierarquico(id_modulo):
+def listar_components_hierarquico(id_modulo):
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_modulos.html', components=components)
 
