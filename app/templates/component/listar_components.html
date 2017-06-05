@@ -21,7 +21,7 @@
                 <td>{{ component.tipo }}</td>
 				{% if component.tipo == 'leaf' %}
 				<td><a href='/component/listar_dispositivos/{{ component.id_component }}'>Listar Dispositivos</a></td>
-				<td><a href='/component/dispositivo/cadastrar/{{ component.id_component }}'>Cadastrar Dispositivo</a></td>
+				<td><a href='/component/{{ component.id_component }}/dispositivo/cadastrar'>Cadastrar Dispositivo</a></td>
 				{%else%}
 				<td><a href='/component/listar_components/{{ component.id_component }}'>Listar por Módulo</a></td>
 				<td><a href='/component/cadastrar/{{ component.id_component }}'>Cadastar Componente</a></td>
