@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
-from app import app
-from app.models import *
+from app import db
+from app.models import Administrador, Usuario
 from app.forms import UsuarioForm
 
 mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates')
@@ -15,11 +15,17 @@ def index():
     else:
         abort(403)
 
-@mod_usuario.route('/criar')
+@mod_usuario.route('/cadastrar', methods=['GET', 'POST'])
 def cadastrar_usuario():
     form = UsuarioForm()
     if form.validate_on_submit():
-        # flash('Login requested for OpenID="%s", remember_me=%s' % (form.openid.data, str(form.remember_me.data)))
-        # session['logged_in'] = True
-        return redirect('/dashborad/')
-    return render_template('cadastro.html', title='Sign In', form=form)
+        if form.is_admin.data:
+            usuario = Administrador(form.nome.data, form.email.data, form.senha.data)
+        else:
+            usuario = Usuario(form.nome.data, form.email.data, form.senha.data)
+        db.session.add(usuario)
+        db.session.commit()
+        flash('Usuário criado com sucesso')
+
+        return redirect('/dashboard/')
+    return render_template('usuario/cadastrar_usuario.html', title='Sign In', form=form)
