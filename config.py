@@ -1,7 +1,7 @@
 # # Enabling the development environment
 DEBUG = True
 DB_USER = 'root'
-DB_PASS = 'root'
+DB_PASS = '123456'
 DB_HOST = 'localhost'
 #DB_PORT = '80'
 DB_NAME = 'homecontrol'

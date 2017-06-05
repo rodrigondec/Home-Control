@@ -38,7 +38,7 @@ def cadastrar_propriedade():
 
 @mod_component.route('/listar_modulos')
 def listar_modulos():
-    components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
+    components = Component.query.all()
     return render_template('component/listar_modulos.html', components=components)
 
 
