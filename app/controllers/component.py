@@ -53,15 +53,17 @@ def cadastrar_component():
     pass
 
 
-@mod_component.route('/listar_dispositivos/<id_leaf>')
-def listar_dispositivos_por_leaf(id_leaf):
-    dispositivos = Dispositivo.query.filter_by(id_leaf=id_leaf)
+@mod_component.route('/listar_dispositivos/<id_component>')
+def listar_dispositivos_por_leaf(id_component):
+    dispositivos = Dispositivo.query.filter_by(id_component=id_component)
     return render_template('component/listar_modulos.html', dispositivos=dispositivos)
 
 
-def alterar_interruptor():
+@mod_component.route('/alterar_interruptor/<id_dispositivo>')
+def alterar_interruptor(id_dispositivo):
     pass
 
 
-def alterar_potenciometro():
+@mod_component.route('alterar_potenciometro/<id_dispositivo>')
+def alterar_potenciometro(id_dispositivo):
     pass
