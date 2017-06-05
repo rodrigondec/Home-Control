@@ -4,8 +4,6 @@
 
 {% block content %}
 <div class="container">
-    <form action="" method="post" name="login">
-        {{ form.hidden_tag() }}
         <div class="col-md-6 col-md-offset-3">
             {% for component in components %}
             <tr>
@@ -13,25 +11,7 @@
                 <td>{{ component.nome }}</td>
                 <td>{{ component.tipo }}</td>
             </tr>
-		{% endfor %}
-                <div class="panel-heading">
-                    Cadastrar Propriedade
-                </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="email" class="col-lg-2 control-label">Nome:</label>
-                        <div class="col-lg-10">
-                            {{ form.nome(class='form-control', placeholder='Nome') }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-10 pull-right">
-                            <button type="submit" class="btn btn-success">Cadastrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+		    {% endfor %}
         </div>
-    </form>
 </div>
 {% endblock %}				
