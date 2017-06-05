@@ -40,6 +40,11 @@ def listar_modulos():
     pass
 
 
+@mod_component.route('/cadastrar/<id_component_pai>')
+def cadastrar_component():
+    pass
+
+
 def listar_dispositivos():
     pass
 
