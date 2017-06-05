@@ -40,7 +40,7 @@ def cadastrar_propriedade():
                 db.session.commit()
 
                 flash('Propriedade cadastrada')
-                return redirect(url_for('component.index'))
+                return redirect(url_for('component.listar_components'))
             return render_template('component/cadastrar_propriedade.html', form=form)
         else:
             abort(403)
