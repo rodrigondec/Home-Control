@@ -25,7 +25,7 @@ def cadastrar_usuario():
         db.session.commit()
         flash('Usuário criado com sucesso')
 
-        return redirect('/dashboard/')
+        return redirect('/')
     return render_template('usuario/cadastrar_usuario.html', title='Sign In', form=form)
 
 
