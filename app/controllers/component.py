@@ -20,9 +20,9 @@ def listar_components_por_modulo(id_modulo):
     return render_template('component/listar_components.html', components=components)
 
 
-@mod_component.route('/listar_dispositivos/<id_component>')
-def listar_dispositivos_por_leaf(id_component):
-    dispositivos = Dispositivo.query.filter_by(leaf_id=id_component)
+@mod_component.route('/listar_dispositivos/<id_leaf>')
+def listar_dispositivos_por_leaf(id_leaf):
+    dispositivos = Dispositivo.query.filter_by(leaf_id=id_leaf)
     return render_template('component/listar_dispositivos.html', dispositivos=dispositivos)
 
 
@@ -48,8 +48,12 @@ def cadastrar_propriedade():
         abort(403)
 
 
-@mod_component.route('/cadastrar/<id_component_pai>')
+@mod_component.route('/cadastrar_component/<id_component_pai>')
 def cadastrar_component(id_component_pai):
+    pass
+
+@mod_component.route('/cadstrar_dispositivo/<id_leaf')
+def cadastrar_dispositivo(id_leaf):
     pass
 
 
