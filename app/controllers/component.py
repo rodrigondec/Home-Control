@@ -55,7 +55,7 @@ def cadastrar_component():
 
 @mod_component.route('/listar_dispositivos/<id_component>')
 def listar_dispositivos_por_leaf(id_component):
-    dispositivos = Dispositivo.query.filter_by(id_component=id_component)
+    dispositivos = Dispositivo.query.filter_by(leaf_id=id_component)
     return render_template('component/listar_dispositivos.html', dispositivos=dispositivos)
 
 
