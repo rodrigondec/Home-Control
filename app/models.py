@@ -272,58 +272,34 @@ class Dispositivo(db.Model):
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
     id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = db.Column(db.Float())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta)
-        self.valor = None
-
-    def set_valor(self, valor):
-        if not isinstance(valor, float):
-            raise TypeError("Valor precisa ser float")
-        self.valor = valor
-
-    def get_valor(self):
-        return self.valor
 
 
 class Interruptor(Dispositivo):
     __tablename__ = 'interruptor'
     id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = db.Column(db.Boolean())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta)
-        self.valor = None
-
-    def set_valor(self, valor):
-        if not isinstance(valor, bool):
-            raise TypeError("Valor precisa ser boolean")
-        self.valor = valor
-
-    def get_valor(self):
-        return self.valor
 
 
 class Potenciometro(Dispositivo):
     __tablename__ = 'potenciometro'
     id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = db.Column(db.Float())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, porta):
         Dispositivo.__init__(self, porta)
-        self.valor = None
-
-    def set_valor(self, valor):
-        if not isinstance(valor, float):
-            raise TypeError("Valor precisa ser float")
-        self.valor = valor
-
-    def get_valor(self):
-        return self.valor
 
 
 class Uso(db.Model):
