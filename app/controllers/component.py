@@ -62,11 +62,16 @@ def cadastrar_dispositivo(id_leaf):
             dispositivo = Interruptor(form.porta.data)
         else:
             dispositivo = Potenciometro(form.porta.data)
+
         leaf_pai = Leaf.query.filter_by(id_component=id_leaf).first()
         if leaf_pai is None:
             flash('Erro no id do component escolhido')
             return redirect(url_for('component.index'))
+
         leaf_pai.add_dispositivo(dispositivo)
+
+        db.session.add(dispositivo)
+        db.session.commit()
         flash('Dispositivo criado com sucesso')
 
         return redirect('/component/listar_dispositivos/'+id_leaf)
