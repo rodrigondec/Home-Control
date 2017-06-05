@@ -4,8 +4,6 @@ from app.models import Administrador, Usuario
 from app.forms import UsuarioForm
 
 mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates')
-# @TODO fazer metodos controlador usuario
-# @TODO fazer views usuario
 
 @mod_usuario.route('/')
 def index():
@@ -29,3 +27,5 @@ def cadastrar_usuario():
 
         return redirect('/dashboard/')
     return render_template('usuario/cadastrar_usuario.html', title='Sign In', form=form)
+
+
