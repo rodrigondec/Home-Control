@@ -35,10 +35,12 @@ def cadastrar_propriedade():
     else:
         abort(403)
 
+
 @mod_component.route('/listar_modulos')
 def listar_modulos():
     components = Component.query.filter((Component.tipo=='modulo') | (Component.tipo=='modulo_privado')).all()
     return render_template('component/listar_modulos.html', components=components)
+
 
 @mod_component.route('/cadastrar/<id_component_pai>')
 def cadastrar_component():
