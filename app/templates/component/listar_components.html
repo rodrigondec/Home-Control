@@ -20,11 +20,11 @@
                 <td>{{ component.nome }}</td>
                 <td>{{ component.tipo }}</td>
 				{% if component.tipo == 'leaf' %}
-				<td><a href='/listar_dispositivos/{{ component.id_component }}'>Listar Dispositivos</a></td>
-				<td><a href='/cadastrar_dispositivos/{{ component.id_component }}'>Cadastrar Dispositivos</a></td>
+				<td><a href='/component/listar_dispositivos/{{ component.id_component }}'>Listar Dispositivos</a></td>
+				<td><a href='/component/cadastrar_dispositivos/{{ component.id_component }}'>Cadastrar Dispositivos</a></td>
 				{%else%}
-				<td><a href='/listar_modulos/{{ component.id_component }}'>Listar por Módulo</a></td>
-				<td><a href='/cadastrar/{{ component.id_component }}'>Cadastar Componente</a></td>
+				<td><a href='/component/listar_components/{{ component.id_component }}'>Listar por Módulo</a></td>
+				<td><a href='/component/cadastrar/{{ component.id_component }}'>Cadastar Componente</a></td>
 				{% endif %}
 				
 			</tr>
