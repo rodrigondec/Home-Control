@@ -2,6 +2,11 @@ from app.models import *
 from app import db
 from datetime import datetime
 
+db.session.add(RequestLeitura())
+db.session.add(RequestEscrita())
+db.session.add(AtualizarDispositivo())
+db.session.add(AlterarDispositivo())
+
 admin = Administrador('rodrigo', 'rodrigondec@gmail.com', 'rodrigo123')
 db.session.add(admin)
 # admin = Administrador.query.filter_by(id_usuario=1).first()

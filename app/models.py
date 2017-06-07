@@ -1,4 +1,5 @@
 from app import db
+from threading import Thread
 
 # Many-to-many helper tables (for public access, use models only) -----------
 
@@ -91,7 +92,8 @@ class Component(db.Model):
 
 class Leaf(Component):
     __tablename__ = 'leaf'
-    id_component = db.Column(db.Integer(), db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
+    id_component = db.Column(db.Integer(),
+                             db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
 
     embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 
@@ -268,6 +270,9 @@ class Dispositivo(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.porta = porta
 
+    def get_valor(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
@@ -368,6 +373,9 @@ class Regra(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.dispositivo = dispositivo
 
+    def avaliar_regra(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class RegraInterruptor(Regra):
     __tablename__ = 'regra_interruptor'
@@ -447,11 +455,11 @@ class RegraCronometradaPotenciometro(RegraCronometrada):
             raise TypeError("Valor não é um float")
         if not isinstance(potenciometro, Potenciometro):
             raise TypeError("Dispositivo passado não é um Potenciometro")
-        RegraCronometrada.__init__(self, hora)
+        RegraCronometrada.__init__(self, potenciometro, hora)
         self.valor = valor
 
 
-class Monitor(db.Model):
+class Monitor(db.Model, Thread):
     __tablename__ = 'monitor'
     id_monitor = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80))
@@ -467,7 +475,31 @@ class Monitor(db.Model):
     def __init__(self, nome):
         if self.__class__ is Monitor:
             raise TypeError('abstract class cannot be instantiated')
+        Thread.__init__(self)
         self.nome = nome
+
+    def add_regra(self, regra):
+        if regra in self.regras:
+            raise Exception("Regra duplicada")
+        self.regras.append(regra)
+
+    def remove_regra(self, regra):
+        self.regras.remove(regra)
+
+    def before_run(self):
+        raise TypeError('abstract method cannot be called')
+
+    def run(self):
+        raise TypeError('abstract method cannot be called')
+
+    def verificar_regras(self):
+        raise TypeError('abstract method cannot be called')
+
+    def executar_comando(self, regra):
+        raise TypeError('abstract method cannot be called')
+
+    def after_run(self):
+        raise TypeError('abstract method cannot be called')
 
 
 class MonitorHorario(Monitor):
@@ -479,16 +511,6 @@ class MonitorHorario(Monitor):
     def __init__(self, nome):
         Monitor.__init__(self, nome)
 
-    def add_regra(self, regra):
-        if regra in self.regras:
-            raise Exception("Regra duplicada")
-        if not isinstance(regra, RegraCronometrada):
-            raise TypeError("Precisa ser uma RegraCronometrada")
-        self.regras.append(regra)
-
-    def remove_regra(self, regra):
-        self.regras.remove(regra)
-
 
 class MonitorAutomatico(Monitor):
     __tablename__ = 'monitor_automatico'
@@ -498,3 +520,126 @@ class MonitorAutomatico(Monitor):
 
     def __init__(self, nome):
         Monitor.__init__(self, nome)
+
+
+class Command(db.Model):
+    __tablename__ = 'command'
+    id_command = db.Column(db.Integer, primary_key=True)
+
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self):
+        if self.__class__ is Command:
+            raise TypeError('abstract class cannot be instantiated')
+
+    def execute(self):
+        raise TypeError('abstract method cannot be called')
+
+    def after_execute(self):
+        raise TypeError('abstract method cannot be called')
+
+
+class RequestLeitura(Command):
+    __tablename__ = 'request_leitura'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, ip, porta):
+        self.ip = ip
+        self.porta = porta
+
+    def execute(self):
+        self.after_execute()
+
+        return True
+
+    def after_execute(self):
+        pass
+
+
+class RequestEscrita(Command):
+    __tablename__ = 'request_escrita'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, ip, porta, valor):
+        self.ip = ip
+        self.porta = porta
+        self.valor = valor
+
+    def execute(self):
+        self.after_execute()
+        pass
+
+    def after_execute(self):
+        pass
+
+
+class AtualizarDispositivo(Command):
+    __tablename__ = 'atualizar_dispositivo'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, embarcado, dispositivo):
+        if not isinstance(embarcado, Embarcado):
+            raise TypeError("parâmetro 1 precisa ser do tipo Embarcado")
+        if not isinstance(dispositivo, Dispositivo):
+            raise TypeError("parâmetro 2 precisa ser do tipo Dispositivo")
+        self.embarcado = embarcado
+        self.dispositivo = dispositivo
+
+    def execute(self):
+        request = RequestLeitura()
+        request.before_execute(self.embarcado, self.dispositivo)
+        request.execute()
+        self.after_execute()
+        pass
+
+    def after_execute(self):
+        pass
+
+
+class AlterarDispositivo(Command):
+    __tablename__ = 'alterar_dispositivo'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, embarcado, dispositivo, valor):
+        if not isinstance(embarcado, Embarcado):
+            raise TypeError("parâmetro 1 precisa ser do tipo Embarcado")
+        if not isinstance(dispositivo, Potenciometro) and not isinstance(dispositivo, Interruptor):
+            raise TypeError("parâmetro 2 precisa ser do tipo Potenciometro ou Interruptor")
+        self.embarcado = embarcado
+        self.dispositivo = dispositivo
+        self.valor = valor
+
+    def execute(self):
+        request = RequestEscrita()
+        request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
+        request.execute()
+        self.after_execute()
+        pass
+
+    def after_execute(self):
+        request = RequestLeitura()
+        request.before_execute(self.embarcado.ip, self.dispositivo.porta)
+        request.execute()
+
+        return True
