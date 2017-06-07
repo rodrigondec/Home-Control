@@ -561,3 +561,25 @@ class RequestLeitura(Command):
     def after_execute(self):
         pass
 
+
+class RequestEscrita(Command):
+    __tablename__ = 'request_escrita'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, ip, porta, valor):
+        self.ip = ip
+        self.porta = porta
+        self.valor = valor
+
+    def execute(self):
+        self.after_execute()
+        pass
+
+    def after_execute(self):
+        pass
+
