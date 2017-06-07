@@ -611,3 +611,35 @@ class AtualizarDispositivo(Command):
     def after_execute(self):
         pass
 
+
+class AlterarDispositivo(Command):
+    __tablename__ = 'alterar_dispositivo'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, embarcado, dispositivo, valor):
+        if not isinstance(embarcado, Embarcado):
+            raise TypeError("parâmetro 1 precisa ser do tipo Embarcado")
+        if not isinstance(dispositivo, Potenciometro) and not isinstance(dispositivo, Interruptor):
+            raise TypeError("parâmetro 2 precisa ser do tipo Potenciometro ou Interruptor")
+        self.embarcado = embarcado
+        self.dispositivo = dispositivo
+        self.valor = valor
+
+    def execute(self):
+        request = RequestEscrita()
+        request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
+        request.execute()
+        self.after_execute()
+        pass
+
+    def after_execute(self):
+        request = RequestLeitura()
+        request.before_execute(self.embarcado.ip, self.dispositivo.porta)
+        request.execute()
+
+        return True
