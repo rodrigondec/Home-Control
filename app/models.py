@@ -520,3 +520,23 @@ class MonitorAutomatico(Monitor):
 
     def __init__(self, nome):
         Monitor.__init__(self, nome)
+
+
+class Command(db.Model):
+    __tablename__ = 'command'
+    id_command = db.Column(db.Integer, primary_key=True)
+
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self):
+        if self.__class__ is Command:
+            raise TypeError('abstract class cannot be instantiated')
+
+    def execute(self):
+        raise TypeError('abstract method cannot be called')
+
+    def after_execute(self):
+        raise TypeError('abstract method cannot be called')
+
+
