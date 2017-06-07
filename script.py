@@ -40,12 +40,10 @@ leaf.add_dispositivo(sensor)
 interruptor = Interruptor(12)
 # interruptor = Interruptor.query.filter_by(id_dispositivo=2).first()
 leaf.add_dispositivo(interruptor)
-leaf.alterar_interruptor(interruptor, True)
 #
 potenciometro = Potenciometro(11)
 # potenciometro = Potenciometro.query.filter_by(id_dispositivo=3).first()
 leaf.add_dispositivo(potenciometro)
-leaf.alterar_potenciometro(potenciometro, 80.5)
 #
 monitor = MonitorHorario("custom")
 # monitor = MonitorHorario.query.filter_by(id_monitor=1).first()
