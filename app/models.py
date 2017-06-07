@@ -540,3 +540,24 @@ class Command(db.Model):
         raise TypeError('abstract method cannot be called')
 
 
+class RequestLeitura(Command):
+    __tablename__ = 'request_leitura'
+    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self):
+        Command.__init__(self)
+
+    def before_execute(self, ip, porta):
+        self.ip = ip
+        self.porta = porta
+
+    def execute(self):
+        self.after_execute()
+
+        return True
+
+    def after_execute(self):
+        pass
+
