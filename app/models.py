@@ -1,4 +1,5 @@
 from app import db
+from threading import Thread
 
 # Many-to-many helper tables (for public access, use models only) -----------
 
@@ -91,7 +92,8 @@ class Component(db.Model):
 
 class Leaf(Component):
     __tablename__ = 'leaf'
-    id_component = db.Column(db.Integer(), db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
+    id_component = db.Column(db.Integer(),
+                             db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
 
     embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
 
@@ -268,6 +270,9 @@ class Dispositivo(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.porta = porta
 
+    def get_valor(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
@@ -368,6 +373,9 @@ class Regra(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.dispositivo = dispositivo
 
+    def avaliar_regra(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class RegraInterruptor(Regra):
     __tablename__ = 'regra_interruptor'
@@ -447,11 +455,11 @@ class RegraCronometradaPotenciometro(RegraCronometrada):
             raise TypeError("Valor não é um float")
         if not isinstance(potenciometro, Potenciometro):
             raise TypeError("Dispositivo passado não é um Potenciometro")
-        RegraCronometrada.__init__(self, hora)
+        RegraCronometrada.__init__(self, potenciometro, hora)
         self.valor = valor
 
 
-class Monitor(db.Model):
+class Monitor(db.Model, Thread):
     __tablename__ = 'monitor'
     id_monitor = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80))
@@ -467,6 +475,7 @@ class Monitor(db.Model):
     def __init__(self, nome):
         if self.__class__ is Monitor:
             raise TypeError('abstract class cannot be instantiated')
+        Thread.__init__(self)
         self.nome = nome
 
 
