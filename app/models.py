@@ -478,6 +478,29 @@ class Monitor(db.Model, Thread):
         Thread.__init__(self)
         self.nome = nome
 
+    def add_regra(self, regra):
+        if regra in self.regras:
+            raise Exception("Regra duplicada")
+        self.regras.append(regra)
+
+    def remove_regra(self, regra):
+        self.regras.remove(regra)
+
+    def before_run(self):
+        raise TypeError('abstract method cannot be called')
+
+    def run(self):
+        raise TypeError('abstract method cannot be called')
+
+    def verificar_regras(self):
+        raise TypeError('abstract method cannot be called')
+
+    def executar_comando(self, regra):
+        raise TypeError('abstract method cannot be called')
+
+    def after_run(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class MonitorHorario(Monitor):
     __tablename__ = 'monitor_horario'
@@ -487,16 +510,6 @@ class MonitorHorario(Monitor):
 
     def __init__(self, nome):
         Monitor.__init__(self, nome)
-
-    def add_regra(self, regra):
-        if regra in self.regras:
-            raise Exception("Regra duplicada")
-        if not isinstance(regra, RegraCronometrada):
-            raise TypeError("Precisa ser uma RegraCronometrada")
-        self.regras.append(regra)
-
-    def remove_regra(self, regra):
-        self.regras.remove(regra)
 
 
 class MonitorAutomatico(Monitor):
