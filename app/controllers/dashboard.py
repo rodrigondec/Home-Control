@@ -47,6 +47,7 @@ def index():
                 return "Nenhum modulo privado com o usuário encontrado!"
         return render_template('dashboard/index.html', components=components)
     else:
+        flash('Entre no sistema primeiro!')
         return redirect('/')
 
 @mod_dashboard.route('/modulo/<id_modulo>')
@@ -55,13 +56,14 @@ def modulo(id_modulo):
         usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
         modulo = Component.query.filter_by(id_component=id_modulo).first()
         if modulo.tipo == 'modulo_privado' and usuario not in modulo.usuarios:
-            abort(403)
+            flash('Você não tem acesso à esse modulo privado!')
+            return redirect('/dashboard/')
         components = modulo.components
         print(components)
         return render_template('dashboard/modulo.html', components=components, id_modulo=id_modulo)
     else:
-        flash('Você não tem acesso à esse modulo privado!')
-        return redirect('/dashboard/')
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
 
 
 @mod_dashboard.route('/leaf/<id_leaf>')
