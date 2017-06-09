@@ -27,6 +27,7 @@ class ComponentForm(FlaskForm):
 	
 
 class DispositivoForm(FlaskForm):
+    nome = StringField('nome', validators=[DataRequired()])
     porta = IntegerField('porta', validators=[DataRequired()])
     tipo_dispositivo = SelectField(u'Tipo Dispositivo',
                                  choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
