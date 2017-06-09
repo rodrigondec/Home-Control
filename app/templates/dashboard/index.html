@@ -1,7 +1,33 @@
 {% extends "base.html" %}
 
-{% block head %}Página inicial{% endblock %}
+{% block head %}Index{% endblock %}
 
 {% block content %}
-    Hello World
+<div class="container">
+	<div class="col-md-10 col-md-offset-1">
+		<table class="table table-striped table-hover ">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nome</th>
+					<th>Tipo</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for component in components %}
+				<tr>
+					<td>{{ component.id_component }}</td>
+					<td>{{ component.nome }}</td>
+					<td>{{ component.tipo }}</td>
+					{% if component.tipo == 'leaf' %}
+					<td><a href='/dashboard/leaf/{{ component.id_component }}'>Abrir leaf</a></td>
+					{%else%}
+					<td><a href='/dashboard/modulo/{{ component.id_component }}'>Abrir modulo</a></td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
 {% endblock %}
