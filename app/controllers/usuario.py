@@ -29,7 +29,7 @@ def cadastrar_usuario():
         return redirect('/')
     return render_template('usuario/cadastrar.html', title='Sign In', form=form)
 
-@mod_usuario.route('/adicionar/<id_modulo>', mehotds=['GET', 'POST'])
+@mod_usuario.route('/adicionar/<id_modulo>', methods=['GET', 'POST'])
 def adicionar_usuario(id_modulo):
     if 'logged_in' in session:
         print(session['logged_in'])
