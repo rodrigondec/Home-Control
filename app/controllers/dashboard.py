@@ -115,6 +115,8 @@ def cadastrar_propriedade():
                 return redirect(url_for('dashboard.index'))
             return render_template('dashboard/cadastrar_propriedade.html', form=form)
         else:
-            abort(403)
+            flash('Você já tem uma propriedade ou não é administrador do sistema')
+            return redirect('/dashboard/')
     else:
-        abort(403)
+        flash('Entre primeiro')
+        return redirect('/')
