@@ -20,7 +20,7 @@ casa = ModuloPrivado('Casa rod')
 # casa = ModuloPrivado.query.filter_by(id_component=1).first()
 client.component = casa
 
-usuario = Usuario('wesley', 'wereuelgmail.com', 'wesley123')
+usuario = Usuario('wesley', 'wereuel@gmail.com', 'wesley123')
 # usuario = Usuario.query.filter_by(id_usuario=1).first()
 casa.add_usuario(usuario)
 casa.add_usuario(admin)
