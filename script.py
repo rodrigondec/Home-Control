@@ -28,6 +28,7 @@ casa.add_usuario(admin)
 
 quarto = ModuloPrivado('Quarto de rods')
 # quarto = ModuloPrivado.query.filter_by(id_component=2).first()
+quarto.add_usuario(admin)
 casa.add_component(quarto)
 #
 leaf = Leaf('Dispositivos do quarto de rods')
@@ -54,8 +55,13 @@ monitor = MonitorHorario("custom")
 # monitor = MonitorHorario.query.filter_by(id_monitor=1).first()
 leaf.monitor = monitor
 #
-regra = RegraCronometradaInterruptor(interruptor, True, datetime.now())
+regra = RegraCronometradaInterruptor(interruptor, True, datetime.now().hour, datetime.now().minute)
 # regra = RegraCronometradaInterruptor.query.filter_by(id_regra=1).first()
 monitor.add_regra(regra)
+
+regra2 = RegraInterruptor(interruptor, True)
+# regra2 = RegraCronometradaInterruptor.query.filter_by(id_regra=2).first()
+monitor.add_regra(regra2)
+
 
 db.session.commit()
