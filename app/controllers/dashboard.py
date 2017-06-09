@@ -29,7 +29,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('dashboard.index'))
+    return redirect(url_for('/'))
 
 @mod_dashboard.route('/')
 def index():
@@ -47,7 +47,7 @@ def index():
                 return "Nenhum modulo privado com o usuário encontrado!"
         return render_template('dashboard/index.html', components=components)
     else:
-        abort(403)
+        return redirect('/')
 
 @mod_dashboard.route('/modulo/<id_modulo>')
 def modulo(id_modulo):
