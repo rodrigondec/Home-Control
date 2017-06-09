@@ -38,15 +38,15 @@ embarcado = Embarcado('0.0.0.0', 'ex:abcd:efgh:ijkl')
 # embarcado = Embarcado.query.filter_by(id_embarcado=1).first()
 leaf.embarcado = embarcado
 #
-sensor = Sensor(13)
+sensor = Sensor('Temperatura', 13)
 # sensor = Sensor.query.filter_by(id_dispositivo=1).first()
 leaf.add_dispositivo(sensor)
 #
-interruptor = Interruptor(12)
+interruptor = Interruptor('Lampâda central', 12)
 # interruptor = Interruptor.query.filter_by(id_dispositivo=2).first()
 leaf.add_dispositivo(interruptor)
 #
-potenciometro = Potenciometro(11)
+potenciometro = Potenciometro('Ventilador', 11)
 # potenciometro = Potenciometro.query.filter_by(id_dispositivo=3).first()
 leaf.add_dispositivo(potenciometro)
 #

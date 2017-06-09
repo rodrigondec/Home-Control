@@ -253,6 +253,7 @@ class Embarcado(db.Model):
 class Dispositivo(db.Model):
     __tablename__ = 'dispositivo'
     id_dispositivo = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(80))
     porta = db.Column(db.Integer)
 
     leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
@@ -265,9 +266,10 @@ class Dispositivo(db.Model):
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
-    def __init__(self, porta):
+    def __init__(self, nome, porta):
         if self.__class__ is Dispositivo:
             raise TypeError('abstract class cannot be instantiated')
+        self.nome = nome
         self.porta = porta
 
     def get_valor(self):
@@ -281,8 +283,11 @@ class Sensor(Dispositivo):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, porta):
-        Dispositivo.__init__(self, porta)
+    def __init__(self, nome, porta):
+        Dispositivo.__init__(self, nome, porta)
+
+    def get_valor(self):
+        return self.valor
 
 
 class Interruptor(Dispositivo):
@@ -292,8 +297,11 @@ class Interruptor(Dispositivo):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, porta):
-        Dispositivo.__init__(self, porta)
+    def __init__(self, nome, porta):
+        Dispositivo.__init__(self, nome, porta)
+
+    def get_valor(self):
+        return self.valor
 
 
 class Potenciometro(Dispositivo):
@@ -303,8 +311,11 @@ class Potenciometro(Dispositivo):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, porta):
-        Dispositivo.__init__(self, porta)
+    def __init__(self, nome, porta):
+        Dispositivo.__init__(self, nome, porta)
+
+    def get_valor(self):
+        return self.valor
 
 
 class Uso(db.Model):
