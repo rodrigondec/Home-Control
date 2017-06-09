@@ -40,12 +40,13 @@ def index():
         if usuario in modulo.usuarios:
             components = modulo.components
         else:
-            for modulo in Commponent.query.filter((Component.tipo=='modulo_privado')).all():
-                if usuario in modulo.components:
+            for modulo_i in Commponent.query.filter((Component.tipo=='modulo_privado')).all():
+                if usuario in modulo_i.components:
+                    modulo = modulo_i
                     components = modulo.components
             if not components:
                 return "Nenhum modulo privado com o usuário encontrado!"
-        return render_template('dashboard/index.html', components=components)
+        return render_template('dashboard/modulo.html', components=components, modulo=modulo)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -60,7 +61,7 @@ def modulo(id_modulo):
             return redirect('/dashboard/')
         components = modulo.components
         print(components)
-        return render_template('dashboard/modulo.html', components=components, id_modulo=id_modulo)
+        return render_template('dashboard/modulo.html', components=components, modulo=modulo)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -68,8 +69,9 @@ def modulo(id_modulo):
 
 @mod_dashboard.route('/leaf/<id_leaf>')
 def leaf(id_leaf):
+    leaf = Component.query.filter_by(id_component=id_leaf).first()
     dispositivos = Dispositivo.query.filter_by(leaf_id=id_leaf)
-    return render_template('dashboard/leaf.html', dispositivos=dispositivos)
+    return render_template('dashboard/leaf.html', dispositivos=dispositivos, leaf=leaf)
 
 
 @mod_dashboard.route('/component/cadastrar/<id_component_pai>', methods=['GET', 'POST'])

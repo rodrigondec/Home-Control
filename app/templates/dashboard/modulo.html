@@ -5,10 +5,12 @@
 {% block content %}
 <div class="container">
 	<div class="col-md-12">
+		<h1 class="text-center">{{ modulo.nome }}</h1>
+		<hr>
 		<div class="col-md-2">
 			<ul>
-				<li><a href="/dashboard/component/cadastrar/{{ id_modulo }}">Cadastrar Component</a></li>
-				<li><a href="/usuario/adicionar/{{ id_modulo }}">Adicionar Usuário</a></li>
+				<li><a href="/dashboard/component/cadastrar/{{ modulo.id_modulo }}">Cadastrar Component</a></li>
+				<li><a href="/usuario/adicionar/{{ modulo.id_modulo }}">Adicionar Usuário</a></li>
 			</ul>
 		</div>
 		<div class="col-md-10">
