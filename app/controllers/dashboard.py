@@ -60,8 +60,8 @@ def modulo(id_modulo):
         print(components)
         return render_template('dashboard/modulo.html', components=components, id_modulo=id_modulo)
     else:
-        abort(403)
-
+        flash('Você não tem acesso à esse modulo privado!')
+        return redirect('/dashboard/')
 
 
 @mod_dashboard.route('/leaf/<id_leaf>')
