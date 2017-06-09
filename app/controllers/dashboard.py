@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
-from app.forms import LoginForm
+from app.forms import LoginForm, ComponentForm, ClientForm
 from app.models import *
 
 mod_dashboard = Blueprint('dashboard', __name__, url_prefix='/dashboard', template_folder='templates')
@@ -60,7 +60,7 @@ def modulo(id_modulo):
             flash('Você não tem acesso à esse modulo privado!')
             return redirect('/dashboard/')
         components = modulo.components
-        print(components)
+
         return render_template('dashboard/modulo.html', components=components, modulo=modulo)
     else:
         flash('Entre no sistema primeiro!')
