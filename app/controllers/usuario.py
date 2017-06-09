@@ -11,7 +11,8 @@ def index():
         print(session['logged_in'])
         return render_template('usuario/index.html')
     else:
-        abort(403)
+        flash('Entre primeiro')
+        return redirect('/')
 
 @mod_usuario.route('/cadastrar', methods=['GET', 'POST'])
 def cadastrar_usuario():
@@ -26,6 +27,13 @@ def cadastrar_usuario():
         flash('Usuário criado com sucesso')
 
         return redirect('/')
-    return render_template('usuario/cadastrar_usuario.html', title='Sign In', form=form)
+    return render_template('usuario/cadastrar.html', title='Sign In', form=form)
 
-
+@mod_usuario.route('/adicionar/<id_modulo>', mehotds=['GET', 'POST'])
+def adicionar_usuario(id_modulo):
+    if 'logged_in' in session:
+        print(session['logged_in'])
+        return render_template('usuario/adicionar.html')
+    else:
+        flash('Entre primeiro')
+        return redirect('/')
