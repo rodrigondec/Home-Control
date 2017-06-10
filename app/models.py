@@ -571,6 +571,21 @@ class MonitorManual(Monitor):
     def __init__(self, nome):
         Monitor.__init__(self, nome)
 
+    def before_run(self):
+        raise Exception('not implemented')
+
+    def run(self):
+        raise Exception('not implemented')
+
+    def verificar_regras(self):
+        raise Exception('not implemented')
+
+    def executar_regra(self, regra):
+        raise Exception('not implemented')
+
+    def after_run(self):
+        raise Exception('not implemented')
+
 
 class MonitorAutomatico(Monitor):
     __tablename__ = 'monitor_automatico'
