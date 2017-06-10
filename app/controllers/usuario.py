@@ -33,7 +33,8 @@ def cadastrar_usuario():
 def adicionar_usuario(id_modulo):
     if 'logged_in' in session:
         print(session['logged_in'])
-        return render_template('usuario/adicionar.html')
+        # return render_template('usuario/adicionar.html')
+        return 'Adicionar usuario'
     else:
         flash('Entre primeiro')
         return redirect('/')
