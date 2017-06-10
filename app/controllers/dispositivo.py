@@ -30,11 +30,15 @@ def cadastrar_dispositivo(id_leaf):
             flash('Dispositivo criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
-        return render_template('dispositivo/cadastrar.html', form=form)
+        return render_template('dispositivo/cadastrar_dispositivo.html', form=form)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
 
+
+@mod_dispositivo.route('/cadastrar_embarcado/<id_leaf>', methods=['GET', 'POST'])
+def cadastrar_embarcado(id_leaf):
+    return 'cadastrar_embarcado'
 
 @mod_dispositivo.route('/atualizar/<id_dispositivo>')
 def atualizar(id_dispositivo):
