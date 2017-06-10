@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "form.html" import render_field %}
+{% block head %}Entrar{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="col-md-12">
+		<h1 class="text-center">Monitor ({{ leaf.monitor.nome }} - {{ leaf.nome }}</h1>
+		<h3 class="text-center">Regras</h3>
+		<hr>
+		<div class="col-md-2">
+			<ul>
+				<li><a href="/monitor/cadastrar_regra/{{ leaf.monitor.id_monitor }}">Cadastrar regra</a></li>
+				<li><a href="/dashboard/leaf/{{ leaf.id_component }}">Voltar</a></li>
+			</ul>
+		</div>
+		<div class="col-md-6 col-md-offset-1">
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Nome dispositivo</th>
+						<th>Valor</th>
+						<th>Hora</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for regra in leaf.monitor.regras %}
+						<tr>
+							<td>{{ regra.id_regra }}</td>
+							<td>{{ regra.dispositivo.nome }}</td>
+							<td>{{ regra.valor }}</td>
+							{% if regra.tipo == 'regra_cronometrada_interruptor' or regra.tipo == 'regra_cronometrada_potenciometro' %}
+							<td>{{ regra.hora }}:{{ regra.minuto }}</td>
+							{% else %}
+							<td> - </td>
+							{% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+</div>
+
+{% endblock %}				
