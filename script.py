@@ -51,7 +51,7 @@ potenciometro = Potenciometro('Ventilador', 11)
 # potenciometro = Potenciometro.query.filter_by(id_dispositivo=3).first()
 leaf.add_dispositivo(potenciometro)
 #
-monitor = MonitorHorario("custom")
+monitor = MonitorManual("custom")
 # monitor = MonitorHorario.query.filter_by(id_monitor=1).first()
 leaf.monitor = monitor
 #
