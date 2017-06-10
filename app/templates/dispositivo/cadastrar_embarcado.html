@@ -9,21 +9,16 @@
 		<form class="form-horizontal" action="" method="post" name="criarDispositivo">
 			{{ form.hidden_tag() }}
 			<fieldset>
-				<legend>Dispositivo - Cadastro</legend>
+				<legend>Embarcado - Cadastro</legend>
 
 				<div class="form-group">
-					<label for="inputNome" class="control-label">Nome:</label>
-					{{ form.nome(class='form-control', placeholder=form.nome.name) }}
+					<label for="inputNome" class="control-label">IP:</label>
+					{{ form.ip(class='form-control', placeholder=form.ip.ip) }}
 				</div>
 
 				<div class="form-group">
 					<label for="inputPorta" class="control-label">Porta:</label>
-					{{ form.porta(class='form-control', placeholder=form.porta.name) }}
-				</div>
-
-				<div class="form-group">
-					<label for="inputAdmin" class="control-label">Tipo dispositivo:</label>
-					{{ form.tipo_dispositivo(class='form-control') }}
+					{{ form.mac(class='form-control', placeholder=form.mac.name) }}
 				</div>
 
 				<div class="form-group">
