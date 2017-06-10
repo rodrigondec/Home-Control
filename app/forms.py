@@ -40,3 +40,5 @@ class EmbarcadoForm(FlaskForm):
 
 class MonitorForm(FlaskForm):
     nome = StringField('nome', validators=[DataRequired()])
+    tipo_monitor = SelectField(u'Tipo Monitor',
+                                 choices=[('MonitorManual', 'Monitor Manual'), ('MonitorAutomatico', 'Monitor Automático')])

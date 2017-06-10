@@ -521,8 +521,8 @@ class Monitor(db.Model, Thread):
         raise TypeError('abstract method cannot be called')
 
 
-class MonitorHorario(Monitor):
-    __tablename__ = 'monitor_horario'
+class MonitorManual(Monitor):
+    __tablename__ = 'monitor_manual'
     id_monitor = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
