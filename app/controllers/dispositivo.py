@@ -73,14 +73,30 @@ def cadastrar_embarcado(id_leaf):
 
 @mod_dispositivo.route('/atualizar/<id_dispositivo>')
 def atualizar(id_dispositivo):
-    return 'atualizar'
+    if 'logged_in' in session:
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        dispositivo = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo).first()
+        if not dispositivo.leaf.acessivel_por(usuario):
+            flash('Você não tem autorização para alterar esse dispositivo')
+            return re
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
 
 
 @mod_dispositivo.route('/alterar_interruptor/<id_dispositivo>')
 def alterar_interruptor(id_dispositivo):
-    return 'alterar interruptor'
+    if 'logged_in' in session:
+        pass
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
 
 
 @mod_dispositivo.route('alterar_potenciometro/<id_dispositivo>')
 def alterar_potenciometro(id_dispositivo):
-    return 'alterar potenciometro'
+    if 'logged_in' in session:
+        pass
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
