@@ -430,10 +430,44 @@ class RegraPotenciometro(Regra):
     def execute(self):
         raise Exception('not implemented')
 
-class RegraCronometrada(Regra):
-    __tablename__ = 'regra_cronometrada'
+
+class RegraSensor(Regra):
+    __tablename__ = 'regra_sensor'
     id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
-    hora = db.Column(db.INTEGER)
+    valor_inicial = db.Column(db.Float)
+    valor_final = db.Column(db.Float)
+
+    regra_atuadora_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
+    regra_atuadora = db.relationship("Regra", foreign_keys=[regra_atuadora_id])
+
+    __mapper_args__ = {
+        'polymorphic_identity': __tablename__,
+        'inherit_condition': (id_regra==Regra.id_regra)
+    }
+
+    def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora):
+        if isinstance(valor_inicial, int):
+            valor_inicial = float(valor_final)
+        if isinstance(valor_final, int):
+            valor_final = float(valor_final)
+        if not isinstance(valor_inicial, float) or not isinstance(valor_final, float):
+            raise TypeError("Valor não é um float")
+        if not isinstance(sensor, Sensor):
+            raise TypeError("Dispositivo passado não é um Sensor")
+        if not isinstance(regra_atuadora, RegraPotenciometro) and not isinstance(regra_atuadora, RegraInterruptor):
+            raise TypeError("Regra atuadora não é valida")
+        Regra.__init__(self, sensor)
+        self.valor_inicial = valor_inicial
+        self.valor_final = valor_final
+        self.regra_atuadora = regra_atuadora
+
+    def avaliar_regra(self):
+        raise Exception('not implemented')
+
+    def execute(self):
+        raise Exception('not implemented')
+
+
     minuto = db.Column(db.Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
