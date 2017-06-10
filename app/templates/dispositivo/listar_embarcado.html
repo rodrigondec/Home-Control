@@ -4,27 +4,33 @@
 
 {% block content %}
 
-<div class="container">
-	<div class="col-md-6 col-md-offset-1">
-		<table class="table table-striped table-hover ">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Ip</th>
-					<th>Mac</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for component in components %}
-				<tr>
-					<td>{{ component.id_embarcado }}</td>
-					<td>{{ component.ip }}</td>
-					<td>{{ component.mac }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+<div class="container-fluid">
+	<div class="col-md-12">
+		<h1 class="text-center">Embarcado - {{ leaf.nome }}</h1>
+		<hr>
+		<div class="col-md-2">
+			<ul>
+				<li><a href="/dashboard/leaf/{{ leaf.id_component }}">Voltar</a></li>
+			</ul>
+		</div>
+		<div class="col-md-6 col-md-offset-1">
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Ip</th>
+						<th>Mac</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ leaf.embarcado.id_embarcado }}</td>
+						<td>{{ leaf.embarcado.ip }}</td>
+						<td>{{ leaf.embarcado.mac }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 </div>
 
 {% endblock %}				

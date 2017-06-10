@@ -39,7 +39,7 @@ def embarcado(id_leaf):
         if leaf.embarcado is None:
             flash('Cadastre um embarcado')
             return redirect('/dispositivo/cadastrar_embarcado/'+id_leaf)
-        return render_template('dispositivo/listar_embarcado/', embarcado=leaf.embarcado)
+        return render_template('dispositivo/listar_embarcado.html/', leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
