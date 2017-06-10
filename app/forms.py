@@ -33,5 +33,5 @@ class DispositivoForm(FlaskForm):
                                  choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
 
 class EmbarcadoForm(FlaskForm):
-    ip = StringField('ip', validators=[DataRequired()])
-    mac = IntegerField('mac', validators=[DataRequired()])
+	ip = StringField('ip', validators=[DataRequired()])
+	mac = IntegerField('mac', validators=[DataRequired()])
