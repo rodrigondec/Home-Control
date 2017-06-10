@@ -381,6 +381,9 @@ class Regra(db.Model):
     def avaliar_regra(self):
         raise TypeError('abstract method cannot be called')
 
+    def execute(self):
+        raise TypeError('abstract method cannot be called')
+
 
 class RegraInterruptor(Regra):
     __tablename__ = 'regra_interruptor'
@@ -400,6 +403,9 @@ class RegraInterruptor(Regra):
     def avaliar_regra(self):
         return self.dispositivo.get_valor() != self.valor
 
+    def execute(self):
+        raise Exception('not implemented')
+
 
 class RegraPotenciometro(Regra):
     __tablename__ = 'regra_potenciometro'
@@ -409,6 +415,8 @@ class RegraPotenciometro(Regra):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, potenciometro, valor):
+        if isinstance(valor, int):
+            valor = float(valor)
         if not isinstance(valor, float):
             raise TypeError("Valor não é um float")
         if not isinstance(potenciometro, Potenciometro):
@@ -419,6 +427,8 @@ class RegraPotenciometro(Regra):
     def avaliar_regra(self):
         return self.dispositivo.get_valor() != self.valor
 
+    def execute(self):
+        raise Exception('not implemented')
 
 class RegraCronometrada(Regra):
     __tablename__ = 'regra_cronometrada'
