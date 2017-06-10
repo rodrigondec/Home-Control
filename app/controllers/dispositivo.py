@@ -18,12 +18,7 @@ def cadastrar_dispositivo(id_leaf):
         if form.validate_on_submit():
             dispositivo = eval(form.tipo_dispositivo.data)(form.nome.data, form.porta.data)
 
-            leaf_pai = Component.query.filter_by(id_component=id_leaf).first()
-            if leaf_pai is None:
-                flash('Erro no id do component escolhido')
-                return redirect('/dashboard/')
-
-            leaf_pai.add_dispositivo(dispositivo)
+            leaf.add_dispositivo(dispositivo)
 
             db.session.add(dispositivo)
             db.session.commit()
@@ -38,33 +33,28 @@ def cadastrar_dispositivo(id_leaf):
 
 @mod_dispositivo.route('/cadastrar_embarcado/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar_embarcado(id_leaf):
-	if 'logged_in' in session:
-		usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-		leaf = Component.query.filter_by(id_component=id_leaf).first()
-		if not leaf.alteravel_por(usuario):
-			flash('Você não pode adicionar dispositivos à esse leaf')
-			return redirect('/dashboard/')
+    if 'logged_in' in session:
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        if not leaf.alteravel_por(usuario):
+            flash('Você não pode adicionar dispositivos à esse leaf')
+            return redirect('/dashboard/')
 
-		form = EmbarcadoForm()
-		if form.validate_on_submit():
-			embarcado = (form.ip.data, form.mac.data, id_leaf)
+        form = EmbarcadoForm()
+        if form.validate_on_submit():
+            embarcado = Embarcado(form.ip.data, form.mac.data)
 
-			leaf_pai = Component.query.filter_by(id_component=id_leaf).first()
-			if leaf_pai is None:
-				flash('Erro no id do component escolhido')
-				return redirect('/dashboard/')
+            leaf.add_embarcado(embarcado)
 
-			leaf_pai.add_embarcado(embarcado)
+            db.session.add(embarcado)
+            db.session.commit()
+            flash('Embarcado criado com sucesso')
 
-			db.session.add(embarcado)
-			db.session.commit()
-			flash('Embarcado criado com sucesso')
-
-			return redirect('/dashboard/leaf/'+id_leaf)
-		return render_template('dispositivo/cadastrar_embarcado.html', form=form)
-	else:
-		flash('Entre no sistema primeiro!')
-		return redirect('/')
+            return redirect('/dashboard/leaf/'+id_leaf)
+        return render_template('dispositivo/cadastrar_embarcado.html', form=form)
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
 
 
 @mod_dispositivo.route('/atualizar/<id_dispositivo>')

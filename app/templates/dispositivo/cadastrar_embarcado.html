@@ -6,14 +6,14 @@
 
 <div class="container">
 	<div class="col-md-4 col-md-offset-4">
-		<form class="form-horizontal" action="" method="post" name="criarDispositivo">
+		<form class="form-horizontal" action="" method="post" name="criarEmbarcado">
 			{{ form.hidden_tag() }}
 			<fieldset>
 				<legend>Embarcado - Cadastro</legend>
 
 				<div class="form-group">
 					<label for="inputNome" class="control-label">IP:</label>
-					{{ form.ip(class='form-control', placeholder=form.ip.ip) }}
+					{{ form.ip(class='form-control', placeholder=form.ip.name) }}
 				</div>
 
 				<div class="form-group">
