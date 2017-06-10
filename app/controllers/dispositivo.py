@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
 from app.models import *
-from app.forms import ClientForm, DispositivoForm, ComponentForm
+from app.forms import ClientForm, DispositivoForm, ComponentForm, EmbarcadoForm
 
 mod_dispositivo = Blueprint('dispositivo', __name__, url_prefix='/dispositivo', template_folder='templates')
 
@@ -47,7 +47,7 @@ def cadastrar_embarcado(id_leaf):
 
 		form = EmbarcadoForm()
 		if form.validate_on_submit():
-			embarcado = (form.ip.data, form.mac.data)
+			embarcado = (form.ip.data, form.mac.data, id_leaf)
 
 			leaf_pai = Component.query.filter_by(id_component=id_leaf).first()
 			if leaf_pai is None:
@@ -61,7 +61,7 @@ def cadastrar_embarcado(id_leaf):
 			flash('Embarcado criado com sucesso')
 
 			return redirect('/dashboard/leaf/'+id_leaf)
-		return render_template('embarcado/cadastrar_embarcado.html', form=form)
+		return render_template('dispositivo/cadastrar_embarcado.html', form=form)
 	else:
 		flash('Entre no sistema primeiro!')
 		return redirect('/')
