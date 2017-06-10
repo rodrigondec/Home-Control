@@ -23,7 +23,7 @@ class ClientForm(FlaskForm):
 class ComponentForm(FlaskForm):
     nome = StringField('nome', validators=[DataRequired()])
     tipo_component = SelectField(u'Tipo Componente',
-                                 choices=[('Leaf', 'Folha'), ('Modulo', 'Módulo'), ('ModuloPrivado', 'Módulo Privado')])
+                                 choices=[('Leaf', 'Folha'), ('Modulo', 'Módulo Público'), ('ModuloPrivado', 'Módulo Privado')])
 	
 
 class DispositivoForm(FlaskForm):
