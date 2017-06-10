@@ -128,64 +128,6 @@ class Leaf(Component):
     def remove_dispositivo(self, dispositivo):
         self.dispositivos.remove(dispositivo)
 
-    def atualizar_sensor(self, sensor):
-        if sensor in self.dispositivos:
-            # Mock de acesso ao servidor pegando:
-            # self.embarcado.ip < ip do servidor de embarcado
-            # sensor.porta < porta do sensor no embarcado
-            # request para: 'http://'+self.embarcado.ip+'/sensor/'+sensor.porta
-            # retorna um valor
-            return_value = 31.5
-            sensor.set_valor(return_value)
-        else:
-            raise Exception("Sensor não achado")
-
-    def atualizar_interruptor(self, interruptor):
-        if interruptor in self.dispositivos:
-            # Mock de acesso ao servidor pegando:
-            # self.embarcado.ip < ip do servidor de embarcado
-            # interruptor.porta < porta do sensor no embarcado
-            # request para: 'http://'+self.embarcado.ip+'/interruptor/'+interruptor.porta
-            # retorna um valor
-            return_value = True
-            interruptor.set_valor(return_value)
-        else:
-            raise Exception("Interruptor não achado")
-
-    def atualizar_potenciometro(self, potenciometro):
-        if potenciometro in self.dispositivos:
-            # Mock de acesso ao servidor pegando:
-            # self.embarcado.ip < ip do servidor de embarcado
-            # interruptor.porta < porta do sensor no embarcado
-            # request para: 'http://'+self.embarcado.ip+'/potenciometro/'+potenciometro.porta
-            # retorna um valor
-            return_value = 50.5
-            potenciometro.set_valor(return_value)
-        else:
-            raise Exception("Interruptor não achado")
-
-    def alterar_interruptor(self, interruptor, valor):
-        if interruptor in self.dispositivos:
-            # Mock de acesso ao servidor pegando:
-            # self.embarcado.ip < ip do servidor de embarcado
-            # interruptor.porta < porta do sensor no embarcado
-            # request para: 'http://'+self.embarcado.ip+'/interruptor/'+interruptor.porta+'/'+valor
-            self.atualizar_interruptor(interruptor)
-            self.add_uso(UsoInterruptor(interruptor, valor))
-        else:
-            raise Exception("Interruptor não achado")
-
-    def alterar_potenciometro(self, potenciometro, valor):
-        if potenciometro in self.dispositivos:
-            # Mock de acesso ao servidor pegando:
-            # self.embarcado.ip < ip do servidor de embarcado
-            # interruptor.porta < porta do sensor no embarcado
-            # request para: 'http://'+self.embarcado.ip+'/potenciometro/'+potenciometro.porta+'/'+valor
-            self.atualizar_potenciometro(potenciometro)
-            self.add_uso(UsoPotenciometro(potenciometro, valor))
-        else:
-            raise Exception("Interruptor não achado")
-
     def achar_pai_privado(self):
         modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
         modulo_atual = self
@@ -633,7 +575,7 @@ class RequestLeitura(Command):
     def execute(self):
         self.after_execute()
 
-        return True
+        return 1.0
 
     def after_execute(self):
         pass
@@ -680,10 +622,10 @@ class AtualizarDispositivo(Command):
 
     def execute(self):
         request = RequestLeitura()
-        request.before_execute(self.embarcado, self.dispositivo)
-        request.execute()
+        request.before_execute(self.embarcado.ip, self.dispositivo.porta)
+        self.dispositivo.valor = request.execute()
+        db.commit()
         self.after_execute()
-        pass
 
     def after_execute(self):
         pass
@@ -711,12 +653,10 @@ class AlterarDispositivo(Command):
         request = RequestEscrita()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
         request.execute()
-        self.after_execute()
-        pass
+        self.dispositivo.valor = self.after_execute()
+        db.commit()
 
     def after_execute(self):
         request = RequestLeitura()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
-        request.execute()
-
-        return True
+        return request.execute()
