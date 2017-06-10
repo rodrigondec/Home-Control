@@ -23,7 +23,7 @@ def monitor(id_leaf):
         return redirect('/')
 
 
-@mod_monitor.route('/cadastrar/<id_leaf>')
+@mod_monitor.route('/cadastrar/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar(id_leaf):
     if 'logged_in' in session:
         usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
@@ -33,6 +33,17 @@ def cadastrar(id_leaf):
             return redirect('/dashboard/')
 
         form = MonitorForm()
+        if form.validate_on_submit():
+            monitor = eval(form.tipo_monitor.data)(form.nome.data)
+
+            leaf.monitor = monitor
+
+            db.session.add(monitor)
+            db.session.commit()
+            flash('Monitor criado com sucesso')
+
+            return redirect('/dashboard/leaf/'+id_leaf)
+        return render_template('monitor/cadastrar_monitor.html', form=form)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
