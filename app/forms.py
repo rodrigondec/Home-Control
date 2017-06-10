@@ -35,4 +35,4 @@ class DispositivoForm(FlaskForm):
 
 class EmbarcadoForm(FlaskForm):
     ip = StringField('ip', validators=[DataRequired()])
-    mac = IntegerField('mac', validators=[DataRequired()])
+    mac = StringField('mac', validators=[DataRequired()])

@@ -44,7 +44,7 @@ def cadastrar_embarcado(id_leaf):
         if form.validate_on_submit():
             embarcado = Embarcado(form.ip.data, form.mac.data)
 
-            leaf.add_embarcado(embarcado)
+            leaf.embarcado = embarcado
 
             db.session.add(embarcado)
             db.session.commit()
