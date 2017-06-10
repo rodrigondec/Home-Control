@@ -90,6 +90,12 @@ class Component(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.nome = nome
 
+    def alteravel_por(self, usuario):
+        raise TypeError('abstract method cannot be called')
+
+    def acessivel_por(self, usuario):
+        raise TypeError('abstract method cannot be called')
+
 
 class Leaf(Component):
     __tablename__ = 'leaf'
@@ -180,6 +186,23 @@ class Leaf(Component):
         else:
             raise Exception("Interruptor não achado")
 
+    def achar_pai_privado(self):
+        modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
+        modulo_atual = self
+        while modulo_atual.tipo != 'modulo_privado':
+            for modulo in modulos:
+                if modulo_atual in modulo.components:
+                    # modulos.remove(modulo_atual)
+                    modulo_atual = modulo
+                    break
+        return modulo_atual
+
+    def alteravel_por(self, usuario):
+        return self.achar_pai_privado().alteravel_por(usuario)
+
+    def acessivel_por(self, usuario):
+        return self.achar_pai_privado().acessivel_por(usuario)
+
 
 class Modulo(Component):
     __tablename__ = 'modulo'
@@ -203,6 +226,23 @@ class Modulo(Component):
 
     def remove_component(self, component):
         self.components.remove(component)
+
+    def achar_pai_privado(self):
+        modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
+        modulo_atual = self
+        while modulo_atual.tipo != 'modulo_privado':
+            for modulo in modulos:
+                if modulo_atual in modulo.components:
+                    modulos.remove(modulo_atual)
+                    modulo_atual = modulo
+                    break
+        return modulo_atual
+
+    def alteravel_por(self, usuario):
+        return self.achar_pai_privado().alteravel_por(usuario)
+
+    def acessivel_por(self, usuario):
+        return self.achar_pai_privado().acessivel_por(usuario)
 
 
 class ModuloPrivado(Modulo):
@@ -235,6 +275,17 @@ class ModuloPrivado(Modulo):
 
     def remove_component(self, component):
         self.components.remove(component)
+
+    def alteravel_por(self, usuario):
+        client = Client.query.filter_by(id_client=1).first()
+        if self == client.component and usuario.tipo != 'administrador':
+            return False
+        return self.acessivel_por(usuario)
+
+    def acessivel_por(self, usuario):
+        if usuario in self.usuarios:
+            return True
+        return False
 
 
 class Embarcado(db.Model):

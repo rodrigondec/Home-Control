@@ -3,7 +3,7 @@
 {% block head %}Index{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
 	<div class="col-md-12">
 		<h1 class="text-center">{{ modulo.nome }}</h1>
 		<hr>
@@ -13,7 +13,7 @@
 				<li><a href="/usuario/adicionar/{{ modulo.id_component }}">Adicionar Usuário</a></li>
 			</ul>
 		</div>
-		<div class="col-md-10">
+		<div class="col-md-6 col-md-offset-1">
 			<table class="table table-striped table-hover ">
 				<thead>
 					<tr>
