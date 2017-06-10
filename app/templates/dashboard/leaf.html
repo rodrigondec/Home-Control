@@ -19,6 +19,8 @@
 				<thead>
 					<tr>
 			  			<th>#</th>
+						<th>Nome</th>
+						<th>Porta</th>
 			  			<th>Valor</th>
 			  			<th>Tipo</th>
 					</tr>
@@ -27,6 +29,8 @@
 					{% for dispositivo in dispositivos %}
 					<tr>
 						<td>{{ dispositivo.id_dispositivo }}</td>
+						<td>{{ dispositivo.nome }}</td>
+						<td>{{ dispositivo.porta }}</td>
 						<td>{{ dispositivo.valor }}</td>
 						<td>{{ dispositivo.tipo }}</td>
 						{% if dispositivo.tipo == 'interruptor' %}

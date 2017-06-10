@@ -7,5 +7,7 @@ mod_monitor = Blueprint('monitor', __name__, url_prefix='/monitor', template_fol
 @mod_monitor.route('/')
 def index():
     if 'logged_in' in session:
-        print(session['logged_in'])
-    return render_template('monitor/index.html')
+        pass
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
