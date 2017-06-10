@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField, FloatField, HiddenField
 from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 
 
 class LoginForm(FlaskForm):
@@ -21,24 +21,25 @@ class ClientForm(FlaskForm):
 
 
 class ComponentForm(FlaskForm):
-    nome = StringField('nome', validators=[DataRequired()])
-    tipo_component = SelectField(u'Tipo Componente',
+    nome = StringField('Nome', validators=[DataRequired()])
+    tipo_component = SelectField('Tipo Componente',
                                  choices=[('Leaf', 'Folha'), ('Modulo', 'Módulo Público'), ('ModuloPrivado', 'Módulo Privado')])
 	
 
 class DispositivoForm(FlaskForm):
-    nome = StringField('nome', validators=[DataRequired()])
-    porta = IntegerField('porta', validators=[DataRequired()])
-    tipo_dispositivo = SelectField(u'Tipo Dispositivo',
+    nome = StringField('Nome', validators=[DataRequired()])
+    porta = IntegerField('Porta', validators=[DataRequired()])
+    tipo_dispositivo = SelectField('Tipo Dispositivo',
                                  choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
 
 
 class EmbarcadoForm(FlaskForm):
-    ip = StringField('ip', validators=[DataRequired()])
-    mac = StringField('mac', validators=[DataRequired()])
+    ip = StringField('Pp', validators=[DataRequired()])
+    mac = StringField('Mac', validators=[DataRequired()])
 
 
 class MonitorForm(FlaskForm):
-    nome = StringField('nome', validators=[DataRequired()])
-    tipo_monitor = SelectField(u'Tipo Monitor',
+    nome = StringField('Nome', validators=[DataRequired()])
+    tipo_monitor = SelectField('Tipo Monitor',
                                  choices=[('MonitorManual', 'Monitor Manual'), ('MonitorAutomatico', 'Monitor Automático')])
+
