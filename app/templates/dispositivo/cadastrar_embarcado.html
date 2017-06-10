@@ -10,18 +10,9 @@
 			{{ form.hidden_tag() }}
 			<fieldset>
 				<legend>Embarcado - Cadastro</legend>
-				 {{ render_field(form.ip) }} 
-				 {{ render_field(form.mac) }} 
-				 
-				<!-- <div class="form-group"> -->
-					<!-- <label for="ip" class="control-label">IP:</label> -->
-					<!-- {{ form.ip(class='form-control', placeholder=form.ip.name) }} -->
-				<!-- </div> -->
 
-				<!-- <div class="form-group"> -->
-					<!-- <label for="mac" class="control-label">Mac Address:</label> -->
-					<!-- {{ form.mac(class='form-control', placeholder=form.mac.name) }} -->
-				<!-- </div> -->
+				{{ render_field(form.ip) }}
+				{{ render_field(form.mac) }}
 
 				<div class="form-group">
 					<div class="pull-right">
