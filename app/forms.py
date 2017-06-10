@@ -36,3 +36,7 @@ class DispositivoForm(FlaskForm):
 class EmbarcadoForm(FlaskForm):
     ip = StringField('ip', validators=[DataRequired()])
     mac = StringField('mac', validators=[DataRequired()])
+
+
+class MonitorForm(FlaskForm):
+    nome = StringField('nome', validators=[DataRequired()])
