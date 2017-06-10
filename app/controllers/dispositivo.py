@@ -7,23 +7,33 @@ mod_dispositivo = Blueprint('dispositivo', __name__, url_prefix='/dispositivo', 
 
 @mod_dispositivo.route('/cadastrar/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar_dispositivo(id_leaf):
-    form = DispositivoForm()
-    if form.validate_on_submit():
-        dispositivo = eval(form.tipo_dispositivo.data)(form.nome.data, form.porta.data)
-
-        leaf_pai = Component.query.filter_by(id_component=id_leaf).first()
-        if leaf_pai is None:
-            flash('Erro no id do component escolhido')
+    if 'logged_in' in session:
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        if not leaf.alteravel_por(usuario):
+            flash('Você não pode adicionar dispositivos à esse leaf')
             return redirect('/dashboard/')
 
-        leaf_pai.add_dispositivo(dispositivo)
+        form = DispositivoForm()
+        if form.validate_on_submit():
+            dispositivo = eval(form.tipo_dispositivo.data)(form.nome.data, form.porta.data)
 
-        db.session.add(dispositivo)
-        db.session.commit()
-        flash('Dispositivo criado com sucesso')
+            leaf_pai = Component.query.filter_by(id_component=id_leaf).first()
+            if leaf_pai is None:
+                flash('Erro no id do component escolhido')
+                return redirect('/dashboard/')
 
-        return redirect('/dashboard/leaf/'+id_leaf)
-    return render_template('dispositivo/cadastrar.html', form=form)
+            leaf_pai.add_dispositivo(dispositivo)
+
+            db.session.add(dispositivo)
+            db.session.commit()
+            flash('Dispositivo criado com sucesso')
+
+            return redirect('/dashboard/leaf/'+id_leaf)
+        return render_template('dispositivo/cadastrar.html', form=form)
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
 
 
 @mod_dispositivo.route('/atualizar/<id_dispositivo>')

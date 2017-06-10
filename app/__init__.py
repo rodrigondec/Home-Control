@@ -42,10 +42,12 @@ def not_authorized(error):
     return error
 
 from app.controllers.dashboard import mod_dashboard as dashboard_module
+from app.controllers.dispositivo import mod_dispositivo as dispositivo_module
 from app.controllers.monitor import mod_monitor as monitor_module
 from app.controllers.usuario import mod_usuario as usuario_module
 
 app.register_blueprint(dashboard_module)
+app.register_blueprint(dispositivo_module)
 app.register_blueprint(monitor_module)
 app.register_blueprint(usuario_module)
 

@@ -9,7 +9,7 @@
 		<hr>
 		<div class="col-md-2">
 			<ul>
-				<li><a href="#">Cadastrar Dispositivo</a></li>
+				<li><a href="/dispositivo/cadastrar/{{ leaf.id_component }}">Cadastrar Dispositivo</a></li>
 				<li><a href="#">Cadastrar Embarcado</a></li>
 				<li><a href="#">Configurar Monitor</a></li>
 			</ul>
@@ -30,13 +30,13 @@
 						<td>{{ dispositivo.valor }}</td>
 						<td>{{ dispositivo.tipo }}</td>
 						{% if dispositivo.tipo == 'interruptor' %}
-						<td><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
-						<td><a href='/component/alterar_interruptor/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
+						<td><a href='/dispositivo/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
+						<td><a href='/dispositivo/alterar_interruptor/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
 						{% elif dispositivo.tipo == 'potenciometro' %}
-						<td><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
-						<td><a href='/component/alterar_potenciometro/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
+						<td><a href='/dispositivo/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
+						<td><a href='/dispositivo/alterar_potenciometro/{{ dispositivo.id_dispositivo }}'>Alterar</a></td>
 						{% elif dispositivo.tipo == 'sensor' %}
-						<td colspan="2"><a href='/component/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
+						<td colspan="2"><a href='/dispositivo/atualizar_dispositivo/{{ dispositivo.id_dispositivo }}'>Atualizar</a></td>
 						{% endif %}
 					</tr>
 					{% endfor %}
