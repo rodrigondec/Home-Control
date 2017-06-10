@@ -31,6 +31,20 @@ def cadastrar_dispositivo(id_leaf):
         return redirect('/')
 
 
+@mod_dispositivo.route('/embarcado/<id_leaf>', methods=['GET', 'POST'])
+def embarcado(id_leaf):
+    if 'logged_in' in session:
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        if leaf.embarcado is None:
+            flash('Cadastre um embarcado')
+            return redirect('/dispositivo/cadastrar_embarcado/'+id_leaf)
+        return redirect('dashboard/leaf/'+id_leaf)
+    else:
+        flash('Entre no sistema primeiro!')
+        return redirect('/')
+
+
 @mod_dispositivo.route('/cadastrar_embarcado/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar_embarcado(id_leaf):
     if 'logged_in' in session:
