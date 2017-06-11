@@ -704,7 +704,7 @@ class AtualizarDispositivo(Command):
         request = RequestLeitura()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
         self.dispositivo.valor = request.execute()
-        db.commit()
+        db.session.commit()
         self.after_execute()
 
     def after_execute(self):
@@ -733,8 +733,9 @@ class AlterarDispositivo(Command):
         request = RequestEscrita()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
         request.execute()
-        self.dispositivo.valor = self.after_execute()
-        db.commit()
+        # self.dispositivo.valor = self.after_execute()
+        self.dispositivo.valor = self.valor
+        db.session.commit()
 
     def after_execute(self):
         request = RequestLeitura()
