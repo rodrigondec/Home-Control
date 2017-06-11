@@ -15,14 +15,16 @@
 				<li><a href="/dashboard/leaf/{{ leaf.id_component }}">Voltar</a></li>
 			</ul>
 		</div>
-		<div class="col-md-6 col-md-offset-1">
+		<div class="col-md-8">
 			<table class="table table-striped table-hover ">
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Nome dispositivo</th>
+						<th>Condição</th>
+						<th>Atuador</th>
 						<th>Valor</th>
-						<th>Hora</th>
+						<!--<th>Hora</th>-->
 					</tr>
 				</thead>
 				<tbody>
@@ -31,14 +33,21 @@
 							<td>{{ regra.id_regra }}</td>
 							<td>{{ regra.dispositivo.nome }}</td>
 							{% if regra.tipo == 'regra_interruptor' or regra.tipo == 'regra_potenciometro' or regra.tipo == 'regra_interruptor_cronometrada' or regra.tipo == 'regra_potenciometro_cronometrada' %}
+								{% if regra.tipo == 'regra_interruptor' or regra.tipo == 'regra_potenciometro' %}
+							<td>valor != {{ regra.valor }}</td>
+								{% else %}
+							<td>valor != {{ regra.valor }} and hora atual == {{ regra.hora }}:{{ regra.minuto }}</td>
+								{% endif %}
+							<td>{{ regra.dispositivo.nome }}</td>
 							<td>{{ regra.valor }}</td>
 							{% else %}
-							<td>{{ regra.valor_inicial }} => {{ regra.valor_final }}</td>
-							{% endif %}
-							{% if regra.tipo == 'regra_interruptor_cronometrada' or regra.tipo == 'regra_potenciometro_cronometrada' or regra.tipo == 'regra_sensor_cronometrada' %}
-							<td>{{ regra.hora }}:{{ regra.minuto }}</td>
-							{% else %}
-							<td> - </td>
+								{% if regra.tipo == 'regra_sensor_cronometrada' %}
+							<td>{{ regra.valor_inicial }} <= valor => {{ regra.valor_final }} and hora atual == {{ regra.hora }}:{{ regra.minuto }}</td>
+								{% else %}
+							<td>{{ regra.valor_inicial }} <= valor => {{ regra.valor_final }}</td>
+								{% endif%}
+							<td>{{ regra.regra_atuadora.dispositivo.nome }}</td>
+							<td>{{ regra.regra_atuadora.valor }}</td>
 							{% endif %}
 						</tr>
 					{% endfor %}
