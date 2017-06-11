@@ -2,31 +2,31 @@
 {% from "form.html" import render_field %}
 {% block head %}Entrar{% endblock %}
 
-
-
 {% block content %}
 
 <div class="container">
-	<div class="col-md-4 col-md-offset-4">
-		<form class="form-horizontal" action="" method="post" name="criarUsuario">
-			{{ form.hidden_tag() }}
-			<fieldset>
-				<legend>Usuario - Cadastro</legend>
-				{{ render_field(form.nome) }}
-				{{ render_field(form.email) }}
-				{{ render_field(form.senha) }}				
-				<div class="form-group">
-					<label for="inputAdmin" class="control-label">Administrador:</label>
-					{{ form.is_admin(type='checkbox', class='checkbox form-control') }}
-				</div>
+	<div class="col-md-12">
+		<h1 class="text-center">Home Control</h1>
+		<hr>
+		<div class="col-md-4 col-md-offset-4">
+			<form class="form-horizontal" action="" method="post" name="criarUsuario">
+				{{ form.hidden_tag() }}
+				<fieldset>
+					<legend>Cadastrar Usuario</legend>
 
-				<div class="form-group">
-					<div class="pull-right">
-						<button type="submit" class="btn btn-success">Cadastrar</button>
+					{{ render_field(form.nome) }}
+					{{ render_field(form.email) }}
+					{{ render_field(form.senha) }}
+					{{ render_field(form.is_admin) }}
+
+					<div class="form-group">
+						<div class="pull-right">
+							<button type="submit" class="btn btn-success">Cadastrar</button>
+						</div>
 					</div>
-				</div>
-			</fieldset>
-		</form>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 </div>
 {% endblock %}				

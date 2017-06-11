@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
-from app.models import Administrador, Usuario
-from app.forms import UsuarioForm
+from app.models import Administrador, Usuario, Component
+from app.forms import UsuarioForm, AdicionarUsuariosForm
 
 mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates')
 

@@ -101,7 +101,7 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
                     regra = RegraInterruptorCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
                 else:
                     regra = RegraInterruptor(dispositivo, form.valor.data)
-                    
+
             else:
                 if form.cronometrado.data:
                     regra = RegraPotenciometroCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
