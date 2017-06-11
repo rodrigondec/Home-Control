@@ -78,7 +78,11 @@ def atualizar(id_dispositivo):
         dispositivo = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo).first()
         if not dispositivo.leaf.acessivel_por(usuario):
             flash('Você não tem autorização para alterar esse dispositivo')
-            return re
+            return redirect('/dashboard/')
+        command = Command.query.filter_by(tipo='atualizar_dispositivo').first()
+        command.before_execute(embarcado=dispositivo.leaf.embarcado, dispositivo=dispositivo)
+        command.execute()
+        return redirect('/dashboard/leaf/'+str(dispositivo.leaf_id))
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
