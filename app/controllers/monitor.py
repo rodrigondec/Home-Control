@@ -76,8 +76,15 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
 
         if tipo_dispositivo == 'sensor':
             form = RegraSensorForm(tipo_dispositivo, monitor.leaf_id)
-            if form.validate_on_submit():
-                dispositivo = Dispositivo.query.filter_by(id_dispositivo=form.dispositivo.data).first()
+        elif tipo_dispositivo == 'interruptor':
+            form = RegraInterruptorForm(tipo_dispositivo, monitor.leaf_id)
+        else:
+            form = RegraPotenciometroForm(tipo_dispositivo, monitor.leaf_id)
+
+        if form.validate_on_submit():
+            dispositivo = Dispositivo.query.filter_by(id_dispositivo=form.dispositivo.data).first()
+
+            if dispositivo.tipo == 'sensor':
                 atuador = Dispositivo.query.filter_by(id_dispositivo=form.atuador.data).first()
                 if atuador.tipo == 'interruptor':
                     regra_atuadora = RegraInterruptor(atuador, form.valor_atuador.data)
@@ -88,17 +95,26 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
                     regra = RegraSensorCronometrada(dispositivo, form.valor_inicial.data, form.valor_final.data, regra_atuadora, form.hora.data, form.minuto.data)
                 else:
                     regra = RegraSensor(dispositivo, form.valor_inicial.data, form.valor_final.data, regra_atuadora)
-                monitor.add_regra(regra)
-                db.session.commit()
-                return redirect('/monitor/'+str(monitor.leaf_id))
+
+            elif dispositivo.tipo == 'interruptor':
+                if form.cronometrado.data:
+                    regra = RegraInterruptorCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
+                else:
+                    regra = RegraInterruptor(dispositivo, form.valor.data)
+                    
+            else:
+                if form.cronometrado.data:
+                    regra = RegraPotenciometroCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
+                else:
+                    regra = RegraPotenciometro(dispositivo, form.valor.data)
+
+            monitor.add_regra(regra)
+            db.session.commit()
+            return redirect('/monitor/' + str(monitor.leaf_id))
+
+        if tipo_dispositivo == 'sensor':
             return render_template('monitor/regra_sensor.html', form=form, monitor=monitor)
         else:
-            if tipo_dispositivo == 'interruptor':
-                form = RegraInterruptorForm(tipo_dispositivo, monitor.leaf_id)
-            else:
-                form = RegraPotenciometroForm(tipo_dispositivo, monitor.leaf_id)
-            if form.validate_on_submit():
-                pass
             return render_template('monitor/regra_int_pot.html', form=form, monitor=monitor)
     else:
         flash('Entre no sistema primeiro!')
