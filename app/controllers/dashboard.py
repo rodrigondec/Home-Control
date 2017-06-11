@@ -47,7 +47,7 @@ def index():
                     components = modulo.components
             if not components:
                 return "Nenhum modulo privado com o usuário encontrado!"
-        return render_template('dashboard/modulo.html', components=components, modulo=modulo)
+        return render_template('dashboard/modulo.html', components=components, modulo=modulo, pai=modulo.achar_pai())
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -62,7 +62,7 @@ def modulo(id_modulo):
             return redirect('/dashboard/')
         components = modulo.components
 
-        return render_template('dashboard/modulo.html', components=components, modulo=modulo)
+        return render_template('dashboard/modulo.html', components=components, modulo=modulo, pai=modulo.achar_pai())
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -77,7 +77,7 @@ def leaf(id_leaf):
             flash('Essa leaf não é liberada para você')
             return redirect('/dashboard/')
         dispositivos = Dispositivo.query.filter_by(leaf_id=id_leaf)
-        return render_template('dashboard/leaf.html', dispositivos=dispositivos, leaf=leaf)
+        return render_template('dashboard/leaf.html', dispositivos=dispositivos, leaf=leaf, pai=leaf.achar_pai())
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')

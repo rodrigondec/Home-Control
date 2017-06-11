@@ -41,7 +41,7 @@ def cadastrar_monitor(id_leaf):
             flash('Monitor criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
-        return render_template('monitor/cadastrar_monitor.html', form=form)
+        return render_template('monitor/cadastrar_monitor.html', form=form, leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -58,7 +58,7 @@ def regra_tipo_dispositivo(id_monitor):
         form = RegraTipoDispositivoForm()
         if form.validate_on_submit():
             return redirect('/monitor/cadastrar_regra/'+id_monitor+'/'+form.tipo_dispositivo.data)
-        return render_template('monitor/regra_tipo_dispositivo.html', form=form)
+        return render_template('monitor/regra_tipo_dispositivo.html', form=form, monitor=monitor)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -76,7 +76,7 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
             form = RegraSensorForm(tipo_dispositivo, monitor.leaf_id)
             if form.validate_on_submit():
                 pass
-            return render_template('monitor/regra_sensor.html', form=form)
+            return render_template('monitor/regra_sensor.html', form=form, monitor=monitor)
         else:
             if tipo_dispositivo == 'Interruptor':
                 form = RegraInterruptorForm(tipo_dispositivo, monitor.leaf_id)
@@ -84,7 +84,7 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
                 form = RegraPotenciometroForm(tipo_dispositivo, monitor.leaf_id)
             if form.validate_on_submit():
                 pass
-            return render_template('monitor/regra_int_pot.html', form=form)
+            return render_template('monitor/regra_int_pot.html', form=form, monitor=monitor)
 
 
     else:

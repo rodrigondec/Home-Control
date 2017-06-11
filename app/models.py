@@ -128,6 +128,13 @@ class Leaf(Component):
     def remove_dispositivo(self, dispositivo):
         self.dispositivos.remove(dispositivo)
 
+    def achar_pai(self):
+        modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
+        for modulo in modulos:
+            if self in modulo.components:
+                return modulo
+        return self
+
     def achar_pai_privado(self):
         modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
         modulo_atual = self
@@ -168,6 +175,13 @@ class Modulo(Component):
 
     def remove_component(self, component):
         self.components.remove(component)
+
+    def achar_pai(self):
+        modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
+        for modulo in modulos:
+            if self in modulo.components:
+                return modulo
+        return self
 
     def achar_pai_privado(self):
         modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
@@ -217,6 +231,13 @@ class ModuloPrivado(Modulo):
 
     def remove_component(self, component):
         self.components.remove(component)
+
+    def achar_pai(self):
+        modulos = Component.query.filter((Component.tipo == 'modulo_privado') | (Component.tipo == 'modulo')).all()
+        for modulo in modulos:
+            if self in modulo.components:
+                return modulo
+        return self
 
     def alteravel_por(self, usuario):
         client = Client.query.filter_by(id_client=1).first()
