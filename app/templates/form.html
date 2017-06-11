@@ -1,7 +1,7 @@
 {% macro render_field(field) %}
     <div class="form-group">
-        <label for="{{ field.id }}" class="control-label">{{ field.name }}:</label>
-        {{ field(class='form-control', placeholder=field.name)|safe }}
+        {{ field.label(class='control-label')|safe }}
+        {{ field(class='form-control', placeholder=field.label.text)|safe }}
 
         {% if field.errors %}
         <ul class=errors>
