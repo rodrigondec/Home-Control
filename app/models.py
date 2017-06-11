@@ -90,6 +90,9 @@ class Component(db.Model):
             raise TypeError('abstract class cannot be instantiated')
         self.nome = nome
 
+    def achar_pai(self):
+        raise TypeError('abstract method cannot be called')
+
     def alteravel_por(self, usuario):
         raise TypeError('abstract method cannot be called')
 

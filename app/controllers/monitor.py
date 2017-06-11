@@ -46,6 +46,7 @@ def cadastrar_monitor(id_leaf):
         flash('Entre no sistema primeiro!')
         return redirect('/')
 
+
 @mod_monitor.route('/cadastrar_regra/<id_monitor>', methods=['GET', 'POST'])
 def regra_tipo_dispositivo(id_monitor):
     if 'logged_in' in session:
@@ -63,6 +64,7 @@ def regra_tipo_dispositivo(id_monitor):
         flash('Entre no sistema primeiro!')
         return redirect('/')
 
+
 @mod_monitor.route('/cadastrar_regra/<id_monitor>/<tipo_dispositivo>', methods=['GET', 'POST'])
 def regra_dispositivo(id_monitor, tipo_dispositivo):
     if 'logged_in' in session:
@@ -72,13 +74,13 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
             flash('Você não tem permissão para cadastrar uma regra para esse monitor')
             return redirect('/dashboard/')
 
-        if tipo_dispositivo == 'Sensor':
+        if tipo_dispositivo == 'sensor':
             form = RegraSensorForm(tipo_dispositivo, monitor.leaf_id)
             if form.validate_on_submit():
                 pass
             return render_template('monitor/regra_sensor.html', form=form, monitor=monitor)
         else:
-            if tipo_dispositivo == 'Interruptor':
+            if tipo_dispositivo == 'interruptor':
                 form = RegraInterruptorForm(tipo_dispositivo, monitor.leaf_id)
             else:
                 form = RegraPotenciometroForm(tipo_dispositivo, monitor.leaf_id)

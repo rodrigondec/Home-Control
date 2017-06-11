@@ -84,8 +84,8 @@ def atualizar(id_dispositivo):
         return redirect('/')
 
 
-@mod_dispositivo.route('/alterar_interruptor/<id_dispositivo>')
-def alterar_interruptor(id_dispositivo):
+@mod_dispositivo.route('/alterar_interruptor/<id_interruptor>')
+def alterar_interruptor(id_interruptor):
     if 'logged_in' in session:
         pass
     else:
@@ -93,8 +93,8 @@ def alterar_interruptor(id_dispositivo):
         return redirect('/')
 
 
-@mod_dispositivo.route('alterar_potenciometro/<id_dispositivo>')
-def alterar_potenciometro(id_dispositivo):
+@mod_dispositivo.route('alterar_potenciometro/<id_potenciometro>')
+def alterar_potenciometro(id_potenciometro):
     if 'logged_in' in session:
         pass
     else:
