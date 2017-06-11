@@ -417,6 +417,8 @@ class RegraInterruptor(Regra):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, interruptor, valor):
+        if isinstance(valor, int) or isinstance(valor, float) or isinstance(valor, str):
+            valor = bool(valor)
         if not isinstance(valor, bool):
             raise TypeError("Valor não é um boolean")
         if not isinstance(interruptor, Interruptor):
