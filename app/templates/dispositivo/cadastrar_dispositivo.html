@@ -5,23 +5,32 @@
 {% block content %}
 
 <div class="container">
-	<div class="col-md-4 col-md-offset-4">
-		<form class="form-horizontal" action="" method="post" name="criarDispositivo">
-			{{ form.hidden_tag() }}
-			<fieldset>
-				<legend>Dispositivo - Cadastro</legend>
+	<div class="col-md-12">
+		<h1 class="text-center">{{ leaf.nome }}</h1>
+		<hr>
+		<div class="col-md-2">
+			<ul>
+				<li><a href="/dashboard/leaf/{{ leaf.id_component }}">Voltar</a></li>
+			</ul>
+		</div>
+		<div class="col-md-4 col-md-offset-4">
+			<form class="form-horizontal" action="" method="post" name="criarDispositivo">
+				{{ form.hidden_tag() }}
+				<fieldset>
+					<legend>Cadastrar Dispositivo</legend>
 
-				{{ render_field(form.nome) }}
-				{{ render_field(form.porta) }}
-				{{ render_field(form.tipo_dispositivo) }}
+					{{ render_field(form.nome) }}
+					{{ render_field(form.porta) }}
+					{{ render_field(form.tipo_dispositivo) }}
 
-				<div class="form-group">
-					<div class="pull-right">
-						<button type="submit" class="btn btn-success">Cadastrar</button>
+					<div class="form-group">
+						<div class="pull-right">
+							<button type="submit" class="btn btn-success">Cadastrar</button>
+						</div>
 					</div>
-				</div>
-			</fieldset>
-		</form>
+				</fieldset>
+			</form>
+		</div>
 	</div>
 </div>
 

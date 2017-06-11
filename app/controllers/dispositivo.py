@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
 from app import db
 from app.models import *
-from app.forms import ClientForm, DispositivoForm, ComponentForm, EmbarcadoForm
+from app.forms import ClientForm, DispositivoForm, ComponentForm, EmbarcadoForm, AlterarInterruptorForm, AlterarPotenciometroForm
 
 mod_dispositivo = Blueprint('dispositivo', __name__, url_prefix='/dispositivo', template_folder='templates')
 
@@ -25,7 +25,7 @@ def cadastrar_dispositivo(id_leaf):
             flash('Dispositivo criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
-        return render_template('dispositivo/cadastrar_dispositivo.html', form=form)
+        return render_template('dispositivo/cadastrar_dispositivo.html', form=form, leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
@@ -65,7 +65,7 @@ def cadastrar_embarcado(id_leaf):
             flash('Embarcado criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
-        return render_template('dispositivo/cadastrar_embarcado.html', form=form)
+        return render_template('dispositivo/cadastrar_embarcado.html', form=form, leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
