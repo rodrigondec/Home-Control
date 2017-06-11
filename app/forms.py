@@ -47,57 +47,48 @@ class MonitorForm(FlaskForm):
 
 class RegraTipoDispositivoForm(FlaskForm):
     form_name = HiddenField('regra_tipo_dispositivo', default='regra_tipo_dispositivo')
-    tipo_dispositivo = SelectField(u'Tipo Dispositivo', validators=[DataRequired()], choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
+    tipo_dispositivo = SelectField(u'Tipo Dispositivo', validators=[DataRequired()], choices=[('sensor', 'Sensor'), ('interruptor', 'Interruptor'), ('potenciometro', 'Potenciômetro')])
 
 
-class RegraInterruptorForm(FlaskForm):
+class RegraDispositivoForm(FlaskForm):
+    tipo_dispositivo = HiddenField(u'Tipo Dispositivo')
+    dispositivo = SelectField(u'Dispositivo', validators=[DataRequired()], choices=[])
+    cronometrado = BooleanField(u'Cronometrado', default=False)
+    hora = IntegerField(u'Hora', validators=[NumberRange(min=00, max=23)])
+    minuto = IntegerField(u'Minuto', validators=[NumberRange(min=00, max=60)])
+
+    def __init__(self, tipo_dispositivo, leaf_id):
+        FlaskForm.__init__(self)
+        self.tipo_dispositivo.data = tipo_dispositivo
+        dispositivos = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo==tipo_dispositivo)).all()
+        for dispositivo in dispositivos:
+            self.dispositivo.choices.append((dispositivo.id_dispositivo, dispositivo.nome))
+
+class RegraInterruptorForm(RegraDispositivoForm):
     form_name = HiddenField('regra_interruptor', default='regra_interruptor')
-    tipo_dispositivo = HiddenField(u'Tipo Dispositivo')
     valor = BooleanField(u'Ligado')
-    atuador = SelectField(u'Atuador', validators=[DataRequired()], choices=[])
-    cronometrado = BooleanField(u'Cronometrado', default=False)
-    hora = IntegerField(u'Hora', validators=[NumberRange(min=00, max=23)])
-    minuto = IntegerField(u'Minuto', validators=[NumberRange(min=00, max=60)])
 
     def __init__(self, tipo_dispositivo, leaf_id):
-        super(RegraInterruptorForm, self).__init__()
-        self.tipo_dispositivo.data = tipo_dispositivo
-        atuadores = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo=='interruptor')).all()
-        for atuador in atuadores:
-            self.atuador.choices.append((atuador.id_dispositivo, atuador.nome))
+        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
 
 
-class RegraPotenciometroForm(FlaskForm):
+class RegraPotenciometroForm(RegraDispositivoForm):
     form_name = HiddenField('regra_potenciometro', default='regra_potenciometro')
-    tipo_dispositivo = HiddenField(u'Tipo Dispositivo')
     valor = FloatField(u'Valor', validators=[DataRequired()])
-    atuador = SelectField(u'Atuador', validators=[DataRequired()], choices=[])
-    cronometrado = BooleanField(u'Cronometrado', default=False)
-    hora = IntegerField(u'Hora', validators=[NumberRange(min=00, max=23)])
-    minuto = IntegerField(u'Minuto', validators=[NumberRange(min=00, max=60)])
 
     def __init__(self, tipo_dispositivo, leaf_id):
-        super(RegraPotenciometroForm, self).__init__()
-        self.tipo_dispositivo.data = tipo_dispositivo
-        atuadores = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo=='potenciometro')).all()
-        for atuador in atuadores:
-            self.atuador.choices.append((atuador.id_dispositivo, atuador.nome))
+        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
 
 
-class RegraSensorForm(FlaskForm):
+class RegraSensorForm(RegraDispositivoForm):
     form_name = HiddenField('regra_sensor', default='regra_sensor')
-    tipo_dispositivo = HiddenField(u'Tipo Dispositivo')
     valor_inicial = FloatField(u'Valor inicial', validators=[DataRequired()])
     valor_final = FloatField(u'Valor inicial', validators=[DataRequired()])
     atuador = SelectField(u'Atuador', validators=[DataRequired()], choices=[])
     valor_atuador = StringField(u'Valor atuador', validators=[DataRequired()])
-    cronometrado = BooleanField(u'Cronometrado', default=False)
-    hora = IntegerField(u'Hora', validators=[NumberRange(min=00, max=23)])
-    minuto = IntegerField(u'Minuto', validators=[NumberRange(min=00, max=60)])
 
     def __init__(self, tipo_dispositivo, leaf_id):
-        super(RegraSensorForm, self).__init__()
-        self.tipo_dispositivo.data = tipo_dispositivo
+        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
         atuadores = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo=='interruptor') | (Dispositivo.tipo=='potenciometro')).all()
         for atuador in atuadores:
             self.atuador.choices.append((atuador.id_dispositivo, atuador.nome))
