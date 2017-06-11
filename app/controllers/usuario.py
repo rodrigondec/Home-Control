@@ -32,9 +32,23 @@ def cadastrar_usuario():
 @mod_usuario.route('/adicionar/<id_modulo>', methods=['GET', 'POST'])
 def adicionar_usuario(id_modulo):
     if 'logged_in' in session:
-        print(session['logged_in'])
-        # return render_template('usuario/adicionar.html')
-        return 'Adicionar usuario'
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        modulo = Component.query.filter_by(id_component=id_modulo).first()
+        if not modulo.alteravel_por(usuario):
+            flash('Você não tem permissão para alterar esse modulo')
+            return redirect('/dashboard/')
+
+        usuarios = Usuario.query.all()
+        for user in modulo.usuarios:
+            usuarios.remove(user)
+        form = AdicionarUsuariosForm(usuarios)
+        if form.validate_on_submit():
+            for id_usuario in form.usuarios.data:
+                user = Usuario.query.filter_by(id_usuario=id_usuario).first()
+                modulo.add_usuario(user)
+            db.session.commit()
+            return redirect('/dashboard/modulo/'+id_modulo)
+        return render_template('usuario/adicionar.html', form=form, modulo=modulo)
     else:
         flash('Entre primeiro')
         return redirect('/')

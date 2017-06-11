@@ -17,6 +17,16 @@ class UsuarioForm(FlaskForm):
     is_admin = BooleanField(u'Administrador', default=False)
 
 
+class AdicionarUsuariosForm(FlaskForm):
+    usuarios = SelectMultipleField(u'Usuarios', validators=[DataRequired()], choices=[])
+
+    def __init__(self, usuarios):
+        FlaskForm.__init__(self)
+        self.usuarios.choices = []
+        for usuario in usuarios:
+            self.usuarios.choices.append((str(usuario.id_usuario), usuario.nome))
+
+
 class ClientForm(FlaskForm):
     nome = StringField(u'Nome', validators=[DataRequired()])
 
@@ -72,6 +82,7 @@ class RegraDispositivoForm(FlaskForm):
         dispositivos = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo==tipo_dispositivo)).all()
         for dispositivo in dispositivos:
             self.dispositivo.choices.append((str(dispositivo.id_dispositivo), dispositivo.nome))
+
 
 class RegraInterruptorForm(RegraDispositivoForm):
     form_name = HiddenField('regra_interruptor', default='regra_interruptor')
