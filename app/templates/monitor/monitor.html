@@ -30,8 +30,12 @@
 						<tr>
 							<td>{{ regra.id_regra }}</td>
 							<td>{{ regra.dispositivo.nome }}</td>
+							{% if regra.tipo == 'regra_interruptor' or regra.tipo == 'regra_potenciometro' or regra.tipo == 'regra_interruptor_cronometrada' or regra.tipo == 'regra_potenciometro_cronometrada' %}
 							<td>{{ regra.valor }}</td>
-							{% if regra.tipo == 'regra_cronometrada_interruptor' or regra.tipo == 'regra_cronometrada_potenciometro' %}
+							{% else %}
+							<td>{{ regra.valor_inicial }} => {{ regra.valor_final }}</td>
+							{% endif %}
+							{% if regra.tipo == 'regra_interruptor_cronometrada' or regra.tipo == 'regra_potenciometro_cronometrada' or regra.tipo == 'regra_sensor_cronometrada' %}
 							<td>{{ regra.hora }}:{{ regra.minuto }}</td>
 							{% else %}
 							<td> - </td>
