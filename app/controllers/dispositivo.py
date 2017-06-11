@@ -83,20 +83,26 @@ def atualizar(id_dispositivo):
         flash('Entre no sistema primeiro!')
         return redirect('/')
 
-
-@mod_dispositivo.route('/alterar_interruptor/<id_interruptor>')
-def alterar_interruptor(id_interruptor):
+@mod_dispositivo.route('/alterar/<id_dispositivo>', methods=['GET', 'POST'])
+def alterar(id_dispositivo):
     if 'logged_in' in session:
-        pass
-    else:
-        flash('Entre no sistema primeiro!')
-        return redirect('/')
+        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
+        dispositivo = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo).first()
+        if not dispositivo.leaf.alteravel_por(usuario):
+            flash('Você não pode alterar essa leaf')
+            return redirect('/dashboard/')
 
+        if dispositivo.tipo == 'interruptor':
+            form = AlterarInterruptorForm()
+        else:
+            form = AlterarPotenciometroForm()
 
-@mod_dispositivo.route('alterar_potenciometro/<id_potenciometro>')
-def alterar_potenciometro(id_potenciometro):
-    if 'logged_in' in session:
-        pass
+        if form.validate_on_submit():
+            command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+            command.before_execute(dispositivo.leaf.embarcado, dispositivo, form.valor.data)
+            command.execute()
+            return redirect('/dashboard/leaf/' + str(dispositivo.leaf_id))
+        return render_template('dispositivo/alterar_dispositivo.html', form=form, dispositivo=dispositivo)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
