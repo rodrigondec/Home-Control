@@ -67,11 +67,11 @@ regra2 = RegraInterruptorCronometrada(interruptor=interruptor, valor=True, hora=
 monitor.add_regra(regra2)
 #
 regra3 = RegraSensor(sensor=sensor, valor_inicial=10, valor_final=20, regra_atuadora=RegraPotenciometro(potenciometro=potenciometro, valor=0))
-# regra3 = Regra.query.filter_by(id_regra=4).first()
+# regra3 = Regra.query.filter_by(id_regra=5).first()
 monitor.add_regra(regra3)
 #
 regra4 = RegraSensorCronometrada(sensor=sensor, valor_inicial=10, valor_final=20, regra_atuadora=RegraPotenciometro(potenciometro=potenciometro, valor=3), hora=datetime.now().hour, minuto=datetime.now().minute)
-# regra4 = Regra.query.filter_by(id_regra=4).first()
+# regra4 = Regra.query.filter_by(id_regra=6).first()
 monitor.add_regra(regra4)
 #
 db.session.commit()
