@@ -441,7 +441,7 @@ class RegraPotenciometro(Regra):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, potenciometro, valor):
-        if isinstance(valor, int):
+        if isinstance(valor, int) or isinstance(valor, str):
             valor = float(valor)
         if not isinstance(valor, float):
             raise TypeError("Valor não é um float")

@@ -82,7 +82,7 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
                 if atuador.tipo == 'interruptor':
                     regra_atuadora = RegraInterruptor(atuador, form.valor_atuador.data)
                 else:
-                    regra_atuadora = RegraPotenciometroForm(atuador, form.valor_atuador.data)
+                    regra_atuadora = RegraPotenciometro(atuador, form.valor_atuador.data)
 
                 if form.cronometrado.data:
                     regra = RegraSensorCronometrada(dispositivo, form.valor_inicial.data, form.valor_final.data, regra_atuadora, form.hora.data, form.minuto.data)
