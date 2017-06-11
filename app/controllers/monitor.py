@@ -77,8 +77,8 @@ def regra_dispositivo(id_monitor, tipo_dispositivo):
         if tipo_dispositivo == 'sensor':
             form = RegraSensorForm(tipo_dispositivo, monitor.leaf_id)
             if form.validate_on_submit():
-                dispositivo = Dispositivo.query.filter_by(id_dispositivo=form.dispositivo).first()
-                atuador = Dispositivo.query.filter_by(id_dispositivo=form.atuador).first()
+                dispositivo = Dispositivo.query.filter_by(id_dispositivo=form.dispositivo.data).first()
+                atuador = Dispositivo.query.filter_by(id_dispositivo=form.atuador.data).first()
                 if atuador.tipo == 'interruptor':
                     regra_atuadora = RegraInterruptor(atuador, form.valor_atuador.data)
                 else:
