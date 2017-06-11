@@ -34,6 +34,14 @@ class DispositivoForm(FlaskForm):
                                  choices=[('Sensor', 'Sensor'), ('Interruptor', 'Interruptor'), ('Potenciometro', 'Potenciômetro')])
 
 
+class AlterarInterruptorForm(FlaskForm):
+    valor = BooleanField(u'Ligado')
+
+
+class AlterarPotenciometroForm(FlaskForm):
+    valor = FloatField(u'Valor', validators=[DataRequired()])
+
+
 class EmbarcadoForm(FlaskForm):
     ip = StringField(u'Ip', validators=[DataRequired()])
     mac = StringField(u'Mac', validators=[DataRequired()])
