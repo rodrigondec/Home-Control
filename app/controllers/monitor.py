@@ -79,49 +79,48 @@ def regra_dispositivo(id_monitor, id_dispositivo_condicao, id_dispositivo_atuado
             flash('Você não tem permissão para cadastrar uma regra para esse monitor')
             return redirect('/dashboard/')
 
-        if dispositivo_condicao.tipo == 'sensor':
-            if dispositivo_atuador.tipo == 'interruptor':
-                form = RegraSensorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
-            else:
-                form = RegraSensorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
-        elif dispositivo_condicao.tipo == 'interruotor':
-            if dispositivo_atuador.tipo == 'interruptor':
-                form = RegraInterruptorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
-            else:
-                form = RegraInterruptorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
-        else:
-            if dispositivo_atuador.tipo == 'interruptor':
-                form = RegraPotenciometroInterruptorForm(dispositivo_condicao, dispositivo_atuador)
-            else:
-                form = RegraPotenciometroPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
+        form = RegraInterruptorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+
+        if dispositivo_condicao.tipo == 'sensor' and dispositivo_atuador.tipo == 'interruptor':
+            form = RegraSensorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'sensor' and dispositivo_atuador.tipo == 'potenciometro':
+            form = RegraSensorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'interruptor' and dispositivo_atuador.tipo == 'interruptor':
+            form = RegraInterruptorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'interruptor' and dispositivo_atuador.tipo == 'potenciometro':
+            form = RegraInterruptorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'potenciometro' and dispositivo_atuador.tipo == 'interruptor':
+            form = RegraPotenciometroInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'potenciometro' and dispositivo_atuador.tipo == 'potenciometro':
+            form = RegraPotenciometroPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
 
         if form.validate_on_submit():
             if dispositivo_condicao.tipo == 'sensor':
                 if form.cronometrado.data:
-                    condicao = CondicaoSensorCronometrada(dispositivo_condicao, form.valor_inical_condicao,
-                                                          form.valor_final_condicao, form.hora.data, form.minuto.data)
+                    condicao = CondicaoSensorCronometrada(dispositivo_condicao, form.valor_inical_condicao.data,
+                                                          form.valor_final_condicao.data, form.hora.data, form.minuto.data)
                 else:
-                    condicao = CondicaoSensor(dispositivo_condicao, form.valor_inical_condicao,
-                                              form.valor_final_condicao)
-            elif dispositivo_condicao.tipo == 'interruotor':
+                    condicao = CondicaoSensor(dispositivo_condicao, form.valor_inical_condicao.data,
+                                              form.valor_final_condicao.data)
+            elif dispositivo_condicao.tipo == 'interruptor':
                 if form.cronometrado.data:
-                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao,
+                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao.data,
                                                                 form.hora.data, form.minuto.data)
                 else:
-                    condicao = CondicaoInterruptor(dispositivo_condicao, form.valor_condicao)
+                    condicao = CondicaoInterruptor(dispositivo_condicao, form.valor_condicao.data)
             else:
                 if form.cronometrado.data:
-                    condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inical_condicao,
-                                                                 form.valor_final_condicao, form.hora.data,
+                    condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inical_condicao.data,
+                                                                 form.valor_final_condicao.data, form.hora.data,
                                                                  form.minuto.data)
                 else:
-                    condicao = CondicaoPotenciometro(dispositivo_condicao, form.valor_inical_condicao,
-                                                     form.valor_final_condicao)
+                    condicao = CondicaoPotenciometro(dispositivo_condicao, form.valor_inical_condicao.data,
+                                                     form.valor_final_condicao.data)
 
             if dispositivo_atuador.tipo == 'interruptor':
-                atuador = AtuadorInterruptor(dispositivo_atuador, form.valor_atuador)
+                atuador = AtuadorInterruptor(dispositivo_atuador, form.valor_atuador.data)
             else:
-                atuador = AtuadorPotenciometro(dispositivo_atuador, form.valor_atuador)
+                atuador = AtuadorPotenciometro(dispositivo_atuador, form.valor_atuador.data)
 
             regra = Regra(monitor, condicao, atuador)
 
