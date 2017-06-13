@@ -109,8 +109,6 @@ class Leaf(Component):
 
     dispositivos = db.relationship("Dispositivo", back_populates="leaf")
 
-    usos = db.relationship("Uso", back_populates="leaf")
-
     monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -342,9 +340,6 @@ class Uso(db.Model):
     __tablename__ = 'uso'
     id_uso = db.Column(db.Integer, primary_key=True)
     hora = db.Column(db.DateTime, default=db.func.now())
-
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
-    leaf = db.relationship("Leaf", back_populates="usos")
 
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
     dispositivo = db.relationship("Dispositivo", back_populates="usos")
@@ -795,6 +790,11 @@ class AlterarDispositivo(Command):
         request.execute()
         # self.dispositivo.valor = self.after_execute()
         self.dispositivo.valor = self.valor
+        if self.dispositivo.tipo == 'interruptor':
+            uso = UsoInterruptor(self.dispositivo, self.valor)
+        else:
+            uso = UsoPotenciometro(self.dispositivo, self.valor)
+        db.session.add(uso)
         db.session.commit()
 
     def after_execute(self):
