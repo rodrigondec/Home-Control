@@ -103,7 +103,7 @@ def alterar(id_dispositivo):
 
         if form.validate_on_submit():
             command = Command.query.filter_by(tipo='alterar_dispositivo').first()
-            command.before_execute(dispositivo.leaf.embarcado, dispositivo, form.valor.data)
+            command.before_execute(dispositivo.leaf.embarcado, dispositivo, form.valor.data, usuario.id_usuario)
             command.execute()
             return redirect('/dashboard/leaf/' + str(dispositivo.leaf_id))
         return render_template('dispositivo/alterar_dispositivo.html', form=form, dispositivo=dispositivo)

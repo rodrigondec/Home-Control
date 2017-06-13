@@ -340,6 +340,7 @@ class Uso(db.Model):
     __tablename__ = 'uso'
     id_uso = db.Column(db.Integer, primary_key=True)
     hora = db.Column(db.DateTime, default=db.func.now())
+    usuario_id = db.Column(db.Integer)
 
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
     dispositivo = db.relationship("Dispositivo", back_populates="usos")
@@ -347,10 +348,11 @@ class Uso(db.Model):
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
-    def __init__(self, dispositivo):
+    def __init__(self, dispositivo, usuario_id):
         if self.__class__ is Regra:
             raise TypeError('abstract class cannot be instantiated')
         self.dispositivo = dispositivo
+        self.usuario_id = usuario_id
 
 
 class UsoInterruptor(Uso):
@@ -360,10 +362,10 @@ class UsoInterruptor(Uso):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, interruptor, valor):
+    def __init__(self, interruptor, valor, usuario_id):
         if not isinstance(valor, bool):
             raise TypeError("Valor não é um boolean")
-        Uso.__init__(self, interruptor)
+        Uso.__init__(self, interruptor, usuario_id)
         self.valor = valor
 
 
@@ -374,10 +376,10 @@ class UsoPotenciometro(Uso):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, potenciometro, valor):
+    def __init__(self, potenciometro, valor, usuario_id):
         if not isinstance(valor, float):
             raise TypeError("Valor não é um boolean")
-        Uso.__init__(self, potenciometro)
+        Uso.__init__(self, potenciometro, usuario_id)
         self.valor = valor
 
 
@@ -775,7 +777,7 @@ class AlterarDispositivo(Command):
     def __init__(self):
         Command.__init__(self)
 
-    def before_execute(self, embarcado, dispositivo, valor):
+    def before_execute(self, embarcado, dispositivo, valor, usuario_id=None):
         if not isinstance(embarcado, Embarcado):
             raise TypeError("parâmetro 1 precisa ser do tipo Embarcado")
         if not isinstance(dispositivo, Potenciometro) and not isinstance(dispositivo, Interruptor):
@@ -783,6 +785,7 @@ class AlterarDispositivo(Command):
         self.embarcado = embarcado
         self.dispositivo = dispositivo
         self.valor = valor
+        self.usuario_id = usuario_id
 
     def execute(self):
         request = RequestEscrita()
@@ -791,9 +794,9 @@ class AlterarDispositivo(Command):
         # self.dispositivo.valor = self.after_execute()
         self.dispositivo.valor = self.valor
         if self.dispositivo.tipo == 'interruptor':
-            uso = UsoInterruptor(self.dispositivo, self.valor)
+            uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
         else:
-            uso = UsoPotenciometro(self.dispositivo, self.valor)
+            uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
         db.session.add(uso)
         db.session.commit()
 
