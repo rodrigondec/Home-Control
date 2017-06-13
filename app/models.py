@@ -519,6 +519,9 @@ class CondicaoInterruptor(Condicao):
         Condicao.__init__(self, interruptor)
         self.valor = valor
 
+    def __str__(self):
+        return 'valor == '+str(self.valor)
+
     def avaliar_condicao(self):
         return self.dispositivo.get_valor() == self.valor
 
@@ -543,6 +546,9 @@ class CondicaoPotenciometro(Condicao):
         Condicao.__init__(self, potenciometro)
         self.valor_inicial = valor_inicial
         self.valor_final = valor_final
+
+    def __str__(self):
+        return str(self.valor_inicial)+' <= valor >= '+str(self.valor_final)
 
     def avaliar_condicao(self):
         return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final
@@ -569,6 +575,9 @@ class CondicaoSensor(Condicao):
         self.valor_inicial = valor_inicial
         self.valor_final = valor_final
 
+    def __str__(self):
+        return str(self.valor_inicial)+' <= valor >= '+str(self.valor_final)
+
     def avaliar_condicao(self):
         return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final
 
@@ -585,6 +594,9 @@ class CondicaoInterruptorCronometrada(CondicaoInterruptor):
         CondicaoInterruptor.__init__(self, interruptor, valor)
         self.hora = hora
         self.minuto = minuto
+
+    def __str__(self):
+        return 'valor == '+str(self.valor)+' and hora == '+str(self.hora)+':'+str(self.minuto)
 
     def avaliar_regra(self):
         return self.hora == datetime.now().hour and self.minuto == datetime.now().minute and self.dispositivo.get_valor() != self.valor
@@ -603,6 +615,9 @@ class CondicaoPotenciometroCronometrada(CondicaoPotenciometro):
         self.hora = hora
         self.minuto = minuto
 
+    def __str__(self):
+        return str(self.valor_inicial)+' <= valor >= '+str(self.valor_final)+' and hora == '+str(self.hora)+':'+str(self.minuto)
+
     def avaliar_regra(self):
         return self.hora == datetime.now().hour and self.minuto == datetime.now().minute and self.dispositivo.get_valor() != self.valor
 
@@ -615,10 +630,14 @@ class CondicaoSensorCronometrada(CondicaoSensor):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora, hora, minuto):
+    def __init__(self, sensor, valor_inicial, valor_final, hora, minuto):
         CondicaoSensor.__init__(self, sensor, valor_inicial, valor_final)
         self.hora = hora
         self.minuto = minuto
+
+    def __str__(self):
+        return str(self.valor_inicial) + ' <= valor >= ' + str(self.valor_final) + ' and hora == ' + str(
+            self.hora) + ':' + str(self.minuto)
 
     def avaliar_regra(self):
         return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final and self.hora == datetime.now().hour and self.minuto == datetime.now().minute
