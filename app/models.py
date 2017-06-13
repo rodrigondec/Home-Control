@@ -397,9 +397,6 @@ class Regra(db.Model):
 
     atuador = db.relationship("Atuador", uselist=False, back_populates="regra")
 
-    tipo = db.Column(db.String(30))
-    __mapper_args__ = {'polymorphic_on': tipo}
-
     def __init__(self, monitor, condicao, atuador):
         if not isinstance(monitor, Monitor):
             raise TypeError('monitor não é do tipo Monitor')

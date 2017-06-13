@@ -41,37 +41,41 @@ embarcado = Embarcado('0.0.0.0', 'ex:abcd:efgh:ijkl')
 # embarcado = Embarcado.query.filter_by(id_embarcado=1).first()
 leaf.embarcado = embarcado
 #
-sensor = Sensor('Temperatura', 13)
-# sensor = Dispositivo.query.filter_by(id_dispositivo=1).first()
-leaf.add_dispositivo(sensor)
+temperatura = Sensor('Temperatura', 13)
+# temperatura = Dispositivo.query.filter_by(id_dispositivo=1).first()
+leaf.add_dispositivo(temperatura)
 #
-interruptor = Interruptor('Lampâda central', 12)
-# interruptor = Dispositivo.query.filter_by(id_dispositivo=2).first()
-leaf.add_dispositivo(interruptor)
+lampada = Interruptor('Lampâda central', 12)
+# lampada = Dispositivo.query.filter_by(id_dispositivo=2).first()
+leaf.add_dispositivo(lampada)
+
+ar = Interruptor('Ar-condicionado', 14)
+# ar = Dispositivo.query.filter_by(id_dispositivo=3).first()
+leaf.add_dispositivo(ar)
+
+porta = Interruptor('Porta', 15)
+# porta = Dispositivo.query.filter_by(id_dispositivo=4).first()
+leaf.add_dispositivo(porta)
 #
-potenciometro = Potenciometro('Ventilador', 11)
-# potenciometro = Dispositivo.query.filter_by(id_dispositivo=3).first()
-leaf.add_dispositivo(potenciometro)
+ventilador = Potenciometro('Ventilador', 11)
+# ventilador = Dispositivo.query.filter_by(id_dispositivo=5).first()
+leaf.add_dispositivo(ventilador)
 #
 
-monitor = MonitorManual("custom")
+monitor = Monitor("custom")
 # monitor = Monitor.query.filter_by(id_monitor=1).first()
 leaf.monitor = monitor
 #
-regra1 = RegraInterruptor(interruptor, True)
+regra1 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorInterruptor(porta, False))
 # regra1 = Regra.query.filter_by(id_regra=1).first()
-monitor.add_regra(regra1)
 #
-regra2 = RegraInterruptorCronometrada(interruptor=interruptor, valor=True, hora=datetime.now().hour, minuto=datetime.now().minute)
+regra2 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorPotenciometro(ventilador, 0))
 # regra2 = Regra.query.filter_by(id_regra=2).first()
-monitor.add_regra(regra2)
 #
-regra3 = RegraSensor(sensor=sensor, valor_inicial=10, valor_final=20, regra_atuadora=RegraPotenciometro(potenciometro=potenciometro, valor=0))
+regra3 = Regra(monitor=monitor, condicao=CondicaoInterruptorCronometrada(lampada, False, hora=18, minuto=00), atuador=AtuadorInterruptor(lampada, True))
 # regra3 = Regra.query.filter_by(id_regra=5).first()
-monitor.add_regra(regra3)
 #
-regra4 = RegraSensorCronometrada(sensor=sensor, valor_inicial=10, valor_final=20, regra_atuadora=RegraPotenciometro(potenciometro=potenciometro, valor=3), hora=datetime.now().hour, minuto=datetime.now().minute)
+regra4 = Regra(monitor=monitor, condicao=CondicaoSensor(temperatura, 23, 40), atuador=AtuadorInterruptor(ar, True))
 # regra4 = Regra.query.filter_by(id_regra=6).first()
-monitor.add_regra(regra4)
 #
 db.session.commit()
