@@ -1,6 +1,8 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for, request
 from app.models import *
-from app.forms import MonitorForm, RegraTipoDispositivoForm, RegraSensorForm, RegraPotenciometroForm, RegraInterruptorForm
+from app.forms import MonitorForm, RegraCondicaoAtuadorForm, RegraSensorInterruptorForm, RegraSensorPotenciometroForm, \
+    RegraInterruptorInterruptorForm, RegraInterruptorPotenciometroForm, RegraPotenciometroInterruptorForm, \
+    RegraPotenciometroPotenciometroForm
 
 mod_monitor = Blueprint('monitor', __name__, url_prefix='/monitor', template_folder='templates')
 
@@ -48,7 +50,7 @@ def cadastrar_monitor(id_leaf):
 
 
 @mod_monitor.route('/cadastrar_regra/<id_monitor>', methods=['GET', 'POST'])
-def regra_tipo_dispositivo(id_monitor):
+def regra_condicao_atuador(id_monitor):
     if 'logged_in' in session:
         usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
         monitor = Monitor.query.filter_by(id_monitor=id_monitor).first()
@@ -56,66 +58,70 @@ def regra_tipo_dispositivo(id_monitor):
             flash('Você não tem permissão para cadastrar uma regra para esse monitor')
             return redirect('/dashboard/')
 
-        form = RegraTipoDispositivoForm()
+        form = RegraCondicaoAtuadorForm(monitor.leaf_id)
         if form.validate_on_submit():
-            return redirect('/monitor/cadastrar_regra/'+id_monitor+'/'+form.tipo_dispositivo.data)
-        return render_template('monitor/regra_tipo_dispositivo.html', form=form, monitor=monitor)
+            return redirect('/monitor/cadastrar_regra/'+id_monitor+'/'+str(form.dispositivo_condicao.data)+'/'+str(form.dispositivo_atuador.data))
+        return render_template('monitor/regra_condicao_atuador.html', form=form, monitor=monitor)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
 
 
-@mod_monitor.route('/cadastrar_regra/<id_monitor>/<tipo_dispositivo>', methods=['GET', 'POST'])
-def regra_dispositivo(id_monitor, tipo_dispositivo):
+@mod_monitor.route('/cadastrar_regra/<id_monitor>/<id_dispositivo_condicao>/<id_dispositivo_atuador>', methods=['GET', 'POST'])
+def regra_dispositivo(id_monitor, id_dispositivo_condicao, id_dispositivo_atuador):
     if 'logged_in' in session:
         usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
         monitor = Monitor.query.filter_by(id_monitor=id_monitor).first()
+        dispositivo_condicao = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo_condicao).first()
+        dispositivo_atuador = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo_atuador).first()
+
         if not monitor.leaf.alteravel_por(usuario):
             flash('Você não tem permissão para cadastrar uma regra para esse monitor')
             return redirect('/dashboard/')
 
-        if tipo_dispositivo == 'sensor':
-            form = RegraSensorForm(tipo_dispositivo, monitor.leaf_id)
-        elif tipo_dispositivo == 'interruptor':
-            form = RegraInterruptorForm(tipo_dispositivo, monitor.leaf_id)
+        if dispositivo_condicao.tipo == 'sensor':
+            if dispositivo_atuador.tipo == 'interruptor':
+                form = RegraSensorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+            else:
+                form = RegraSensorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
+        elif dispositivo_condicao.tipo == 'interruotor':
+            if dispositivo_atuador.tipo == 'interruptor':
+                form = RegraInterruptorInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+            else:
+                form = RegraInterruptorPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
         else:
-            form = RegraPotenciometroForm(tipo_dispositivo, monitor.leaf_id)
+            if dispositivo_atuador.tipo == 'interruptor':
+                form = RegraPotenciometroInterruptorForm(dispositivo_condicao, dispositivo_atuador)
+            else:
+                form = RegraPotenciometroPotenciometroForm(dispositivo_condicao, dispositivo_atuador)
 
         if form.validate_on_submit():
-            dispositivo = Dispositivo.query.filter_by(id_dispositivo=form.dispositivo.data).first()
-
-            if dispositivo.tipo == 'sensor':
-                atuador = Dispositivo.query.filter_by(id_dispositivo=form.atuador.data).first()
-                if atuador.tipo == 'interruptor':
-                    regra_atuadora = RegraInterruptor(atuador, form.valor_atuador.data)
-                else:
-                    regra_atuadora = RegraPotenciometro(atuador, form.valor_atuador.data)
-
+            if dispositivo_condicao.tipo == 'sensor':
                 if form.cronometrado.data:
-                    regra = RegraSensorCronometrada(dispositivo, form.valor_inicial.data, form.valor_final.data, regra_atuadora, form.hora.data, form.minuto.data)
+                    condicao = CondicaoSensorCronometrada(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao, form.hora.data, form.minuto.data)
                 else:
-                    regra = RegraSensor(dispositivo, form.valor_inicial.data, form.valor_final.data, regra_atuadora)
-
-            elif dispositivo.tipo == 'interruptor':
+                    condicao = CondicaoSensor(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao)
+            elif dispositivo_condicao.tipo == 'interruotor':
                 if form.cronometrado.data:
-                    regra = RegraInterruptorCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
+                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao, form.hora.data, form.minuto.data)
                 else:
-                    regra = RegraInterruptor(dispositivo, form.valor.data)
-
+                    condicao = CondicaoInterruptor(dispositivo_condicao, form.valor_condicao)
             else:
                 if form.cronometrado.data:
-                    regra = RegraPotenciometroCronometrada(dispositivo, form.valor.data, form.hora.data, form.minuto.data)
+                    condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao, form.hora.data, form.minuto.data)
                 else:
-                    regra = RegraPotenciometro(dispositivo, form.valor.data)
+                    condicao = CondicaoPotenciometro(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao)
 
-            monitor.add_regra(regra)
+            if dispositivo_atuador.tipo == 'interruptor':
+                atuador = AtuadorInterruptor(dispositivo_atuador, form.valor_atuador)
+            else:
+                atuador = AtuadorPotenciometro(dispositivo_atuador, form.valor_atuador)
+
+            regra = Regra(monitor, condicao, atuador)
+
             db.session.commit()
-            return redirect('/monitor/' + str(monitor.leaf_id))
-
-        if tipo_dispositivo == 'sensor':
-            return render_template('monitor/regra_sensor.html', form=form, monitor=monitor)
-        else:
-            return render_template('monitor/regra_int_pot.html', form=form, monitor=monitor)
+            return redirect('/monitor/'+str(monitor.leaf_id))
+        return render_template('monitor/regra_valor.html', form=form, monitor=monitor, dispositivo_condicao=dispositivo_condicao, dispositivo_atuador=dispositivo_atuador)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
