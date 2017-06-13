@@ -18,7 +18,7 @@
 			<form class="form-horizontal" action="" method="post" name="{{ form.form_name.name }}">
 				{{ form.hidden_tag() }}
 				<fieldset>
-					<legend>Cadastrar Regra - C: {{ dispositivo_condicao.nome }} | A: {{ dispoisitivo_atuador.nome }}</legend>
+					<legend>Cadastrar Regra - C: {{ dispositivo_condicao.nome }} | A: {{ dispositivo_atuador.nome }}</legend>
 
                     {% if dispositivo_condicao.tipo == 'sensor' or dispositivo_condicao.tipo == 'potenciometro' %}
                         {{ render_field(form.valor_inicial_condicao) }}

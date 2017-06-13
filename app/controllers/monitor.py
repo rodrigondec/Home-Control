@@ -98,19 +98,25 @@ def regra_dispositivo(id_monitor, id_dispositivo_condicao, id_dispositivo_atuado
         if form.validate_on_submit():
             if dispositivo_condicao.tipo == 'sensor':
                 if form.cronometrado.data:
-                    condicao = CondicaoSensorCronometrada(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao, form.hora.data, form.minuto.data)
+                    condicao = CondicaoSensorCronometrada(dispositivo_condicao, form.valor_inical_condicao,
+                                                          form.valor_final_condicao, form.hora.data, form.minuto.data)
                 else:
-                    condicao = CondicaoSensor(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao)
+                    condicao = CondicaoSensor(dispositivo_condicao, form.valor_inical_condicao,
+                                              form.valor_final_condicao)
             elif dispositivo_condicao.tipo == 'interruotor':
                 if form.cronometrado.data:
-                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao, form.hora.data, form.minuto.data)
+                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao,
+                                                                form.hora.data, form.minuto.data)
                 else:
                     condicao = CondicaoInterruptor(dispositivo_condicao, form.valor_condicao)
             else:
                 if form.cronometrado.data:
-                    condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao, form.hora.data, form.minuto.data)
+                    condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inical_condicao,
+                                                                 form.valor_final_condicao, form.hora.data,
+                                                                 form.minuto.data)
                 else:
-                    condicao = CondicaoPotenciometro(dispositivo_condicao, form.valor_inical_condicao, form.valor_final_condicao)
+                    condicao = CondicaoPotenciometro(dispositivo_condicao, form.valor_inical_condicao,
+                                                     form.valor_final_condicao)
 
             if dispositivo_atuador.tipo == 'interruptor':
                 atuador = AtuadorInterruptor(dispositivo_atuador, form.valor_atuador)
@@ -120,7 +126,7 @@ def regra_dispositivo(id_monitor, id_dispositivo_condicao, id_dispositivo_atuado
             regra = Regra(monitor, condicao, atuador)
 
             db.session.commit()
-            return redirect('/monitor/'+str(monitor.leaf_id))
+            return redirect('/monitor/' + str(monitor.leaf_id))
         return render_template('monitor/regra_valor.html', form=form, monitor=monitor, dispositivo_condicao=dispositivo_condicao, dispositivo_atuador=dispositivo_atuador)
     else:
         flash('Entre no sistema primeiro!')

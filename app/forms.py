@@ -64,7 +64,7 @@ class MonitorForm(FlaskForm):
 
 
 class RegraCondicaoAtuadorForm(FlaskForm):
-    form_name = HiddenField('regra_tipo_dispositivo', default='regra_tipo_dispositivo')
+    form_name = HiddenField('regra_tipo_dispositivo', default='regra_condicao_atuador')
     dispositivo_condicao = SelectField(u'Dispositivo Condição', validators=[DataRequired()], choices=[])
     dispositivo_atuador = SelectField(u'Dispositivo Atuador', validators=[DataRequired()], choices=[])
 
@@ -82,6 +82,7 @@ class RegraCondicaoAtuadorForm(FlaskForm):
 
 
 class RegraDispositivoDispositivoForm(FlaskForm):
+    form_name = HiddenField('regra_tipo_dispositivo', default='regra_valores')
     id_dispositivo_condicao = HiddenField(u'Dispositivo Condicao')
     tipo_dispositivo_condicao = HiddenField(u'Tipo Dispositivo Condicao')
     id_dispositivo_atuador = HiddenField(u'Dispositivo Atuador')
@@ -115,7 +116,7 @@ class RegraInterruptorPotenciometroForm(RegraDispositivoDispositivoForm):
 
 
 class RegraPotenciometroInterruptorForm(RegraDispositivoDispositivoForm):
-    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_inicial_condicao = FloatField(u'Valor Inicial Condição')
     valor_final_condicao = FloatField(u'Valor Final Condição')
     valor_atuador = BooleanField(u'Valor Atuador')
 
@@ -124,7 +125,7 @@ class RegraPotenciometroInterruptorForm(RegraDispositivoDispositivoForm):
 
 
 class RegraPotenciometroPotenciometroForm(RegraDispositivoDispositivoForm):
-    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_inicial_condicao = FloatField(u'Valor Inicial Condição')
     valor_final_condicao = FloatField(u'Valor Final Condição')
     valor_atuador = FloatField(u'Valor Atuador')
 
@@ -133,7 +134,7 @@ class RegraPotenciometroPotenciometroForm(RegraDispositivoDispositivoForm):
 
 
 class RegraSensorInterruptorForm(RegraDispositivoDispositivoForm):
-    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_inicial_condicao = FloatField(u'Valor Inicial Condição')
     valor_final_condicao = FloatField(u'Valor Final Condição')
     valor_atuador = BooleanField(u'Valor Atuador')
 
@@ -142,7 +143,7 @@ class RegraSensorInterruptorForm(RegraDispositivoDispositivoForm):
 
 
 class RegraSensorPotenciometroForm(RegraDispositivoDispositivoForm):
-    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_inicial_condicao = FloatField(u'Valor Inicial Condição')
     valor_final_condicao = FloatField(u'Valor Final Condição')
     valor_atuador = FloatField(u'Valor Atuador')
 
