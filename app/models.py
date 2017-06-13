@@ -639,12 +639,7 @@ class Monitor(db.Model, Thread):
 
     regras = db.relationship("Regra", back_populates="monitor")
 
-    tipo = db.Column(db.String(30))
-    __mapper_args__ = {'polymorphic_on': tipo}
-
     def __init__(self, nome):
-        if self.__class__ is Monitor:
-            raise TypeError('abstract class cannot be instantiated')
         Thread.__init__(self)
         self.nome = nome
 
@@ -657,31 +652,6 @@ class Monitor(db.Model, Thread):
         self.regras.remove(regra)
 
     def before_run(self):
-        raise TypeError('abstract method cannot be called')
-
-    def run(self):
-        raise TypeError('abstract method cannot be called')
-
-    def verificar_regras(self):
-        raise TypeError('abstract method cannot be called')
-
-    def executar_regra(self, regra):
-        raise TypeError('abstract method cannot be called')
-
-    def after_run(self):
-        raise TypeError('abstract method cannot be called')
-
-
-class MonitorManual(Monitor):
-    __tablename__ = 'monitor_manual'
-    id_monitor = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
-
-    __mapper_args__ = {'polymorphic_identity': __tablename__}
-
-    def __init__(self, nome):
-        Monitor.__init__(self, nome)
-
-    def before_run(self):
         raise Exception('not implemented')
 
     def run(self):
@@ -695,16 +665,6 @@ class MonitorManual(Monitor):
 
     def after_run(self):
         raise Exception('not implemented')
-
-
-class MonitorAutomatico(Monitor):
-    __tablename__ = 'monitor_automatico'
-    id_monitor = db.Column(db.Integer(), db.ForeignKey("monitor.id_monitor"), primary_key=True)
-
-    __mapper_args__ = {'polymorphic_identity': __tablename__}
-
-    def __init__(self, nome):
-        Monitor.__init__(self, nome)
 
 
 class Command(db.Model):
