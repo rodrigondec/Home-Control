@@ -279,7 +279,9 @@ class Dispositivo(db.Model):
 
     usos = db.relationship("Uso", back_populates="dispositivo")
 
-    regras = db.relationship("Regra", back_populates="dispositivo")
+    atuadores = db.relationship("Atuador", back_populates="dispositivo")
+
+    condicoes = db.relationship("Condicao", back_populates="dispositivo")
 
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
@@ -388,30 +390,60 @@ class Regra(db.Model):
     __tablename__ = 'regra'
     id_regra = db.Column(db.Integer, primary_key=True)
 
-    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-    dispositivo = db.relationship("Dispositivo", back_populates="regras")
-
     monitor_id = db.Column(db.Integer, db.ForeignKey('monitor.id_monitor'))
     monitor = db.relationship("Monitor", back_populates="regras")
+
+    condicao = db.relationship("Condicao", uselist=False, back_populates="regra")
+
+    atuador = db.relationship("Atuador", uselist=False, back_populates="regra")
+
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self, monitor, condicao, atuador):
+        if not isinstance(monitor, Monitor):
+            raise TypeError('monitor não é do tipo Monitor')
+        if not isinstance(condicao, Condicao):
+            raise TypeError('condicao não é do tipo Condicao')
+        if not isinstance(atuador, Atuador):
+            raise TypeError('atuador não é do tipo Atuador')
+        self.condicao = condicao
+        self.atuador = atuador
+        monitor.add_regra(self)
+
+
+    def avaliar_regra(self):
+        raise Exception('not implemented')
+
+    def execute(self):
+        raise Exception('not implemented')
+
+
+class Atuador(db.Model):
+    __tablename__ = 'atuador'
+    id_atuador = db.Column(db.Integer, primary_key=True)
+
+    regra_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
+    regra = db.relationship("Regra", back_populates="atuador")
+
+    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = db.relationship("Dispositivo", back_populates="atuadores")
 
     tipo = db.Column(db.String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, dispositivo):
-        if self.__class__ is Regra:
+        if self.__class__ is Atuador:
             raise TypeError('abstract class cannot be instantiated')
         self.dispositivo = dispositivo
-
-    def avaliar_regra(self):
-        raise TypeError('abstract method cannot be called')
 
     def execute(self):
         raise TypeError('abstract method cannot be called')
 
 
-class RegraInterruptor(Regra):
-    __tablename__ = 'regra_interruptor'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+class AtuadorInterruptor(Atuador):
+    __tablename__ = 'atuador_interruptor'
+    id_atuador = db.Column(db.Integer(), db.ForeignKey("atuador.id_atuador"), primary_key=True)
     valor = db.Column(db.Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -423,19 +455,16 @@ class RegraInterruptor(Regra):
             raise TypeError("Valor não é um boolean")
         if not isinstance(interruptor, Interruptor):
             raise TypeError("Dispositivo passado não é um Interruptor")
-        Regra.__init__(self, interruptor)
+        Atuador.__init__(self, interruptor)
         self.valor = valor
-
-    def avaliar_regra(self):
-        return self.dispositivo.get_valor() != self.valor
 
     def execute(self):
         raise Exception('not implemented')
 
 
-class RegraPotenciometro(Regra):
-    __tablename__ = 'regra_potenciometro'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+class AtuadorPotenciometro(Atuador):
+    __tablename__ = 'atuador_potenciometro'
+    id_atuador = db.Column(db.Integer(), db.ForeignKey("atuador.id_atuador"), primary_key=True)
     valor = db.Column(db.Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -446,30 +475,89 @@ class RegraPotenciometro(Regra):
         if not isinstance(valor, float):
             raise TypeError("Valor não é um float")
         if not isinstance(potenciometro, Potenciometro):
-            raise TypeError("Dispositivo passado não é um Potenciometro")
-        Regra.__init__(self, potenciometro)
+            raise TypeError("Dispositivo passado não é um Interruptor")
+        Atuador.__init__(self, potenciometro)
         self.valor = valor
-
-    def avaliar_regra(self):
-        return self.dispositivo.get_valor() != self.valor
 
     def execute(self):
         raise Exception('not implemented')
 
 
-class RegraSensor(Regra):
-    __tablename__ = 'regra_sensor'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra.id_regra"), primary_key=True)
+class Condicao(db.Model):
+    __tablename__ = 'condicao'
+    id_condicao = db.Column(db.Integer, primary_key=True)
+
+    regra_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
+    regra = db.relationship("Regra", back_populates="condicao")
+
+    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = db.relationship("Dispositivo", back_populates="condicoes")
+
+    tipo = db.Column(db.String(30))
+    __mapper_args__ = {'polymorphic_on': tipo}
+
+    def __init__(self, dispositivo):
+        if self.__class__ is Condicao:
+            raise TypeError('abstract class cannot be instantiated')
+        self.dispositivo = dispositivo
+
+    def avaliar_condicao(self):
+        raise TypeError('abstract method cannot be called')
+
+
+class CondicaoInterruptor(Condicao):
+    __tablename__ = 'condicao_interruptor'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
+    valor = db.Column(db.Boolean)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
+
+    def __init__(self, interruptor, valor):
+        if isinstance(valor, int) or isinstance(valor, float) or isinstance(valor, str):
+            valor = bool(valor)
+        if not isinstance(valor, bool):
+            raise TypeError("Valor não é um boolean")
+        if not isinstance(interruptor, Interruptor):
+            raise TypeError("Dispositivo passado não é um Interruptor")
+        Condicao.__init__(self, interruptor)
+        self.valor = valor
+
+    def avaliar_condicao(self):
+        return self.dispositivo.get_valor() != self.valor
+
+
+class CondicaoPotenciometro(Condicao):
+    __tablename__ = 'condicao_potenciometro'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
     valor_inicial = db.Column(db.Float)
     valor_final = db.Column(db.Float)
 
-    regra_atuadora_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
-    regra_atuadora = db.relationship("Regra", foreign_keys=[regra_atuadora_id])
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    __mapper_args__ = {
-        'polymorphic_identity': __tablename__,
-        'inherit_condition': (id_regra==Regra.id_regra)
-    }
+    def __init__(self, potenciometro, valor_inicial, valor_final):
+        if isinstance(valor_inicial, int) or isinstance(valor_inicial, str):
+            valor_inicial = float(valor_inicial)
+        if isinstance(valor_final, int) or isinstance(valor_final, str):
+            valor_final = float(valor_final)
+        if not isinstance(valor_inicial, float) or not isinstance(valor_final, float):
+            raise TypeError("Valor não é um float")
+        if not isinstance(potenciometro, Potenciometro):
+            raise TypeError("Dispositivo passado não é um Potenciometro")
+        Condicao.__init__(self, potenciometro)
+        self.valor_inicial = valor_inicial
+        self.valor_final = valor_final
+
+    def avaliar_condicao(self):
+        return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final
+
+
+class CondicaoSensor(Condicao):
+    __tablename__ = 'condicao_sensor'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
+    valor_inicial = db.Column(db.Float)
+    valor_final = db.Column(db.Float)
+
+    __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora):
         if isinstance(valor_inicial, int):
@@ -482,28 +570,24 @@ class RegraSensor(Regra):
             raise TypeError("Dispositivo passado não é um Sensor")
         if not isinstance(regra_atuadora, RegraPotenciometro) and not isinstance(regra_atuadora, RegraInterruptor):
             raise TypeError("Regra atuadora não é valida")
-        Regra.__init__(self, sensor)
+        Condicao.__init__(self, sensor)
         self.valor_inicial = valor_inicial
         self.valor_final = valor_final
-        self.regra_atuadora = regra_atuadora
 
-    def avaliar_regra(self):
-        raise Exception('not implemented')
-
-    def execute(self):
-        raise Exception('not implemented')
+    def avaliar_condicao(self):
+        return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final
 
 
-class RegraInterruptorCronometrada(RegraInterruptor):
-    __tablename__ = 'regra_interruptor_cronometrada'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra_interruptor.id_regra"), primary_key=True)
+class CondicaoInterruptorCronometrada(CondicaoInterruptor):
+    __tablename__ = 'condicao_interruptor_cronometrada'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_interruptor.id_condicao"), primary_key=True)
     hora = db.Column(db.Integer)
     minuto = db.Column(db.Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, interruptor, valor, hora, minuto):
-        RegraInterruptor.__init__(self, interruptor, valor)
+        CondicaoInterruptor.__init__(self, interruptor, valor)
         self.hora = hora
         self.minuto = minuto
 
@@ -511,16 +595,16 @@ class RegraInterruptorCronometrada(RegraInterruptor):
         return self.hora == datetime.now().hour and self.minuto == datetime.now().minute and self.dispositivo.get_valor() != self.valor
 
 
-class RegraPotenciometroCronometrada(RegraPotenciometro):
-    __tablename__ = 'regra_potenciometro_cronometrada'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra_potenciometro.id_regra"), primary_key=True)
+class CondicaoPotenciometroCronometrada(CondicaoPotenciometro):
+    __tablename__ = 'condicao_potenciometro_cronometrada'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_potenciometro.id_condicao"), primary_key=True)
     hora = db.Column(db.Integer)
     minuto = db.Column(db.Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, potenciometro, valor, hora, minuto):
-        RegraPotenciometro.__init__(self, potenciometro, valor)
+    def __init__(self, potenciometro, valor_inicial, valor_final, hora, minuto):
+        CondicaoPotenciometro.__init__(self, potenciometro, valor_inicial, valor_final)
         self.hora = hora
         self.minuto = minuto
 
@@ -528,21 +612,21 @@ class RegraPotenciometroCronometrada(RegraPotenciometro):
         return self.hora == datetime.now().hour and self.minuto == datetime.now().minute and self.dispositivo.get_valor() != self.valor
 
 
-class RegraSensorCronometrada(RegraSensor):
-    __tablename__ = 'regra_sensor_cronometrada'
-    id_regra = db.Column(db.Integer(), db.ForeignKey("regra_sensor.id_regra"), primary_key=True)
+class CondicaoSensorCronometrada(CondicaoSensor):
+    __tablename__ = 'condicao_sensor_cronometrada'
+    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_sensor.id_condicao"), primary_key=True)
     hora = db.Column(db.Integer)
     minuto = db.Column(db.Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora, hora, minuto):
-        RegraSensor.__init__(self, sensor, valor_inicial, valor_final, regra_atuadora)
+        CondicaoSensor.__init__(self, sensor, valor_inicial, valor_final, regra_atuadora)
         self.hora = hora
         self.minuto = minuto
 
     def avaliar_regra(self):
-        raise Exception('not implemented')
+        return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final and self.hora == datetime.now().hour and self.minuto == datetime.now().minute
 
 
 class Monitor(db.Model, Thread):
