@@ -493,7 +493,7 @@ class Condicao(db.Model):
     dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
     dispositivo = db.relationship("Dispositivo", back_populates="condicoes")
 
-    tipo = db.Column(db.String(30))
+    tipo = db.Column(db.String(40))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, dispositivo):
@@ -523,7 +523,7 @@ class CondicaoInterruptor(Condicao):
         self.valor = valor
 
     def avaliar_condicao(self):
-        return self.dispositivo.get_valor() != self.valor
+        return self.dispositivo.get_valor() == self.valor
 
 
 class CondicaoPotenciometro(Condicao):
@@ -559,7 +559,7 @@ class CondicaoSensor(Condicao):
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
-    def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora):
+    def __init__(self, sensor, valor_inicial, valor_final):
         if isinstance(valor_inicial, int):
             valor_inicial = float(valor_inicial)
         if isinstance(valor_final, int):
@@ -568,8 +568,6 @@ class CondicaoSensor(Condicao):
             raise TypeError("Valor não é um float")
         if not isinstance(sensor, Sensor):
             raise TypeError("Dispositivo passado não é um Sensor")
-        if not isinstance(regra_atuadora, RegraPotenciometro) and not isinstance(regra_atuadora, RegraInterruptor):
-            raise TypeError("Regra atuadora não é valida")
         Condicao.__init__(self, sensor)
         self.valor_inicial = valor_inicial
         self.valor_final = valor_final
@@ -621,7 +619,7 @@ class CondicaoSensorCronometrada(CondicaoSensor):
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
     def __init__(self, sensor, valor_inicial, valor_final, regra_atuadora, hora, minuto):
-        CondicaoSensor.__init__(self, sensor, valor_inicial, valor_final, regra_atuadora)
+        CondicaoSensor.__init__(self, sensor, valor_inicial, valor_final)
         self.hora = hora
         self.minuto = minuto
 
