@@ -20,35 +20,20 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>Nome dispositivo</th>
+						<th>Dispositivo Condição</th>
 						<th>Condição</th>
-						<th>Atuador</th>
+						<th>Dispositivo Atuador</th>
 						<th>Valor</th>
-						<!--<th>Hora</th>-->
 					</tr>
 				</thead>
 				<tbody>
 					{% for regra in leaf.monitor.regras %}
 						<tr>
 							<td>{{ regra.id_regra }}</td>
-							<td>{{ regra.dispositivo.nome }}</td>
-							{% if regra.tipo == 'regra_interruptor' or regra.tipo == 'regra_potenciometro' or regra.tipo == 'regra_interruptor_cronometrada' or regra.tipo == 'regra_potenciometro_cronometrada' %}
-								{% if regra.tipo == 'regra_interruptor' or regra.tipo == 'regra_potenciometro' %}
-							<td>valor != {{ regra.valor }}</td>
-								{% else %}
-							<td>valor != {{ regra.valor }} and hora atual == {{ regra.hora }}:{{ regra.minuto }}</td>
-								{% endif %}
-							<td>{{ regra.dispositivo.nome }}</td>
-							<td>{{ regra.valor }}</td>
-							{% else %}
-								{% if regra.tipo == 'regra_sensor_cronometrada' %}
-							<td>{{ regra.valor_inicial }} <= valor => {{ regra.valor_final }} and hora atual == {{ regra.hora }}:{{ regra.minuto }}</td>
-								{% else %}
-							<td>{{ regra.valor_inicial }} <= valor => {{ regra.valor_final }}</td>
-								{% endif%}
-							<td>{{ regra.regra_atuadora.dispositivo.nome }}</td>
-							<td>{{ regra.regra_atuadora.valor }}</td>
-							{% endif %}
+							<td>{{ regra.condicao.dispositivo.nome }}</td>
+							<td>{{ regra.condicao }}</td>
+							<td>{{ regra.atuador.dispositivo.nome }}</td>
+							<td>{{ regra.atuador.valor }}</td>
 						</tr>
 					{% endfor %}
 				</tbody>
