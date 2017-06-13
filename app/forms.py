@@ -63,53 +63,88 @@ class MonitorForm(FlaskForm):
                                  choices=[('MonitorManual', 'Monitor Manual'), ('MonitorAutomatico', 'Monitor Automático')])
 
 
-class RegraTipoDispositivoForm(FlaskForm):
+class RegraCondicaoAtuadorForm(FlaskForm):
     form_name = HiddenField('regra_tipo_dispositivo', default='regra_tipo_dispositivo')
-    tipo_dispositivo = SelectField(u'Tipo Dispositivo', validators=[DataRequired()], choices=[('sensor', 'Sensor'), ('interruptor', 'Interruptor'), ('potenciometro', 'Potenciômetro')])
+    dispositivo_condicao = SelectField(u'Dispositivo Condição', validators=[DataRequired()], choices=[])
+    dispositivo_atuador = SelectField(u'Dispositivo Atuador', validators=[DataRequired()], choices=[])
+
+    def __init__(self, leaf_id):
+        FlaskForm.__init__(self)
+        self.dispositivo_condicao.choices = []
+        dispositivos = Dispositivo.query.filter_by(leaf_id=leaf_id).all()
+        for dispositivo in dispositivos:
+            self.dispositivo_condicao.choices.append((str(dispositivo.id_dispositivo), dispositivo.nome))
+
+        self.dispositivo_atuador.choices = []
+        atuadores = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo == 'potenciometro') | (Dispositivo.tipo == 'interruptor')).all()
+        for atuador in atuadores:
+            self.dispositivo_atuador.choices.append((str(atuador.id_dispositivo), atuador.nome))
 
 
-class RegraDispositivoForm(FlaskForm):
-    tipo_dispositivo = HiddenField(u'Tipo Dispositivo')
-    dispositivo = SelectField(u'Dispositivo', validators=[DataRequired()], choices=[])
+class RegraDispositivoDispositivoForm(FlaskForm):
+    id_dispositivo_condicao = HiddenField(u'Dispositivo Condicao')
+    tipo_dispositivo_condicao = HiddenField(u'Tipo Dispositivo Condicao')
+    id_dispositivo_atuador = HiddenField(u'Dispositivo Atuador')
+    tipo_dispositivo_atuador = HiddenField(u'Tipo Dispositivo Atuador')
     cronometrado = BooleanField(u'Cronometrado', default=False)
     hora = IntegerField(u'Hora', default=0)
     minuto = IntegerField(u'Minuto', default=0)
 
-    def __init__(self, tipo_dispositivo, leaf_id):
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
         FlaskForm.__init__(self)
-        self.tipo_dispositivo.data = tipo_dispositivo
-        self.dispositivo.choices = []
-        dispositivos = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo==tipo_dispositivo)).all()
-        for dispositivo in dispositivos:
-            self.dispositivo.choices.append((str(dispositivo.id_dispositivo), dispositivo.nome))
+        self.id_dispositivo_condicao.data = dispositivo_condicao.id_dispositivo
+        self.tipo_dispositivo_condicao = dispositivo_condicao.tipo
+        self.id_dispositivo_atuador.data = dispositivo_atuador.id_dispositivo
+        self.tipo_dispositivo_atuador = dispositivo_atuador.tipo
 
 
-class RegraInterruptorForm(RegraDispositivoForm):
-    form_name = HiddenField('regra_interruptor', default='regra_interruptor')
-    valor = BooleanField(u'Ligado')
+class RegraInterruptorInterruptorForm(RegraDispositivoDispositivoForm):
+    valor_condicao = BooleanField(u'Valor Condição')
+    valor_atuador = BooleanField(u'Valor Atuador')
 
-    def __init__(self, tipo_dispositivo, leaf_id):
-        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
-
-
-class RegraPotenciometroForm(RegraDispositivoForm):
-    form_name = HiddenField('regra_potenciometro', default='regra_potenciometro')
-    valor = FloatField(u'Valor', validators=[DataRequired()])
-
-    def __init__(self, tipo_dispositivo, leaf_id):
-        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
 
 
-class RegraSensorForm(RegraDispositivoForm):
-    form_name = HiddenField('regra_sensor', default='regra_sensor')
-    valor_inicial = FloatField(u'Valor inicial', validators=[DataRequired()])
-    valor_final = FloatField(u'Valor final', validators=[DataRequired()])
-    atuador = SelectField(u'Atuador', validators=[DataRequired()], choices=[])
-    valor_atuador = StringField(u'Valor atuador', validators=[DataRequired()])
+class RegraInterruptorPotenciometroForm(RegraDispositivoDispositivoForm):
+    valor_condicao = BooleanField(u'Valor Condição')
+    valor_atuador = FloatField(u'Valor Atuador')
 
-    def __init__(self, tipo_dispositivo, leaf_id):
-        RegraDispositivoForm.__init__(self, tipo_dispositivo, leaf_id)
-        self.atuador.choices = []
-        atuadores = Dispositivo.query.filter_by(leaf_id=leaf_id).filter((Dispositivo.tipo=='interruptor') | (Dispositivo.tipo=='potenciometro')).all()
-        for atuador in atuadores:
-            self.atuador.choices.append((str(atuador.id_dispositivo), atuador.nome))
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
+
+
+class RegraPotenciometroInterruptorForm(RegraDispositivoDispositivoForm):
+    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_final_condicao = FloatField(u'Valor Final Condição')
+    valor_atuador = BooleanField(u'Valor Atuador')
+
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
+
+
+class RegraPotenciometroPotenciometroForm(RegraDispositivoDispositivoForm):
+    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_final_condicao = FloatField(u'Valor Final Condição')
+    valor_atuador = FloatField(u'Valor Atuador')
+
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
+
+
+class RegraSensorInterruptorForm(RegraDispositivoDispositivoForm):
+    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_final_condicao = FloatField(u'Valor Final Condição')
+    valor_atuador = BooleanField(u'Valor Atuador')
+
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
+
+
+class RegraSensorPotenciometroForm(RegraDispositivoDispositivoForm):
+    valor_inical_condicao = FloatField(u'Valor Inicial Condição')
+    valor_final_condicao = FloatField(u'Valor Final Condição')
+    valor_atuador = FloatField(u'Valor Atuador')
+
+    def __init__(self, dispositivo_condicao, dispositivo_atuador):
+        RegraDispositivoDispositivoForm.__init__(self, dispositivo_condicao, dispositivo_atuador)
