@@ -662,20 +662,36 @@ class Monitor(db.Model, Thread):
     def remove_regra(self, regra):
         self.regras.remove(regra)
 
+    def start(self, session):
+        self.session = session
+        self.running = True
+        self.thread = Thread(target=self.run)
+        self.thread.start()
+
     def before_run(self):
-        raise Exception('not implemented')
+        pass
 
     def run(self):
-        raise Exception('not implemented')
+        self.before_run()
+        while self.running:
+            print('Monitor '+str(self.id_monitor)+' vai verificar regras!')
+            self.verificar_regras()
+            print('Monitor ' + str(self.id_monitor) + ' vai dormir por 5 segundos!')
+            sleep(5)
+        self.after_run()
 
     def verificar_regras(self):
-        raise Exception('not implemented')
+        for regra in self.regras:
+            if regra.avaliar_regra():
+                print('Regra '+str(regra.id_regra)+' foi ativada!')
+                self.executar_regra(regra)
 
     def executar_regra(self, regra):
-        raise Exception('not implemented')
+        print('Monitor '+str(self.id_monitor)+' executando regra '+str(regra.id_regra)+'!')
+        regra.execute(self.session)
 
     def after_run(self):
-        raise Exception('not implemented')
+        pass
 
 
 class Command(db.Model):
