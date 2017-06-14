@@ -798,6 +798,8 @@ class AtualizarDispositivo(Command):
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
         self.dispositivo.valor = request.execute()
         db_session.commit()
+        db_session.flush()
+        db_session.expire_all()
         self.after_execute()
 
     def after_execute(self):
@@ -830,12 +832,15 @@ class AlterarDispositivo(Command):
         # self.dispositivo.valor = self.after_execute()
         self.dispositivo = db_session.merge(self.dispositivo)
         self.dispositivo.valor = self.valor
-        if self.dispositivo.tipo == 'interruptor':
-            uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
-        else:
-            uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
-        db_session.add(uso)
+        if self.usuario_id is not None:
+            if self.dispositivo.tipo == 'interruptor':
+                uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
+            else:
+                uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
+            db_session.add(uso)
         db_session.commit()
+        db_session.flush()
+        db_session.expire_all()
 
     def after_execute(self):
         request = RequestLeitura()

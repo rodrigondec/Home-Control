@@ -84,6 +84,7 @@ def atualizar(id_dispositivo):
         command = Command.query.filter_by(tipo='atualizar_dispositivo').first()
         command.before_execute(embarcado=dispositivo.leaf.embarcado, dispositivo=dispositivo)
         command.execute()
+        db_session.commit()
         return redirect('/dashboard/leaf/'+str(dispositivo.leaf_id))
     else:
         flash('Entre no sistema primeiro!')
