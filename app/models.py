@@ -452,7 +452,9 @@ class AtuadorInterruptor(Atuador):
         self.valor = valor
 
     def execute(self):
-        raise Exception('not implemented')
+        command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+        command.before_execute(self.dispositivo.leaf.embarcado, self.dispositivo, self.valor)
+        command.execute()
 
 
 class AtuadorPotenciometro(Atuador):
@@ -473,7 +475,9 @@ class AtuadorPotenciometro(Atuador):
         self.valor = valor
 
     def execute(self):
-        raise Exception('not implemented')
+        command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+        command.before_execute(self.dispositivo.leaf.embarcado, self.dispositivo, self.valor)
+        command.execute()
 
 
 class Condicao(db.Model):
