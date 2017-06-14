@@ -64,18 +64,6 @@ init_db()
 
 from app.models import Monitor
 
-def run_monitores():
-    while True:
-        db_session = Session()
-        monitores = db_session.query(Monitor).all()
-        for monitor in monitores:
-            print('Monitor ' + str(monitor.id_monitor) + ' vai verificar regras!')
-            monitor.verificar_regras()
-        print('Verificador vai dormir por 5 segundos')
-        db_session.close()
-        Session.remove()
-        sleep(5)
-
-
-t = Thread(target=run_monitores)
-t.start()
+monitores =  db_session.query(Monitor).all()
+for monitor in monitores:
+    monitor.start()

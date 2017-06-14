@@ -698,10 +698,13 @@ class Monitor(Base):
 
     def verificar_regras(self):
         for regra in self.regras:
-            # db_session.expire(regra)
+            db_session = Session()
+            regra = db_session.query(Regra).filter_by(id_regra=regra.id_regra).first()
             if regra.avaliar_regra():
                 print('Regra '+str(regra.id_regra)+' foi ativada!')
                 self.executar_regra(regra)
+            db_session.close()
+            Session.remove()
 
     def executar_regra(self, regra):
         print('Monitor '+str(self.id_monitor)+' executando regra '+str(regra.id_regra)+'!')
