@@ -1,6 +1,8 @@
 from app.models import *
-from database import db_session
+from database import Session
 from datetime import datetime
+
+db_session = Session()
 
 db_session.add(RequestLeitura())
 db_session.add(RequestEscrita())
@@ -69,13 +71,15 @@ leaf.monitor = monitor
 regra1 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorInterruptor(porta, False))
 # regra1 = Regra.query.filter_by(id_regra=1).first()
 #
-# regra2 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorPotenciometro(ventilador, 0))
+regra2 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorPotenciometro(ventilador, 0))
 # regra2 = Regra.query.filter_by(id_regra=2).first()
 #
-# regra3 = Regra(monitor=monitor, condicao=CondicaoInterruptorCronometrada(lampada, False, hora=18, minuto=00), atuador=AtuadorInterruptor(lampada, True))
+regra3 = Regra(monitor=monitor, condicao=CondicaoInterruptorCronometrada(lampada, False, hora=18, minuto=00), atuador=AtuadorInterruptor(lampada, True))
 # regra3 = Regra.query.filter_by(id_regra=5).first()
 #
-# regra4 = Regra(monitor=monitor, condicao=CondicaoSensor(temperatura, 23, 40), atuador=AtuadorInterruptor(ar, True))
+regra4 = Regra(monitor=monitor, condicao=CondicaoSensor(temperatura, 23, 40), atuador=AtuadorInterruptor(ar, True))
 # regra4 = Regra.query.filter_by(id_regra=6).first()
 #
 db_session.commit()
+db_session.close()
+Session.remove()

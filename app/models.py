@@ -465,9 +465,11 @@ class AtuadorInterruptor(Atuador):
         self.valor = valor
 
     def execute(self):
-        command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+        db_session = Session()
+        command = db_session.query(Command).filter_by(tipo='alterar_dispositivo').first()
         command.before_execute(self.dispositivo.leaf.embarcado, self.dispositivo, self.valor)
         command.execute()
+        Session.remove()
 
 
 class AtuadorPotenciometro(Atuador):
@@ -488,9 +490,11 @@ class AtuadorPotenciometro(Atuador):
         self.valor = valor
 
     def execute(self):
-        command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+        db_session = Session()
+        command = db_session.query(Command).filter_by(tipo='alterar_dispositivo').first()
         command.before_execute(self.dispositivo.leaf.embarcado, self.dispositivo, self.valor)
         command.execute()
+        Session.remove()
 
 
 class Condicao(Base):
@@ -796,9 +800,15 @@ class AtualizarDispositivo(Command):
     def execute(self):
         request = RequestLeitura()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
+
+        db_session = Session()
+        self.dispositivo = db_session.merge(self.dispositivo)
         self.dispositivo.valor = request.execute()
-        db_session.commit()
+
         self.after_execute()
+
+        db_session.commit()
+        Session.remove()
 
     def after_execute(self):
         pass
@@ -827,17 +837,25 @@ class AlterarDispositivo(Command):
         request = RequestEscrita()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
         request.execute()
-        # self.dispositivo.valor = self.after_execute()
+
+        db_session = Session()
         self.dispositivo = db_session.merge(self.dispositivo)
-        self.dispositivo.valor = self.valor
-        if self.dispositivo.tipo == 'interruptor':
-            uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
-        else:
-            uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
-        db_session.add(uso)
-        db_session.commit()
+
+        self.after_execute()
 
     def after_execute(self):
         request = RequestLeitura()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
-        return request.execute()
+
+        self.dispositivo.valor = self.valor
+        # self.dispositivo.valor = request.execute()
+
+        if self.usuario_id is not None:
+            if self.dispositivo.tipo == 'interruptor':
+                uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
+            else:
+                uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
+            db_session.add(uso)
+
+        db_session.commit()
+        Session.remove()

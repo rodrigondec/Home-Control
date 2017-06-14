@@ -3,17 +3,17 @@ from database import Session
 from app.models import *
 from app.forms import ClientForm, DispositivoForm, ComponentForm, EmbarcadoForm, AlterarInterruptorForm, AlterarPotenciometroForm
 
-db_session = Session()
-
 mod_dispositivo = Blueprint('dispositivo', __name__, url_prefix='/dispositivo', template_folder='templates')
 
 @mod_dispositivo.route('/cadastrar/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar_dispositivo(id_leaf):
     if 'logged_in' in session:
-        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        db_session = Session()
+        usuario = db_session.query(Usuario).filter_by(id_usuario=session['id_usuario']).first()
+        leaf = db_session.query(Component).filter_by(id_component=id_leaf).first()
         if not leaf.alteravel_por(usuario):
             flash('Você não pode adicionar dispositivos à esse leaf')
+            Session.remove()
             return redirect('/dashboard/')
 
         form = DispositivoForm()
@@ -24,9 +24,12 @@ def cadastrar_dispositivo(id_leaf):
 
             db_session.add(dispositivo)
             db_session.commit()
+            Session.remove()
+
             flash('Dispositivo criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
+        Session.remove()
         return render_template('dispositivo/cadastrar_dispositivo.html', form=form, leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
@@ -36,11 +39,18 @@ def cadastrar_dispositivo(id_leaf):
 @mod_dispositivo.route('/embarcado/<id_leaf>', methods=['GET', 'POST'])
 def embarcado(id_leaf):
     if 'logged_in' in session:
-        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        db_session = Session()
+        usuario = db_session.query(Usuario).filter_by(id_usuario=session['id_usuario']).first()
+        leaf = db_session.query(Component).filter_by(id_component=id_leaf).first()
+        if not leaf.alteravel_por(usuario):
+            flash('Você não pode adicionar dispositivos à esse leaf')
+            Session.remove()
+            return redirect('/dashboard/')
         if leaf.embarcado is None:
             flash('Cadastre um embarcado')
+            Session.remove()
             return redirect('/dispositivo/cadastrar_embarcado/'+id_leaf)
+        Session.remove()
         return render_template('dispositivo/embarcado.html/', leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
@@ -50,10 +60,12 @@ def embarcado(id_leaf):
 @mod_dispositivo.route('/cadastrar_embarcado/<id_leaf>', methods=['GET', 'POST'])
 def cadastrar_embarcado(id_leaf):
     if 'logged_in' in session:
-        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-        leaf = Component.query.filter_by(id_component=id_leaf).first()
+        db_session = Session()
+        usuario = db_session.query(Usuario).filter_by(id_usuario=session['id_usuario']).first()
+        leaf = db_session.query(Component).filter_by(id_component=id_leaf).first()
         if not leaf.alteravel_por(usuario):
             flash('Você não pode adicionar dispositivos à esse leaf')
+            Session.remove()
             return redirect('/dashboard/')
 
         form = EmbarcadoForm()
@@ -64,9 +76,11 @@ def cadastrar_embarcado(id_leaf):
 
             db_session.add(embarcado)
             db_session.commit()
+            Session.remove()
             flash('Embarcado criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
+        Session.remove()
         return render_template('dispositivo/cadastrar_embarcado.html', form=form, leaf=leaf)
     else:
         flash('Entre no sistema primeiro!')
@@ -76,14 +90,18 @@ def cadastrar_embarcado(id_leaf):
 @mod_dispositivo.route('/atualizar/<id_dispositivo>')
 def atualizar(id_dispositivo):
     if 'logged_in' in session:
-        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-        dispositivo = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo).first()
+        db_session = Session()
+        usuario = db_session.query(Usuario).filter_by(id_usuario=session['id_usuario']).first()
+        dispositivo = db_session.query(Dispositivo).filter_by(id_dispositivo=id_dispositivo).first()
         if not dispositivo.leaf.acessivel_por(usuario):
             flash('Você não tem autorização para alterar esse dispositivo')
+            Session.remove()
             return redirect('/dashboard/')
-        command = Command.query.filter_by(tipo='atualizar_dispositivo').first()
+        command = db_session.query(Command).filter_by(tipo='atualizar_dispositivo').first()
         command.before_execute(embarcado=dispositivo.leaf.embarcado, dispositivo=dispositivo)
         command.execute()
+        db_session.refresh(dispositivo)
+        Session.remove()
         return redirect('/dashboard/leaf/'+str(dispositivo.leaf_id))
     else:
         flash('Entre no sistema primeiro!')
@@ -92,10 +110,12 @@ def atualizar(id_dispositivo):
 @mod_dispositivo.route('/alterar/<id_dispositivo>', methods=['GET', 'POST'])
 def alterar(id_dispositivo):
     if 'logged_in' in session:
-        usuario = Usuario.query.filter_by(id_usuario=session['id_usuario']).first()
-        dispositivo = Dispositivo.query.filter_by(id_dispositivo=id_dispositivo).first()
+        db_session = Session()
+        usuario = db_session.query(Usuario).filter_by(id_usuario=session['id_usuario']).first()
+        dispositivo = db_session.query(Dispositivo).filter_by(id_dispositivo=id_dispositivo).first()
         if not dispositivo.leaf.alteravel_por(usuario):
             flash('Você não pode alterar essa leaf')
+            Session.remove()
             return redirect('/dashboard/')
 
         if dispositivo.tipo == 'interruptor':
@@ -104,10 +124,12 @@ def alterar(id_dispositivo):
             form = AlterarPotenciometroForm()
 
         if form.validate_on_submit():
-            command = Command.query.filter_by(tipo='alterar_dispositivo').first()
+            command = db_session.query(Command).filter_by(tipo='alterar_dispositivo').first()
             command.before_execute(dispositivo.leaf.embarcado, dispositivo, form.valor.data, usuario.id_usuario)
             command.execute()
+            Session.remove()
             return redirect('/dashboard/leaf/' + str(dispositivo.leaf_id))
+        Session.remove()
         return render_template('dispositivo/alterar_dispositivo.html', form=form, dispositivo=dispositivo)
     else:
         flash('Entre no sistema primeiro!')
