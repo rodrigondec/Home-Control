@@ -405,12 +405,11 @@ class Regra(db.Model):
         self.atuador = atuador
         monitor.add_regra(self)
 
-
     def avaliar_regra(self):
-        raise Exception('not implemented')
+        return self.condicao.avaliar_condicao()
 
-    def execute(self):
-        raise Exception('not implemented')
+    def execute(self, session):
+        self.atuador.execute(session)
 
 
 class Atuador(db.Model):
