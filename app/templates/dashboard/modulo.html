@@ -10,7 +10,9 @@
 		<div class="col-md-2">
 			<ul>
 				<li><a href="/dashboard/component/cadastrar/{{ modulo.id_component }}">Cadastrar Component</a></li>
+				{% if modulo.tipo == 'modulo_privado' %}
 				<li><a href="/usuario/adicionar/{{ modulo.id_component }}">Adicionar Usuário</a></li>
+				{% endif %}
 				<li><a href="/dashboard/modulo/{{ pai.id_component }}">Voltar</a></li>
 			</ul>
 		</div>

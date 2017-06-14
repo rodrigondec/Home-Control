@@ -34,7 +34,7 @@ def cadastrar_monitor(id_leaf):
 
         form = MonitorForm()
         if form.validate_on_submit():
-            monitor = eval(form.tipo_monitor.data)(form.nome.data)
+            monitor = Monitor(form.nome.data)
 
             leaf.monitor = monitor
 
@@ -101,7 +101,7 @@ def regra_dispositivo(id_monitor, id_dispositivo_condicao, id_dispositivo_atuado
                                                           form.valor_final_condicao.data, form.hora.data,
                                                           form.minuto.data)
                 elif dispositivo_condicao.tipo == 'interruptor':
-                    condicao = CondicaoInterriuptorCronometrada(dispositivo_condicao, form.valor_condicao.data,
+                    condicao = CondicaoInterruptorCronometrada(dispositivo_condicao, form.valor_condicao.data,
                                                                 form.hora.data, form.minuto.data)
                 else:
                     condicao = CondicaoPotenciometroCronometrada(dispositivo_condicao, form.valor_inicial_condicao.data,

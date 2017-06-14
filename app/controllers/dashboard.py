@@ -110,10 +110,10 @@ def cadastrar_component(id_component_pai):
 
             db.session.add(component)
             db.session.commit()
-            flash('Cmponent criado com sucesso')
+            flash('Component criado com sucesso')
 
-            return redirect(url_for('dashboard.index'))
-        return render_template("dashboard/cadastrar_component.html", form=form)
+            return redirect('/dashboard/modulo/'+str(component_pai.id_component))
+        return render_template("dashboard/cadastrar_component.html", form=form, modulo_pai=component_pai)
     else:
         flash('Entre no sistema primeiro!')
         return redirect('/')
