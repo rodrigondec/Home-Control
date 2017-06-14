@@ -643,7 +643,7 @@ class CondicaoSensorCronometrada(CondicaoSensor):
         return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final and self.hora == datetime.now().hour and self.minuto == datetime.now().minute
 
 
-class Monitor(db.Model, Thread):
+class Monitor(db.Model):
     __tablename__ = 'monitor'
     id_monitor = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(80))
@@ -654,7 +654,6 @@ class Monitor(db.Model, Thread):
     regras = db.relationship("Regra", back_populates="monitor")
 
     def __init__(self, nome):
-        Thread.__init__(self)
         self.nome = nome
 
     def add_regra(self, regra):
@@ -665,8 +664,7 @@ class Monitor(db.Model, Thread):
     def remove_regra(self, regra):
         self.regras.remove(regra)
 
-    def start(self, session):
-        self.session = session
+    def start(self):
         self.running = True
         self.thread = Thread(target=self.run)
         self.thread.start()
@@ -691,7 +689,7 @@ class Monitor(db.Model, Thread):
 
     def executar_regra(self, regra):
         print('Monitor '+str(self.id_monitor)+' executando regra '+str(regra.id_regra)+'!')
-        regra.execute(self.session)
+        regra.execute()
 
     def after_run(self):
         pass
