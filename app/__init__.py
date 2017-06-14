@@ -5,6 +5,10 @@ from flask_migrate import Migrate, MigrateCommand
 import logging
 from logging.handlers import RotatingFileHandler
 import pymysql
+from database import Session, init_db
+from threading import Thread
+from time import sleep
+
 pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
@@ -20,9 +24,14 @@ app.logger.addHandler(handler)
 
 # Define the database object which is imported
 # by modules and controllers
-db = SQLAlchemy(app)
 
-migrate = Migrate(app, db)
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    Session.remove()
+
+db_session = Session()
+
+migrate = Migrate(app, db_session)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
@@ -51,4 +60,22 @@ app.register_blueprint(dispositivo_module)
 app.register_blueprint(monitor_module)
 app.register_blueprint(usuario_module)
 
-db.create_all()
+init_db()
+
+from app.models import Monitor
+
+def run_monitores():
+    while True:
+        db_session = Session()
+        monitores = db_session.query(Monitor).all()
+        for monitor in monitores:
+            print('Monitor ' + str(monitor.id_monitor) + ' vai verificar regras!')
+            monitor.verificar_regras()
+        print('Verificador vai dormir por 5 segundos')
+        db_session.close()
+        Session.remove()
+        sleep(5)
+
+
+t = Thread(target=run_monitores)
+t.start()

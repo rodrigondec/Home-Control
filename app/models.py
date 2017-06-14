@@ -1,51 +1,61 @@
-from app import db
+# from app import db
 from threading import Thread
+import time
 from time import sleep
 from datetime import datetime
+from database import Base
+# from app import Session
+from sqlalchemy import Table, Column, Integer, ForeignKey, String, Float, Boolean, DateTime, func
+from sqlalchemy.orm import relationship, backref
+from database import Session
 
-# Many-to-many helper tables (for public access, use models only) -----------
+db_session = Session()
 
-modulo_usuario = db.Table(
+# Many-to-many helper tables (for public access, use Bases only) -----------
+
+modulo_usuario = Table(
     'modulo_usuario',
-    db.Column(
+    Base.metadata,
+    Column(
         'id_component',
-        db.Integer,
-        db.ForeignKey('modulo_privado.id_component')
+        Integer,
+        ForeignKey('modulo_privado.id_component')
     ),
-    db.Column(
+    Column(
         'id_usuario',
-        db.Integer,
-        db.ForeignKey('usuario.id_usuario')
+        Integer,
+        ForeignKey('usuario.id_usuario')
     )
 )
 
-modulo_component = db.Table(
+modulo_component = Table(
     'modulo_component',
-    db.Column(
+    Base.metadata,
+    Column(
         'id_component_pai',
-        db.Integer,
-        db.ForeignKey('modulo.id_component')
+        Integer,
+        ForeignKey('modulo.id_component')
     ),
-    db.Column(
+    Column(
         'id_component_filho',
-        db.Integer,
-        db.ForeignKey('component.id_component'),
+        Integer,
+        ForeignKey('component.id_component'),
         unique=True
     )
 )
 
 
-# Models and their simple relantionships -------------------------------------
+# Bases and their simple relantionships -------------------------------------
 
 
-class Usuario(db.Model):
+class Usuario(Base):
     __tablename__ = 'usuario'
-    id_usuario = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
-    email = db.Column(db.String(50), unique=True)
-    senha = db.Column(db.String(64))
+    id_usuario = Column(Integer, primary_key=True)
+    nome = Column(String(80))
+    email = Column(String(50), unique=True)
+    senha = Column(String(64))
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_identity': __tablename__,
                        'polymorphic_on': tipo}
 
@@ -57,10 +67,10 @@ class Usuario(db.Model):
 
 class Administrador(Usuario):
     __tablename__ = 'administrador'
-    id_usuario = db.Column(db.Integer(), db.ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
+    id_usuario = Column(Integer(), ForeignKey("usuario.id_usuario", ondelete="CASCADE"), primary_key=True)
 
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id_client'))
-    client = db.relationship("Client", uselist=False, back_populates='administrador')
+    client_id = Column(Integer, ForeignKey('client.id_client'))
+    client = relationship("Client", uselist=False, back_populates='administrador')
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -68,22 +78,22 @@ class Administrador(Usuario):
         Usuario.__init__(self, nome, email, senha)
 
 
-class Client(db.Model):
+class Client(Base):
     __tablename__ = 'client'
-    id_client = db.Column(db.Integer, primary_key=True)
+    id_client = Column(Integer, primary_key=True)
 
-    administrador = db.relationship("Administrador", uselist=False, back_populates="client")
+    administrador = relationship("Administrador", uselist=False, back_populates="client")
 
-    component_id = db.Column(db.Integer, db.ForeignKey('component.id_component'))
-    component = db.relationship("Component", uselist=False)
+    component_id = Column(Integer, ForeignKey('component.id_component'))
+    component = relationship("Component", uselist=False)
 
 
-class Component(db.Model):
+class Component(Base):
     __tablename__ = 'component'
-    id_component = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
+    id_component = Column(Integer, primary_key=True)
+    nome = Column(String(80))
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, nome):
@@ -103,14 +113,14 @@ class Component(db.Model):
 
 class Leaf(Component):
     __tablename__ = 'leaf'
-    id_component = db.Column(db.Integer(),
-                             db.ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
+    id_component = Column(Integer(),
+                             ForeignKey("component.id_component", ondelete="CASCADE"), primary_key=True)
 
-    embarcado = db.relationship("Embarcado", uselist=False, back_populates="leaf")
+    embarcado = relationship("Embarcado", uselist=False, back_populates="leaf")
 
-    dispositivos = db.relationship("Dispositivo", back_populates="leaf")
+    dispositivos = relationship("Dispositivo", back_populates="leaf")
 
-    monitor = db.relationship("Monitor", uselist=False, back_populates="leaf")
+    monitor = relationship("Monitor", uselist=False, back_populates="leaf")
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -157,12 +167,12 @@ class Leaf(Component):
 
 class Modulo(Component):
     __tablename__ = 'modulo'
-    id_component = db.Column(db.Integer(), db.ForeignKey("component.id_component"), primary_key=True)
+    id_component = Column(Integer(), ForeignKey("component.id_component"), primary_key=True)
 
-    components = db.relationship(
+    components = relationship(
         'Component',
         secondary=modulo_component,
-        backref=db.backref('component_modulo', lazy='dynamic')
+        backref=backref('component_modulo', lazy='dynamic')
     )
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -205,12 +215,12 @@ class Modulo(Component):
 
 class ModuloPrivado(Modulo):
     __tablename__ = 'modulo_privado'
-    id_component = db.Column(db.Integer(), db.ForeignKey("modulo.id_component"), primary_key=True)
+    id_component = Column(Integer(), ForeignKey("modulo.id_component"), primary_key=True)
 
-    usuarios = db.relationship(
+    usuarios = relationship(
         'Usuario',
         secondary=modulo_usuario,
-        backref=db.backref('modulos', lazy='dynamic')
+        backref=backref('modulos', lazy='dynamic')
     )
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
@@ -253,36 +263,36 @@ class ModuloPrivado(Modulo):
         return False
 
 
-class Embarcado(db.Model):
+class Embarcado(Base):
     __tablename__ = 'embarcado'
-    id_embarcado = db.Column(db.Integer, primary_key=True)
-    ip = db.Column(db.String(15))
-    mac = db.Column(db.String(20))
+    id_embarcado = Column(Integer, primary_key=True)
+    ip = Column(String(15))
+    mac = Column(String(20))
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
-    leaf = db.relationship("Leaf", back_populates="embarcado")
+    leaf_id = Column(Integer, ForeignKey('leaf.id_component'))
+    leaf = relationship("Leaf", back_populates="embarcado")
 
     def __init__(self, ip, mac):
         self.ip = ip
         self.mac = mac
 
 
-class Dispositivo(db.Model):
+class Dispositivo(Base):
     __tablename__ = 'dispositivo'
-    id_dispositivo = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
-    porta = db.Column(db.Integer)
+    id_dispositivo = Column(Integer, primary_key=True)
+    nome = Column(String(80))
+    porta = Column(Integer)
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
-    leaf = db.relationship("Leaf", back_populates="dispositivos")
+    leaf_id = Column(Integer, ForeignKey('leaf.id_component'))
+    leaf = relationship("Leaf", back_populates="dispositivos")
 
-    usos = db.relationship("Uso", back_populates="dispositivo")
+    usos = relationship("Uso", back_populates="dispositivo")
 
-    atuadores = db.relationship("Atuador", back_populates="dispositivo")
+    atuadores = relationship("Atuador", back_populates="dispositivo")
 
-    condicoes = db.relationship("Condicao", back_populates="dispositivo")
+    condicoes = relationship("Condicao", back_populates="dispositivo")
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, nome, porta):
@@ -297,8 +307,8 @@ class Dispositivo(db.Model):
 
 class Sensor(Dispositivo):
     __tablename__ = 'sensor'
-    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
-    valor = db.Column(db.Float())
+    id_dispositivo = Column(Integer(), ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = Column(Float())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -311,8 +321,8 @@ class Sensor(Dispositivo):
 
 class Interruptor(Dispositivo):
     __tablename__ = 'interruptor'
-    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
-    valor = db.Column(db.Boolean())
+    id_dispositivo = Column(Integer(), ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = Column(Boolean())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -325,8 +335,8 @@ class Interruptor(Dispositivo):
 
 class Potenciometro(Dispositivo):
     __tablename__ = 'potenciometro'
-    id_dispositivo = db.Column(db.Integer(), db.ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
-    valor = db.Column(db.Float())
+    id_dispositivo = Column(Integer(), ForeignKey("dispositivo.id_dispositivo"), primary_key=True)
+    valor = Column(Float())
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -337,16 +347,16 @@ class Potenciometro(Dispositivo):
         return self.valor
 
 
-class Uso(db.Model):
+class Uso(Base):
     __tablename__ = 'uso'
-    id_uso = db.Column(db.Integer, primary_key=True)
-    hora = db.Column(db.DateTime, default=db.func.now())
-    usuario_id = db.Column(db.Integer)
+    id_uso = Column(Integer, primary_key=True)
+    hora = Column(DateTime, default=func.now())
+    usuario_id = Column(Integer)
 
-    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-    dispositivo = db.relationship("Dispositivo", back_populates="usos")
+    dispositivo_id = Column(Integer, ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = relationship("Dispositivo", back_populates="usos")
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, dispositivo, usuario_id):
@@ -358,8 +368,8 @@ class Uso(db.Model):
 
 class UsoInterruptor(Uso):
     __tablename__ = 'uso_interruptor'
-    id_uso = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
-    valor = db.Column(db.Boolean)
+    id_uso = Column(Integer(), ForeignKey("uso.id_uso"), primary_key=True)
+    valor = Column(Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -372,8 +382,8 @@ class UsoInterruptor(Uso):
 
 class UsoPotenciometro(Uso):
     __tablename__ = 'uso_potenciometro'
-    id_uso = db.Column(db.Integer(), db.ForeignKey("uso.id_uso"), primary_key=True)
-    valor = db.Column(db.Float)
+    id_uso = Column(Integer(), ForeignKey("uso.id_uso"), primary_key=True)
+    valor = Column(Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -384,16 +394,16 @@ class UsoPotenciometro(Uso):
         self.valor = valor
 
 
-class Regra(db.Model):
+class Regra(Base):
     __tablename__ = 'regra'
-    id_regra = db.Column(db.Integer, primary_key=True)
+    id_regra = Column(Integer, primary_key=True)
 
-    monitor_id = db.Column(db.Integer, db.ForeignKey('monitor.id_monitor'))
-    monitor = db.relationship("Monitor", back_populates="regras")
+    monitor_id = Column(Integer, ForeignKey('monitor.id_monitor'))
+    monitor = relationship("Monitor", back_populates="regras")
 
-    condicao = db.relationship("Condicao", uselist=False, back_populates="regra")
+    condicao = relationship("Condicao", uselist=False, back_populates="regra")
 
-    atuador = db.relationship("Atuador", uselist=False, back_populates="regra")
+    atuador = relationship("Atuador", uselist=False, back_populates="regra")
 
     def __init__(self, monitor, condicao, atuador):
         if not isinstance(monitor, Monitor):
@@ -407,23 +417,25 @@ class Regra(db.Model):
         monitor.add_regra(self)
 
     def avaliar_regra(self):
-        return self.condicao.avaliar_condicao()
+        valor1 = self.condicao.avaliar_condicao()
+        valor2 = self.atuador.dispositivo.valor != self.atuador.valor
+        return valor1 and valor2
 
-    def execute(self, session):
-        self.atuador.execute(session)
+    def execute(self):
+        self.atuador.execute()
 
 
-class Atuador(db.Model):
+class Atuador(Base):
     __tablename__ = 'atuador'
-    id_atuador = db.Column(db.Integer, primary_key=True)
+    id_atuador = Column(Integer, primary_key=True)
 
-    regra_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
-    regra = db.relationship("Regra", back_populates="atuador")
+    regra_id = Column(Integer, ForeignKey('regra.id_regra'))
+    regra = relationship("Regra", back_populates="atuador")
 
-    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-    dispositivo = db.relationship("Dispositivo", back_populates="atuadores")
+    dispositivo_id = Column(Integer, ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = relationship("Dispositivo", back_populates="atuadores")
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, dispositivo):
@@ -437,8 +449,8 @@ class Atuador(db.Model):
 
 class AtuadorInterruptor(Atuador):
     __tablename__ = 'atuador_interruptor'
-    id_atuador = db.Column(db.Integer(), db.ForeignKey("atuador.id_atuador"), primary_key=True)
-    valor = db.Column(db.Boolean)
+    id_atuador = Column(Integer(), ForeignKey("atuador.id_atuador"), primary_key=True)
+    valor = Column(Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -460,8 +472,8 @@ class AtuadorInterruptor(Atuador):
 
 class AtuadorPotenciometro(Atuador):
     __tablename__ = 'atuador_potenciometro'
-    id_atuador = db.Column(db.Integer(), db.ForeignKey("atuador.id_atuador"), primary_key=True)
-    valor = db.Column(db.Float)
+    id_atuador = Column(Integer(), ForeignKey("atuador.id_atuador"), primary_key=True)
+    valor = Column(Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -481,17 +493,17 @@ class AtuadorPotenciometro(Atuador):
         command.execute()
 
 
-class Condicao(db.Model):
+class Condicao(Base):
     __tablename__ = 'condicao'
-    id_condicao = db.Column(db.Integer, primary_key=True)
+    id_condicao = Column(Integer, primary_key=True)
 
-    regra_id = db.Column(db.Integer, db.ForeignKey('regra.id_regra'))
-    regra = db.relationship("Regra", back_populates="condicao")
+    regra_id = Column(Integer, ForeignKey('regra.id_regra'))
+    regra = relationship("Regra", back_populates="condicao")
 
-    dispositivo_id = db.Column(db.Integer, db.ForeignKey('dispositivo.id_dispositivo'))
-    dispositivo = db.relationship("Dispositivo", back_populates="condicoes")
+    dispositivo_id = Column(Integer, ForeignKey('dispositivo.id_dispositivo'))
+    dispositivo = relationship("Dispositivo", back_populates="condicoes")
 
-    tipo = db.Column(db.String(40))
+    tipo = Column(String(40))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self, dispositivo):
@@ -505,8 +517,8 @@ class Condicao(db.Model):
 
 class CondicaoInterruptor(Condicao):
     __tablename__ = 'condicao_interruptor'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
-    valor = db.Column(db.Boolean)
+    id_condicao = Column(Integer(), ForeignKey("condicao.id_condicao"), primary_key=True)
+    valor = Column(Boolean)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -524,14 +536,15 @@ class CondicaoInterruptor(Condicao):
         return 'valor == '+str(self.valor)
 
     def avaliar_condicao(self):
-        return self.dispositivo.get_valor() == self.valor
+        valor = self.dispositivo.get_valor() == self.valor
+        return valor
 
 
 class CondicaoPotenciometro(Condicao):
     __tablename__ = 'condicao_potenciometro'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
-    valor_inicial = db.Column(db.Float)
-    valor_final = db.Column(db.Float)
+    id_condicao = Column(Integer(), ForeignKey("condicao.id_condicao"), primary_key=True)
+    valor_inicial = Column(Float)
+    valor_final = Column(Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -557,9 +570,9 @@ class CondicaoPotenciometro(Condicao):
 
 class CondicaoSensor(Condicao):
     __tablename__ = 'condicao_sensor'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao.id_condicao"), primary_key=True)
-    valor_inicial = db.Column(db.Float)
-    valor_final = db.Column(db.Float)
+    id_condicao = Column(Integer(), ForeignKey("condicao.id_condicao"), primary_key=True)
+    valor_inicial = Column(Float)
+    valor_final = Column(Float)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -585,9 +598,9 @@ class CondicaoSensor(Condicao):
 
 class CondicaoInterruptorCronometrada(CondicaoInterruptor):
     __tablename__ = 'condicao_interruptor_cronometrada'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_interruptor.id_condicao"), primary_key=True)
-    hora = db.Column(db.Integer)
-    minuto = db.Column(db.Integer)
+    id_condicao = Column(Integer(), ForeignKey("condicao_interruptor.id_condicao"), primary_key=True)
+    hora = Column(Integer)
+    minuto = Column(Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -605,9 +618,9 @@ class CondicaoInterruptorCronometrada(CondicaoInterruptor):
 
 class CondicaoPotenciometroCronometrada(CondicaoPotenciometro):
     __tablename__ = 'condicao_potenciometro_cronometrada'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_potenciometro.id_condicao"), primary_key=True)
-    hora = db.Column(db.Integer)
-    minuto = db.Column(db.Integer)
+    id_condicao = Column(Integer(), ForeignKey("condicao_potenciometro.id_condicao"), primary_key=True)
+    hora = Column(Integer)
+    minuto = Column(Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -625,9 +638,9 @@ class CondicaoPotenciometroCronometrada(CondicaoPotenciometro):
 
 class CondicaoSensorCronometrada(CondicaoSensor):
     __tablename__ = 'condicao_sensor_cronometrada'
-    id_condicao = db.Column(db.Integer(), db.ForeignKey("condicao_sensor.id_condicao"), primary_key=True)
-    hora = db.Column(db.Integer)
-    minuto = db.Column(db.Integer)
+    id_condicao = Column(Integer(), ForeignKey("condicao_sensor.id_condicao"), primary_key=True)
+    hora = Column(Integer)
+    minuto = Column(Integer)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -644,15 +657,15 @@ class CondicaoSensorCronometrada(CondicaoSensor):
         return self.valor_inicial <= self.dispositivo.get_valor() and self.dispositivo.get_valor() >= self.valor_final and self.hora == datetime.now().hour and self.minuto == datetime.now().minute
 
 
-class Monitor(db.Model):
+class Monitor(Base):
     __tablename__ = 'monitor'
-    id_monitor = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(80))
+    id_monitor = Column(Integer, primary_key=True)
+    nome = Column(String(80))
 
-    leaf_id = db.Column(db.Integer, db.ForeignKey('leaf.id_component'))
-    leaf = db.relationship("Leaf", back_populates="monitor")
+    leaf_id = Column(Integer, ForeignKey('leaf.id_component'))
+    leaf = relationship("Leaf", back_populates="monitor")
 
-    regras = db.relationship("Regra", back_populates="monitor")
+    regras = relationship("Regra", back_populates="monitor")
 
     def __init__(self, nome):
         self.nome = nome
@@ -676,6 +689,7 @@ class Monitor(db.Model):
     def run(self):
         self.before_run()
         while self.running:
+            # db_session.expire_all()
             print('Monitor '+str(self.id_monitor)+' vai verificar regras!')
             self.verificar_regras()
             print('Monitor ' + str(self.id_monitor) + ' vai dormir por 5 segundos!')
@@ -684,6 +698,7 @@ class Monitor(db.Model):
 
     def verificar_regras(self):
         for regra in self.regras:
+            # db_session.expire(regra)
             if regra.avaliar_regra():
                 print('Regra '+str(regra.id_regra)+' foi ativada!')
                 self.executar_regra(regra)
@@ -696,11 +711,11 @@ class Monitor(db.Model):
         pass
 
 
-class Command(db.Model):
+class Command(Base):
     __tablename__ = 'command'
-    id_command = db.Column(db.Integer, primary_key=True)
+    id_command = Column(Integer, primary_key=True)
 
-    tipo = db.Column(db.String(30))
+    tipo = Column(String(30))
     __mapper_args__ = {'polymorphic_on': tipo}
 
     def __init__(self):
@@ -716,7 +731,7 @@ class Command(db.Model):
 
 class RequestLeitura(Command):
     __tablename__ = 'request_leitura'
-    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+    id_command = Column(Integer(), ForeignKey("command.id_command"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -738,7 +753,7 @@ class RequestLeitura(Command):
 
 class RequestEscrita(Command):
     __tablename__ = 'request_escrita'
-    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+    id_command = Column(Integer(), ForeignKey("command.id_command"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -760,7 +775,7 @@ class RequestEscrita(Command):
 
 class AtualizarDispositivo(Command):
     __tablename__ = 'atualizar_dispositivo'
-    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+    id_command = Column(Integer(), ForeignKey("command.id_command"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -779,7 +794,7 @@ class AtualizarDispositivo(Command):
         request = RequestLeitura()
         request.before_execute(self.embarcado.ip, self.dispositivo.porta)
         self.dispositivo.valor = request.execute()
-        db.session.commit()
+        db_session.commit()
         self.after_execute()
 
     def after_execute(self):
@@ -788,7 +803,7 @@ class AtualizarDispositivo(Command):
 
 class AlterarDispositivo(Command):
     __tablename__ = 'alterar_dispositivo'
-    id_command = db.Column(db.Integer(), db.ForeignKey("command.id_command"), primary_key=True)
+    id_command = Column(Integer(), ForeignKey("command.id_command"), primary_key=True)
 
     __mapper_args__ = {'polymorphic_identity': __tablename__}
 
@@ -810,13 +825,14 @@ class AlterarDispositivo(Command):
         request.before_execute(self.embarcado.ip, self.dispositivo.porta, self.valor)
         request.execute()
         # self.dispositivo.valor = self.after_execute()
+        self.dispositivo = db_session.merge(self.dispositivo)
         self.dispositivo.valor = self.valor
         if self.dispositivo.tipo == 'interruptor':
             uso = UsoInterruptor(self.dispositivo, self.valor, self.usuario_id)
         else:
             uso = UsoPotenciometro(self.dispositivo, self.valor, self.usuario_id)
-        db.session.add(uso)
-        db.session.commit()
+        db_session.add(uso)
+        db_session.commit()
 
     def after_execute(self):
         request = RequestLeitura()

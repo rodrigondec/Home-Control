@@ -1,7 +1,9 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
-from app import db
+from database import Session
 from app.models import *
 from app.forms import ClientForm, DispositivoForm, ComponentForm, EmbarcadoForm, AlterarInterruptorForm, AlterarPotenciometroForm
+
+db_session = Session()
 
 mod_dispositivo = Blueprint('dispositivo', __name__, url_prefix='/dispositivo', template_folder='templates')
 
@@ -20,8 +22,8 @@ def cadastrar_dispositivo(id_leaf):
 
             leaf.add_dispositivo(dispositivo)
 
-            db.session.add(dispositivo)
-            db.session.commit()
+            db_session.add(dispositivo)
+            db_session.commit()
             flash('Dispositivo criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)
@@ -60,8 +62,8 @@ def cadastrar_embarcado(id_leaf):
 
             leaf.embarcado = embarcado
 
-            db.session.add(embarcado)
-            db.session.commit()
+            db_session.add(embarcado)
+            db_session.commit()
             flash('Embarcado criado com sucesso')
 
             return redirect('/dashboard/leaf/'+id_leaf)

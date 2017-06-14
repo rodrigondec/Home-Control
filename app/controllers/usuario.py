@@ -1,7 +1,9 @@
 from flask import render_template, Blueprint, session, abort, flash, redirect, url_for
-from app import db
+from database import Session
 from app.models import Administrador, Usuario, Component
 from app.forms import UsuarioForm, AdicionarUsuariosForm
+
+db_session = Session()
 
 mod_usuario = Blueprint('usuario', __name__, url_prefix='/usuario', template_folder='templates')
 
@@ -22,8 +24,8 @@ def cadastrar_usuario():
             usuario = Administrador(form.nome.data, form.email.data, form.senha.data)
         else:
             usuario = Usuario(form.nome.data, form.email.data, form.senha.data)
-        db.session.add(usuario)
-        db.session.commit()
+        db_session.add(usuario)
+        db_session.commit()
         flash('Usuário criado com sucesso')
 
         return redirect('/')
@@ -46,7 +48,7 @@ def adicionar_usuario(id_modulo):
             for id_usuario in form.usuarios.data:
                 user = Usuario.query.filter_by(id_usuario=id_usuario).first()
                 modulo.add_usuario(user)
-            db.session.commit()
+            db_session.commit()
             return redirect('/dashboard/modulo/'+id_modulo)
         return render_template('usuario/adicionar.html', form=form, modulo=modulo)
     else:

@@ -1,19 +1,19 @@
 from app.models import *
-from app import db
+from database import db_session
 from datetime import datetime
 
-db.session.add(RequestLeitura())
-db.session.add(RequestEscrita())
-db.session.add(AtualizarDispositivo())
-db.session.add(AlterarDispositivo())
+db_session.add(RequestLeitura())
+db_session.add(RequestEscrita())
+db_session.add(AtualizarDispositivo())
+db_session.add(AlterarDispositivo())
 
 admin = Administrador('rodrigo', 'rodrigondec@gmail.com', 'rodrigo123')
 # admin = Usuario.query.filter_by(id_usuario=1).first()
-db.session.add(admin)
+db_session.add(admin)
 #
 #
 client = Client()
-db.session.add(client)
+db_session.add(client)
 # client = Client.query.filter_by(id_client=1).first()
 admin.client = client
 #
@@ -69,13 +69,13 @@ leaf.monitor = monitor
 regra1 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorInterruptor(porta, False))
 # regra1 = Regra.query.filter_by(id_regra=1).first()
 #
-regra2 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorPotenciometro(ventilador, 0))
+# regra2 = Regra(monitor=monitor, condicao=CondicaoInterruptor(ar, True), atuador=AtuadorPotenciometro(ventilador, 0))
 # regra2 = Regra.query.filter_by(id_regra=2).first()
 #
-regra3 = Regra(monitor=monitor, condicao=CondicaoInterruptorCronometrada(lampada, False, hora=18, minuto=00), atuador=AtuadorInterruptor(lampada, True))
+# regra3 = Regra(monitor=monitor, condicao=CondicaoInterruptorCronometrada(lampada, False, hora=18, minuto=00), atuador=AtuadorInterruptor(lampada, True))
 # regra3 = Regra.query.filter_by(id_regra=5).first()
 #
-regra4 = Regra(monitor=monitor, condicao=CondicaoSensor(temperatura, 23, 40), atuador=AtuadorInterruptor(ar, True))
+# regra4 = Regra(monitor=monitor, condicao=CondicaoSensor(temperatura, 23, 40), atuador=AtuadorInterruptor(ar, True))
 # regra4 = Regra.query.filter_by(id_regra=6).first()
 #
-db.session.commit()
+db_session.commit()
