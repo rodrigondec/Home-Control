@@ -750,8 +750,8 @@ class RequestEscrita(Command):
         self.valor = valor
 
     def execute(self):
+        # MOCK DE UM REQUEST HTTP para o servidor http://self.ip/self.porta/valor
         self.after_execute()
-        pass
 
     def after_execute(self):
         pass
