@@ -49,6 +49,8 @@ def adicionar_usuario(id_modulo):
                 user = Usuario.query.filter_by(id_usuario=id_usuario).first()
                 modulo.add_usuario(user)
             db_session.commit()
+            db_session.flush()
+            db_session.expire_all()
             return redirect('/dashboard/modulo/'+id_modulo)
         return render_template('usuario/adicionar.html', form=form, modulo=modulo)
     else:

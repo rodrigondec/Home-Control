@@ -1,5 +1,5 @@
 from app.models import *
-from database import db_session
+from database import Session as db_session
 from datetime import datetime
 
 db_session.add(RequestLeitura())
